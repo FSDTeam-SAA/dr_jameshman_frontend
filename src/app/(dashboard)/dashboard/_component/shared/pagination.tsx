@@ -88,7 +88,7 @@ const DashboardPagination: React.FC<PaginationProps> = ({
               className={cn(
                 "border cursor-pointer border-[#525773] hover:bg-primary hover:text-white rounded-[4px]",
                 page === currentPage
-                  ? "bg-primary text-white"
+                  ? "bg-primary border-primary text-white"
                   : "hover:bg-primary hover:text-white"
               )}
             >
