@@ -59,7 +59,7 @@ const WhyChooseOur = () => {
           </ul>
         </div>
         <div className="md:col-span-1">
-            <Image src="/assets/images/why-choose-us.png" alt="why-choose-us.png" width={1000} height={1000} className="w-full h-[400px] md:h-[500px] lg:h-[834px] object-cover"/>
+            <Image src="/assets/images/why-choose-us.png" alt="why-choose-us" width={1000} height={1000} className="w-full h-[400px] md:h-[500px] lg:h-[834px] object-cover"/>
         </div>
       </div>
     </div>
