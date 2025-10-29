@@ -6,13 +6,13 @@ import { AppTopBar } from "./dashboard/_component/shared/app-topbar";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <SidebarProvider defaultOpen={true} className="gap-8">
+      <SidebarProvider defaultOpen={true} className="px-8">
         <AppSidebar />
         <main className="w-full">
           <div className="lg:hidden">
             <SidebarTrigger />
           </div>
-          <header>
+          <header className="mb-8 mt-10">
             <AppTopBar />
           </header>
           <div className="w-full">
