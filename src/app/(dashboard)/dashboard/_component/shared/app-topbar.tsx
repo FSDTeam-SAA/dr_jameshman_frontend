@@ -17,6 +17,12 @@ export const AppTopBar = () => {
           <Plus /> Add Service
         </Button>
       )}
+
+      {pathName === "/dashboard/price-list" && (
+        <Button className="h-[40px]">
+          <Plus /> Add Price List
+        </Button>
+      )}
     </div>
   );
 };
