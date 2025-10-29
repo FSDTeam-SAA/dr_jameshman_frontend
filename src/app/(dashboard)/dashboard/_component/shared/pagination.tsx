@@ -86,7 +86,7 @@ const DashboardPagination: React.FC<PaginationProps> = ({
             <PaginationLink
               onClick={() => handlePageClick(page)}
               className={cn(
-                "border cursor-pointer border-[#525773] hover:bg-primary hover:text-white rounded-[4px]",
+                "border cursor-pointer border-primary hover:bg-primary hover:text-white rounded-[4px]",
                 page === currentPage
                   ? "bg-primary border-primary text-white"
                   : "hover:bg-primary hover:text-white"
@@ -107,7 +107,7 @@ const DashboardPagination: React.FC<PaginationProps> = ({
               }
             }}
             className={cn(
-              "border border-[#525773] cursor-pointer rounded-[4px]",
+              "border border-primary cursor-pointer rounded-[4px]",
               currentPage === totalPages &&
                 "cursor-not-allowed bg-[#E3E3E3] border-0  pointer-events-none"
             )}

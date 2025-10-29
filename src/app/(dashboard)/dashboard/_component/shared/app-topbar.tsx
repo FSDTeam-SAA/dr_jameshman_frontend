@@ -29,6 +29,12 @@ export const AppTopBar = () => {
           <Plus /> Add Gallery
         </Button>
       )}
+
+      {pathName === "/dashboard/faq" && (
+        <Button className="h-[40px]">
+          <Plus /> Add FAQ
+        </Button>
+      )}
     </div>
   );
 };
