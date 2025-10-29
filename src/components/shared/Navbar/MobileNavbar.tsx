@@ -29,22 +29,13 @@ const MobileNavbar = () => {
             <div className="flex items-center justify-between mb-8">
               <Link href="/" onClick={closeSheet}>
                 <Image
-                  src={"/assets/images/logo.png"}
+                  src={"/assets/images/black-logo.png"}
                   alt="logo.png"
                   width={1000}
                   height={1000}
                   className="h-[60px] w-[100px]"
                 />
               </Link>
-              {/* <Button
-                variant="ghost"
-                size="icon"
-                onClick={closeSheet}
-                className="h-9 w-9"
-              >
-                <X className="h-5 w-5" />
-                <span className="sr-only">Close menu</span>
-              </Button> */}
             </div>
 
             {/* Navigation links */}

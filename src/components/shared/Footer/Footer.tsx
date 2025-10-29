@@ -25,7 +25,7 @@ const Footer = () => {
             />
             <p className="text-sm md:text-base font-normal text-white leading-[150%] py-3 md:py-4 lg:py-6">
               Providing exceptional dental care with a focus on comfort and{" "}
-              <br />
+              <br className="hidden md:block"/>
               results for over 10 years
             </p>
 
@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
 
         {/* bottom part  */}
-        <div className="w-full flex items-center justify-between border-t border-[#D9D9D980] pt-4 md:pt-6 lg:pt-8">
+        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-3 border-t border-[#D9D9D980] pt-4 md:pt-6 lg:pt-8">
           <p className="text-sm md:text-base font-normal text-white leading-[120%]">
             © 2025 Perrystown Orthodontics. All rights reserved.
           </p>

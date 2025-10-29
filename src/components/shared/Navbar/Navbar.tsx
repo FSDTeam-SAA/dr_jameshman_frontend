@@ -32,7 +32,7 @@ const Navbar = () => {
         pathname === "/" && isAtTop ? "bg-transparent" : "bg-white shadow-md"
       }`}
     >
-      <div className="container py-4">
+      <div className="container py-1">
         <div className="flex items-center justify-between">
           {/* ✅ Logo */}
           <Link href={"/"}>
