@@ -1,3 +1,12 @@
-export default function HomePage() {
-  return <h1>Welcome to my site</h1>;
+import React from 'react'
+import Hero from './_components/Hero'
+
+const HomePage = () => {
+  return (
+    <div>
+      <Hero/>
+    </div>
+  )
 }
+
+export default HomePage
