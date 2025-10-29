@@ -1,4 +1,4 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import React from "react";
 import { AppSidebar } from "./dashboard/_component/shared/app-sidebar";
 import { AppTopBar } from "./dashboard/_component/shared/app-topbar";
@@ -6,9 +6,12 @@ import { AppTopBar } from "./dashboard/_component/shared/app-topbar";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <SidebarProvider defaultOpen={true}>
+      <SidebarProvider defaultOpen={true} className="gap-8">
         <AppSidebar />
         <main className="w-full">
+          <div className="lg:hidden">
+            <SidebarTrigger />
+          </div>
           <header>
             <AppTopBar />
           </header>
