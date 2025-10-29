@@ -23,6 +23,12 @@ export const AppTopBar = () => {
           <Plus /> Add Price List
         </Button>
       )}
+
+      {pathName === "/dashboard/gallery-management" && (
+        <Button className="h-[40px]">
+          <Plus /> Add Gallery
+        </Button>
+      )}
     </div>
   );
 };
