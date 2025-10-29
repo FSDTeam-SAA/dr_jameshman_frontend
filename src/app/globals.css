@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  @apply bg-[#F9FAFB]
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
