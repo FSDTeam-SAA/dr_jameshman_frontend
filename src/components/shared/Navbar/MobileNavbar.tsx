@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { navLinks } from "@/utils/navLinks";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,22 +29,13 @@ const MobileNavbar = () => {
             <div className="flex items-center justify-between mb-8">
               <Link href="/" onClick={closeSheet}>
                 <Image
-                  src={"/assets/images/logo.png"}
+                  src={"/assets/images/black-logo.png"}
                   alt="logo.png"
                   width={1000}
                   height={1000}
                   className="h-[60px] w-[100px]"
                 />
               </Link>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={closeSheet}
-                className="h-9 w-9"
-              >
-                <X className="h-5 w-5" />
-                <span className="sr-only">Close menu</span>
-              </Button>
             </div>
 
             {/* Navigation links */}
@@ -71,15 +62,6 @@ const MobileNavbar = () => {
                 })}
               </ul>
             </nav>
-
-            {/* Login button */}
-            <div className="pt-6 border-t">
-              <Link href={"/login"}>
-                <Button className="w-full" onClick={closeSheet}>
-                  Login
-                </Button>
-              </Link>
-            </div>
           </div>
         </SheetContent>
       </Sheet>
