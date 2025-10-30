@@ -30,9 +30,11 @@ export const AppTopBar = () => {
       )}
 
       {pathName === "/dashboard/gallery-management" && (
-        <Button className="h-[40px]">
-          <Plus /> Add Gallery
-        </Button>
+        <Link href={`/dashboard/gallery-management/add-gallery`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Gallery
+          </Button>
+        </Link>
       )}
 
       {pathName === "/dashboard/faq" && (
