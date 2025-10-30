@@ -10,12 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, Trash } from "lucide-react";
+import { Eye } from "lucide-react";
 import DashboardPagination from "../../_component/shared/pagination";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Spinner } from "@/components/ui/spinner";
-import { toast } from "sonner";
+import { DeleteContact } from "./delete-contact";
+import { ViewContactModal } from "./view-contact-modal";
 
 type Contact = {
   _id: string;
@@ -34,7 +34,7 @@ type Pagination = {
   itemsPerPage: number;
 };
 
-type ContactsResponse = {
+export type ContactsResponse = {
   status: boolean;
   message: string;
   data: Contact[];
@@ -43,7 +43,8 @@ type ContactsResponse = {
 
 export const ContactsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
+  const [contactId, setContactId] = useState("");
 
   const { data: allContacts, isLoading } = useQuery<ContactsResponse>({
     queryKey: ["all-contacts", currentPage],
@@ -56,39 +57,10 @@ export const ContactsTable = () => {
     },
   });
 
-  const { mutateAsync, isPending } = useMutation<any, Error, string>({
-    mutationKey: ["delete-booking"],
-    mutationFn: async (id: string) => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const data = await res.json();
-      return data;
-    },
-    onSuccess: (data) => {
-      toast.success(data?.message);
-      queryClient.invalidateQueries({ queryKey: ["all-contacts"] });
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-
   const contacts = allContacts?.data || [];
   const pagination = allContacts?.pagination;
 
   const skeletonRows = Array.from({ length: 10 });
-
-  const handleDelete = async (id: string) => {
-    try {
-      await mutateAsync(id);
-    } catch (error) {
-      console.log(`error from contact delete : ${error}`);
-    }
-  };
 
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 pb-5">
@@ -145,26 +117,37 @@ export const ContactsTable = () => {
             ))
           ) : contacts.length > 0 ? (
             contacts.map((contact) => (
-              <TableRow key={contact._id} className="text-black/60 text-center">
-                <TableCell className="py-6">{contact.name}</TableCell>
-                <TableCell className="py-6">{contact.email}</TableCell>
-                <TableCell className="py-6">{contact.phone}</TableCell>
+              <TableRow
+                key={contact?._id}
+                className="text-black/60 text-center"
+              >
+                <TableCell className="py-6">{contact?.name}</TableCell>
+                <TableCell className="py-6">{contact?.email}</TableCell>
+                <TableCell className="py-6">{contact?.phone}</TableCell>
                 <TableCell className="py-6">
-                  {new Date(contact.updatedAt).toLocaleDateString()}
+                  {new Date(contact?.updatedAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell className="py-6 lg:max-w-lg">
-                  {contact.message}
+                  {contact?.message}
                 </TableCell>
                 <TableCell className="py-6">
                   <div className="flex justify-center space-x-2">
-                    <button>
+                    <button onClick={() => {setContactId(contact?._id); setIsOpen(true)}}>
                       <Eye className="h-5 w-5" />
                     </button>
-                    <button onClick={() => handleDelete(contact?._id)}>
-                      {isPending ? <Spinner /> : <Trash className="h-5 w-5" />}
-                    </button>
+                    <DeleteContact id={contact?._id} />
                   </div>
                 </TableCell>
+
+                <div>
+                  {isOpen && (
+                    <ViewContactModal
+                      isOpen={isOpen}
+                      onClose={() => setIsOpen(false)}
+                      id={contactId}
+                    />
+                  )}
+                </div>
               </TableRow>
             ))
           ) : (
