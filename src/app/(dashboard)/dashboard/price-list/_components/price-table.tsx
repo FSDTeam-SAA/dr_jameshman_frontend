@@ -9,10 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, Trash } from "lucide-react";
+import { Edit } from "lucide-react";
 import DashboardPagination from "../../_component/shared/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { DeletePriceList } from "./delete-price-list";
 
 type PriceItem = {
   _id: string;
@@ -102,24 +103,22 @@ export const PriceTable = () => {
             {!isLoading &&
               priceLists.map((priceList) => (
                 <TableRow
-                  key={priceList._id}
+                  key={priceList?._id}
                   className="text-black/70 text-center"
                 >
                   <TableCell className="py-6">
-                    {priceList.serviceName}
+                    {priceList?.serviceName}
                   </TableCell>
                   <TableCell className="py-6">
-                    {priceList.description}
+                    {priceList?.description}
                   </TableCell>
-                  <TableCell className="py-6">${priceList.rate}</TableCell>
+                  <TableCell className="py-6">${priceList?.rate}</TableCell>
                   <TableCell className="py-6">
                     <div className="flex justify-center gap-2">
                       <button className="hover:text-primary transition-colors">
                         <Edit className="h-5 w-5" />
                       </button>
-                      <button>
-                        <Trash className="h-5 w-5" />
-                      </button>
+                      <DeletePriceList id={priceList?._id} />
                     </div>
                   </TableCell>
                 </TableRow>
