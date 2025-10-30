@@ -18,23 +18,25 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z
-    .string()
-    .email({ message: "Please enter a valid email address." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z
     .string()
     .min(11, { message: "Phone Number must be at least 11 characters." }),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+  message: z
+    .string()
+    .min(10, { message: "Message must be at least 10 characters." }),
   terms: z.boolean().refine((val) => val === true, {
     message: "You must accept the terms and conditions.",
   }),
 });
 
 const GetInTouch = () => {
+  const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,7 +49,7 @@ const GetInTouch = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationKey: ["all-contacts"],
+    mutationKey: ["contacts"],
     mutationFn: async (values: z.infer<typeof formSchema>) => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contacts`, {
         method: "POST",
@@ -55,6 +57,15 @@ const GetInTouch = () => {
         headers: { "Content-Type": "application/json" },
       });
       return res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["all-contacts"] });
+      if (!data?.status) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast.success(data?.message || "Message sent successfully");
+      form.reset();
     },
   });
 
