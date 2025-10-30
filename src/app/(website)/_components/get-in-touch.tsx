@@ -18,24 +18,20 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z
     .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
-    })
-    .email(),
-  phone: z.string().min(2, {
-    message: "Phone Number must be at least 2 characters.",
+    .email({ message: "Please enter a valid email address." }),
+  phone: z
+    .string()
+    .min(11, { message: "Phone Number must be at least 11 characters." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+  terms: z.boolean().refine((val) => val === true, {
+    message: "You must accept the terms and conditions.",
   }),
-  message: z.string().min(2, {
-    message: "Message must be at least 2 characters.",
-  }),
-  terms: z.boolean().default(false).optional(),
 });
 
 const GetInTouch = () => {
@@ -50,9 +46,22 @@ const GetInTouch = () => {
     },
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["all-contacts"],
+    mutationFn: async (values: z.infer<typeof formSchema>) => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contacts`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
+      return res.json();
+    },
+  });
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    mutate(values);
   }
   return (
     <div className="pt-10 md:pt-16 lg:pt-24">
@@ -168,8 +177,11 @@ const GetInTouch = () => {
                           >
                             I consent to having this website store my submitted
                             information so they can respond to my inquiry. See
-                            our <span className="text-primary">privacy policy </span>
-                             to learn more about how we use data.
+                            our{" "}
+                            <span className="text-primary">
+                              privacy policy{" "}
+                            </span>
+                            to learn more about how we use data.
                           </Label>
                           <FormMessage className="text-red-500" />
                         </div>
@@ -178,10 +190,11 @@ const GetInTouch = () => {
                   />
 
                   <Button
+                    disabled={isPending}
                     className="w-full h-[48px] rounded-[8px] bg-primary text-[#F8F9FA] text-base font-medium leading-[120%]"
                     type="submit"
                   >
-                    Send Message
+                    {isPending ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </Form>
