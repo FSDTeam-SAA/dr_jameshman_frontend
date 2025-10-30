@@ -21,6 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
+import { useSession } from "next-auth/react";
 
 type formType = z.input<typeof addFaqSchema>;
 
@@ -38,6 +39,8 @@ interface Props {
 const AddEditFaq = ({ id, faqDetails }: Props) => {
   const pathName = usePathname();
   const queryClient = useQueryClient();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const form = useForm<formType>({
     resolver: zodResolver(addFaqSchema),
@@ -46,7 +49,6 @@ const AddEditFaq = ({ id, faqDetails }: Props) => {
       answer: "",
     },
   });
-
 
   useEffect(() => {
     if (pathName !== "/dashboard/faq/add-faq" && faqDetails) {
@@ -68,7 +70,10 @@ const AddEditFaq = ({ id, faqDetails }: Props) => {
 
       const res = await fetch(url, {
         method,
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(data),
       });
 
