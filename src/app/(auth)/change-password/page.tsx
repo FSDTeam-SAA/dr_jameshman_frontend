@@ -1,19 +1,19 @@
 
 import React, { Suspense } from "react";
 import AuthLayoutDesign from "../_components/authLayout";
-import LoginForm from "./components/loginForm";
+import ChangePasswordBody from "./_components/changePasswordBody";
 
 
-const LoginPage = () => {
+const page = () => {
   return (
     <div>
       <AuthLayoutDesign>
          <Suspense fallback={<div>Loading...</div>}>
-        <LoginForm/>
+        <ChangePasswordBody/>
          </Suspense>
       </AuthLayoutDesign>
     </div>
   );
 };
 
-export default LoginPage;
+export default page;

@@ -19,6 +19,7 @@ import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -124,7 +125,11 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
-
+            <Link href="/forgot-password"> 
+            <p className="text-base text-end mt-3 font-medium leading-[120%] text-[#499FC0]">
+              Forgot Password?
+            </p>
+            </Link>
             <Button
               disabled={isLoading}
               className="text-base font-medium text-[#F8FAF9] leading-[120%] rounded-[8px] w-full h-[48px] bg-primary"
