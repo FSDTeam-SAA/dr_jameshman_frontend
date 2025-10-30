@@ -91,7 +91,6 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
   });
 
   const onSubmit = async (value: formType) => {
-    console.log("value: ", value);
     try {
       await mutateAsync(value);
     } catch (error) {

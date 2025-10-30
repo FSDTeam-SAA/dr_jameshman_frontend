@@ -13,6 +13,7 @@ import { Edit, Trash } from "lucide-react";
 import DashboardPagination from "../../_component/shared/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 interface Faq {
   _id: string;
@@ -103,7 +104,11 @@ export const FaqTable = () => {
                   className="text-black/70 text-center hover:bg-muted/30"
                 >
                   <TableCell className="py-6">{faq?.question}</TableCell>
-                  <TableCell className="py-6">{faq?.answer}</TableCell>
+                  <TableCell className="py-6">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: faq?.answer || "" }}
+                    ></div>
+                  </TableCell>
                   <TableCell className="py-6">
                     {new Date(faq.date).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -113,12 +118,18 @@ export const FaqTable = () => {
                   </TableCell>
                   <TableCell className="py-6">
                     <div className="space-x-2 flex justify-center">
-                      <button>
-                        <Edit className="h-5 w-5" />
-                      </button>
-                      <button>
-                        <Trash className="h-5 w-5" />
-                      </button>
+                      <Link
+                        href={`/dashboard/faq/add-faq/edit-faq/${faq?._id}`}
+                      >
+                        <button>
+                          <Edit className="h-5 w-5" />
+                        </button>
+                      </Link>
+                      <div>
+                        <button>
+                          <Trash className="h-5 w-5" />
+                        </button>
+                      </div>
                     </div>
                   </TableCell>
                 </TableRow>
