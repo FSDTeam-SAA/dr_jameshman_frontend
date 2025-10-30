@@ -1,9 +1,10 @@
+import HeroSection from '@/components/common/hero-section'
 import React from 'react'
 
 const ReferralsPage = () => {
   return (
     <div>
-      referrals page
+     <HeroSection title="Referrals" description="Working together to create confident smiles" />
     </div>
   )
 }

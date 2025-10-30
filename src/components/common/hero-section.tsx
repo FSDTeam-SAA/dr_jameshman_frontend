@@ -16,7 +16,7 @@ const HeroSection = ({title, description}: {title: string, description: string})
       />
       <div className="absolute inset-0 bg-black/40" />
 
-      <div className="relative z-10 text-white text-center">
+      <div className="container relative z-10 text-white text-center">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-[150%] text-center">
           {title}
         </h1>

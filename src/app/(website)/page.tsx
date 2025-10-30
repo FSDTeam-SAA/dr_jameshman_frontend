@@ -7,7 +7,7 @@ import OurTreatments from './_components/our-treatments'
 
 const HomePage = () => {
   return (
-    <div>
+    <div className='min-h-screen'>
       <Hero/>
       <OurTreatments/>
       <WhyChooseOur/>
