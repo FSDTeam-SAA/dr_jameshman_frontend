@@ -59,7 +59,7 @@ const Navbar = () => {
                     <Link
                       href={item.link}
                       className={`p-2 px-4 text-base transition-all duration-500 ease-in-out ${textColor} ${
-                        isActive ? "font-medium underline" : "font-normal"
+                        isActive ? "font-semibold underline" : "font-normal"
                       }`}
                     >
                       {item.label}
