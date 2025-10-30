@@ -1,8 +1,13 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const HeroSection = ({title, description}: {title: string, description: string}) => {
+    const session = useSession();
+
+  console.log(session);
   return (
     // <div className="relative h-[400px] md:h-[500px] lg:h-[575px] flex items-center justify-center overflow-hidden">
     <div className="relative min-h-[calc(100vh)] flex items-center justify-center overflow-hidden">
