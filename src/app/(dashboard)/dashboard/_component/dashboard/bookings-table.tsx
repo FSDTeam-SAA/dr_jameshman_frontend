@@ -8,11 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, Trash } from "lucide-react";
+import { Eye } from "lucide-react";
 import DashboardPagination from "../shared/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ViewBookingModal } from "./view-booking-modal";
+import { DeleteBooking } from "./delete-booking";
 
 type Booking = {
   _id: string;
@@ -51,7 +52,9 @@ export const BookingsTable = () => {
     queryKey: ["all-bookings", currentPage],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/bookings?page=${currentPage}&limit=${10}`
+        `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/bookings?page=${currentPage}&limit=${10}`
       );
       const data = await res.json();
       return data;
@@ -138,9 +141,7 @@ export const BookingsTable = () => {
                       >
                         <Eye className="h-5 w-5" />
                       </button>
-                      <button>
-                        <Trash className="h-5 w-5" />
-                      </button>
+                      <DeleteBooking id={booking?._id} />
                     </div>
                   </TableCell>
 
