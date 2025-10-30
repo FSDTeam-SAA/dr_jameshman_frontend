@@ -13,6 +13,7 @@ import DashboardPagination from "../../_component/shared/pagination";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 interface GalleryItem {
   _id: string;
@@ -108,13 +109,13 @@ export const GalleryManagementTable = () => {
             ) : (
               galleries.map((gallery) => (
                 <TableRow
-                  key={gallery._id}
+                  key={gallery?._id}
                   className="text-black/60 text-center"
                 >
                   <TableCell className="py-6">
                     <Image
-                      src={gallery.imageUrl}
-                      alt={gallery.imageName || "gallery image"}
+                      src={gallery?.imageUrl}
+                      alt={gallery?.imageName || "gallery image"}
                       width={1000}
                       height={1000}
                       className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
@@ -122,11 +123,11 @@ export const GalleryManagementTable = () => {
                   </TableCell>
 
                   <TableCell className="py-6">
-                    {gallery.imageDescription || "No description"}
+                    {gallery?.imageDescription || "No description"}
                   </TableCell>
 
                   <TableCell className="py-6">
-                    {new Date(gallery.createdAt).toLocaleDateString("en-US", {
+                    {new Date(gallery?.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
@@ -135,9 +136,11 @@ export const GalleryManagementTable = () => {
 
                   <TableCell className="py-6">
                     <div className="flex justify-center gap-2">
-                      <button>
-                        <Edit className="h-5 w-5" />
-                      </button>
+                      <Link href={`/dashboard/gallery-management/add-gallery/edit-gallery/${gallery?._id}`}>
+                        <button>
+                          <Edit className="h-5 w-5" />
+                        </button>
+                      </Link>
                       <button>
                         <Trash className="h-5 w-5" />
                       </button>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,9 +24,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { ImageUp, X, Save } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { Spinner } from "@/components/ui/spinner";
+import { usePathname } from "next/navigation";
 
-const AddEditGallery = () => {
+interface GalleryItem {
+  imageName: string;
+  imageDescription: string;
+  imageUrl: string;
+}
+
+interface Props {
+  id?: string;
+  galleryDetails?: GalleryItem;
+}
+
+const AddEditGallery = ({ id, galleryDetails }: Props) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const pathName = usePathname();
 
   const form = useForm<AddGalleryFormType>({
     resolver: zodResolver(addGallerySchema),
@@ -37,13 +50,36 @@ const AddEditGallery = () => {
     },
   });
 
+  useEffect(() => {
+    if (
+      pathName !== "/dashboard/gallery-management/add-gallery" &&
+      galleryDetails
+    ) {
+      const imgUrl = galleryDetails?.imageUrl;
+      if (imgUrl) setImagePreview(imgUrl);
+      form.reset({
+        imageName: galleryDetails?.imageName || "",
+        imageDescription: galleryDetails?.imageDescription || "",
+        imageUrl: imgUrl,
+      });
+    }
+  }, [pathName, galleryDetails, form]);
+
   const { mutateAsync, isPending } = useMutation<any, unknown, FormData>({
     mutationKey: ["add-gallery"],
     mutationFn: async (payload: FormData) => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/galleries`, {
-        method: "POST",
-        body: payload,
+      const isAdd = pathName === "/dashboard/gallery-management/add-gallery";
+      const method = isAdd ? "POST" : "PUT";
+      const url = isAdd
+        ? `${process.env.NEXT_PUBLIC_API_URL}/galleries`
+        : `${process.env.NEXT_PUBLIC_API_URL}/galleries/${id}`;
+
+      const res = await fetch(url, {
+        method,
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
       return await res.json();
     },
   });
