@@ -50,7 +50,7 @@ export const BookingsTable = () => {
   const [contactId, setContactId] = useState("");
 
   const session = useSession();
-  const token = (session?.data?.user as { accessToken: string })?.accessToken;
+  const token = (session?.data?.user as { token: string })?.token;
 
   const { data: allBookings, isLoading } = useQuery<BookingsResponse>({
     queryKey: ["all-bookings", currentPage],

@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 interface BookingsModalProps {
   isOpen: boolean;
@@ -10,11 +11,21 @@ interface BookingsModalProps {
 }
 
 export function ViewBookingModal({ isOpen, onClose, id }: BookingsModalProps) {
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
+
   const { data: bookingDetails } = useQuery({
     queryKey: ["all-bookings", id],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/bookings/${id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/bookings/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) throw new Error("Failed to fetch bookings");
       return res.json();
@@ -30,7 +41,7 @@ export function ViewBookingModal({ isOpen, onClose, id }: BookingsModalProps) {
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between p-6 border-b border-gray-200">
-            <h1 className="text-2xl font-bold">Booking Details</h1>
+          <h1 className="text-2xl font-bold">Booking Details</h1>
           <button
             onClick={onClose}
             className="text-gray-600 hover:text-gray-900 transition-colors"

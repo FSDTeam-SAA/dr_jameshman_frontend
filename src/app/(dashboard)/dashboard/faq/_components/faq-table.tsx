@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { DeleteFaq } from "./delete-faq";
+import { useSession } from "next-auth/react";
 
 interface Faq {
   _id: string;
@@ -41,12 +42,21 @@ interface FaqResponse {
 
 export const FaqTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const { data: allFaq, isLoading } = useQuery<FaqResponse>({
     queryKey: ["all-faq", currentPage],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/faqs?page=${currentPage}&limit=10`
+        `${process.env.NEXT_PUBLIC_API_URL}/faqs?page=${currentPage}&limit=10`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) throw new Error("Failed to fetch FAQs");
       return res.json();

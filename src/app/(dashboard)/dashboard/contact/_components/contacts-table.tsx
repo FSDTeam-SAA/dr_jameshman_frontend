@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DeleteContact } from "./delete-contact";
 import { ViewContactModal } from "./view-contact-modal";
+import { useSession } from "next-auth/react";
 
 type Contact = {
   _id: string;
@@ -46,11 +47,21 @@ export const ContactsTable = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [contactId, setContactId] = useState("");
 
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
+
   const { data: allContacts, isLoading } = useQuery<ContactsResponse>({
     queryKey: ["all-contacts", currentPage],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts?page=${currentPage}&limit=10`
+        `${process.env.NEXT_PUBLIC_API_URL}/contacts?page=${currentPage}&limit=10`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) throw new Error("Failed to fetch contacts");
       return res.json();

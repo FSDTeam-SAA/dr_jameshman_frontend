@@ -21,6 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type formType = z.input<typeof addPriceListSchema>;
 
@@ -39,6 +40,8 @@ interface Props {
 const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
   const queryClient = useQueryClient();
   const pathName = usePathname();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const form = useForm<formType>({
     resolver: zodResolver(addPriceListSchema),
@@ -73,7 +76,10 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
 
       const res = await fetch(url, {
         method,
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(data),
       });
 
