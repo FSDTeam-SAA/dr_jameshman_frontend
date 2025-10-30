@@ -29,17 +29,23 @@ const Navbar = () => {
       ? "/assets/images/logo.png"
       : "/assets/images/black-logo.png";
 
-  // ✅ Dropdown items
+  // Dropdown items
   const pricingItems = [
     { label: "Fees", link: "/pricing" },
-    { label: "Offers & Payment Plans", link: "/pricing/offers-and-payment-plans" },
+    {
+      label: "Offers & Payment Plans",
+      link: "/pricing/offers-and-payment-plans",
+    },
   ];
 
-  const aboutItems = [
-    { label: "Our Team", link: "/about-us/team" },
-    { label: "Our Story", link: "/about-us/story" },
-    { label: "Testimonials", link: "/about-us/testimonials" },
-  ];
+const aboutItems = [
+  { label: "Why Us", link: "/about-us#why-us" },
+  { label: "Meet The Team", link: "/about-us#meet-the-team" },
+];
+
+  // ✅ Adjust padding dynamically
+  const containerPadding =
+    pathname === "/" && isAtTop ? "py-2" : "py-0";
 
   return (
     <div
@@ -47,7 +53,7 @@ const Navbar = () => {
         pathname === "/" && isAtTop ? "bg-transparent" : "bg-white shadow-md"
       }`}
     >
-      <div className="container py-2">
+      <div className={`container transition-all duration-500 ${containerPadding}`}>
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href={"/"}>
@@ -118,7 +124,7 @@ const Navbar = () => {
                             <DropdownMenuItem key={idx} asChild>
                               <Link
                                 href={aboutItem.link}
-                                className="block w-full px-3 py-2 text-sm hover:bg-gray-100 rounded-md"
+                                className="block w-full px-3 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"
                               >
                                 {aboutItem.label}
                               </Link>

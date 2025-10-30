@@ -22,11 +22,10 @@ const MobileNavbar = () => {
     { label: "Offers & Payment Plans", link: "/pricing/offers-and-payment-plans" },
   ];
 
-  const aboutItems = [
-    { label: "Our Team", link: "/about-us/team" },
-    { label: "Our Story", link: "/about-us/story" },
-    { label: "Testimonials", link: "/about-us/testimonials" },
-  ];
+const aboutItems = [
+  { label: "Why Us", link: "/about-us#why-us" },
+  { label: "Meet The Team", link: "/about-us#meet-the-team" },
+];
 
   return (
     <div className="md:hidden">
@@ -140,7 +139,7 @@ const MobileNavbar = () => {
                       <Link
                         href={item.link}
                         onClick={closeSheet}
-                        className={`block p-3 rounded-lg font-medium transition-all duration-300 text-center ${
+                        className={`block p-3 rounded-lg font-medium transition-all duration-300 text-left ${
                           isActive
                             ? "bg-[#e7e7e7] text-primary"
                             : "hover:bg-[#f5f5f5]"

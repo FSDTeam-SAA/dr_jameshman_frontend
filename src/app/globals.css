@@ -6,6 +6,10 @@ body{
   @apply bg-[#F9FAFB]
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
