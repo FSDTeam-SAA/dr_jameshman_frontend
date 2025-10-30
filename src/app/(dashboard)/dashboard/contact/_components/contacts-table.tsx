@@ -15,6 +15,7 @@ import DashboardPagination from "../../_component/shared/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DeleteContact } from "./delete-contact";
+import { ViewContactModal } from "./view-contact-modal";
 
 type Contact = {
   _id: string;
@@ -33,7 +34,7 @@ type Pagination = {
   itemsPerPage: number;
 };
 
-type ContactsResponse = {
+export type ContactsResponse = {
   status: boolean;
   message: string;
   data: Contact[];
@@ -42,6 +43,8 @@ type ContactsResponse = {
 
 export const ContactsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [contactId, setContactId] = useState("");
 
   const { data: allContacts, isLoading } = useQuery<ContactsResponse>({
     queryKey: ["all-contacts", currentPage],
@@ -114,24 +117,37 @@ export const ContactsTable = () => {
             ))
           ) : contacts.length > 0 ? (
             contacts.map((contact) => (
-              <TableRow key={contact._id} className="text-black/60 text-center">
-                <TableCell className="py-6">{contact.name}</TableCell>
-                <TableCell className="py-6">{contact.email}</TableCell>
-                <TableCell className="py-6">{contact.phone}</TableCell>
+              <TableRow
+                key={contact?._id}
+                className="text-black/60 text-center"
+              >
+                <TableCell className="py-6">{contact?.name}</TableCell>
+                <TableCell className="py-6">{contact?.email}</TableCell>
+                <TableCell className="py-6">{contact?.phone}</TableCell>
                 <TableCell className="py-6">
-                  {new Date(contact.updatedAt).toLocaleDateString()}
+                  {new Date(contact?.updatedAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell className="py-6 lg:max-w-lg">
-                  {contact.message}
+                  {contact?.message}
                 </TableCell>
                 <TableCell className="py-6">
                   <div className="flex justify-center space-x-2">
-                    <button>
+                    <button onClick={() => {setContactId(contact?._id); setIsOpen(true)}}>
                       <Eye className="h-5 w-5" />
                     </button>
                     <DeleteContact id={contact?._id} />
                   </div>
                 </TableCell>
+
+                <div>
+                  {isOpen && (
+                    <ViewContactModal
+                      isOpen={isOpen}
+                      onClose={() => setIsOpen(false)}
+                      id={contactId}
+                    />
+                  )}
+                </div>
               </TableRow>
             ))
           ) : (
