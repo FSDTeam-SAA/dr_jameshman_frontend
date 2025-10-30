@@ -1,7 +1,7 @@
 
 import React, { Suspense } from "react";
 import AuthLayoutDesign from "../_components/authLayout";
-import LoginForm from "./components/loginForm";
+import LoginForm from "./components/ForgotPasswordForm";
 
 
 const LoginPage = () => {
