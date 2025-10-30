@@ -6,7 +6,6 @@ import React from "react";
 
 const HeroSection = ({title, description}: {title: string, description: string}) => {
     const session = useSession();
-
   console.log(session);
   return (
     // <div className="relative h-[400px] md:h-[500px] lg:h-[575px] flex items-center justify-center overflow-hidden">

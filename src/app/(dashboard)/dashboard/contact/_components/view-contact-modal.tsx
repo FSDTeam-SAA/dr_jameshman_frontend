@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -10,11 +11,21 @@ interface ContactModalProps {
 }
 
 export function ViewContactModal({ isOpen, onClose, id }: ContactModalProps) {
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
+
   const { data: contactDetails } = useQuery({
     queryKey: ["all-contacts", id],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) throw new Error("Failed to fetch contacts");
       return res.json();

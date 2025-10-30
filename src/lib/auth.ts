@@ -44,8 +44,8 @@ export const authOptions: NextAuthOptions = {
           }
           const { user, token } = response;
           return {
-            id: user._id,
-            name: user.name,
+            id: user.id,
+            name: user.firstName,
             email: user.email,
             phoneNumber: user.phoneNumber,
             role: user.role,
@@ -74,7 +74,7 @@ export const authOptions: NextAuthOptions = {
         token.phoneNumber = user.phoneNumber;
         token.role = user.role;
         token.profileImage = user.profileImage;
-        token.accessToken = user.accessToken;
+        token.token = user.token;
       }
       return token;
     },
@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
         phoneNumber: token.phoneNumber,
         role: token.role,
         profileImage: token.profileImage,
-        accessToken: token.accessToken,
+        token: token.token,
       };
       return session;
     },

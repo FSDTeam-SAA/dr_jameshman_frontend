@@ -25,6 +25,7 @@ import { ImageUp, X, Save } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { Spinner } from "@/components/ui/spinner";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface GalleryItem {
   imageName: string;
@@ -40,6 +41,8 @@ interface Props {
 const AddEditGallery = ({ id, galleryDetails }: Props) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const pathName = usePathname();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const form = useForm<AddGalleryFormType>({
     resolver: zodResolver(addGallerySchema),
@@ -76,7 +79,10 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
 
       const res = await fetch(url, {
         method,
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 

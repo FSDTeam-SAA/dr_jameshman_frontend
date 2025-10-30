@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { DeleteGallery } from "./delete-gallery";
+import { useSession } from "next-auth/react";
 
 interface GalleryItem {
   _id: string;
@@ -40,12 +41,21 @@ interface GalleryResponse {
 
 export const GalleryManagementTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const { data, isLoading } = useQuery<GalleryResponse>({
     queryKey: ["all-gallery", currentPage],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/galleries?page=${currentPage}&limit=10`
+        `${process.env.NEXT_PUBLIC_API_URL}/galleries?page=${currentPage}&limit=10`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) throw new Error("Failed to fetch galleries");
       return res.json();
