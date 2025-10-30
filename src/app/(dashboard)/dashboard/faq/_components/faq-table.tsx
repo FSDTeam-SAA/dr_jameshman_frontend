@@ -9,11 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, Trash } from "lucide-react";
+import { Edit } from "lucide-react";
 import DashboardPagination from "../../_component/shared/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { DeleteFaq } from "./delete-faq";
 
 interface Faq {
   _id: string;
@@ -126,9 +127,7 @@ export const FaqTable = () => {
                         </button>
                       </Link>
                       <div>
-                        <button>
-                          <Trash className="h-5 w-5" />
-                        </button>
+                        <DeleteFaq id={faq?._id} />
                       </div>
                     </div>
                   </TableCell>
