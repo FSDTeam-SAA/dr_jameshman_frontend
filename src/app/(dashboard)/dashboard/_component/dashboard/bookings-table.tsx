@@ -10,9 +10,21 @@ import {
 } from "@/components/ui/table";
 import { Eye, Trash } from "lucide-react";
 import DashboardPagination from "../shared/pagination";
+import { useQuery } from "@tanstack/react-query";
 
 export const BookingsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { data: allBookings } = useQuery({
+    queryKey: ["all-bookings"],
+    queryFn: async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  console.log("allBookings: ", allBookings);
 
   return (
     <div>
