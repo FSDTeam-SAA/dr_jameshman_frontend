@@ -14,6 +14,7 @@ import DashboardPagination from "../../_component/shared/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DeletePriceList } from "./delete-price-list";
+import Link from "next/link";
 
 type PriceItem = {
   _id: string;
@@ -118,11 +119,18 @@ export const PriceTable = () => {
                   </TableCell>
                   <TableCell className="py-6">${priceList?.rate}</TableCell>
                   <TableCell className="py-6">
-                    <div className="flex justify-center gap-2">
-                      <button className="hover:text-primary transition-colors">
-                        <Edit className="h-5 w-5" />
-                      </button>
-                      <DeletePriceList id={priceList?._id} />
+                    <div className="flex items-center justify-center gap-2">
+                      <Link
+                        href={`/dashboard/price-list/add-price-list/edit-price-list/${priceList?._id}`}
+                      >
+                        <button className="hover:text-primary transition-colors">
+                          <Edit className="h-5 w-5" />
+                        </button>
+                      </Link>
+
+                      <div>
+                        <DeletePriceList id={priceList?._id} />
+                      </div>
                     </div>
                   </TableCell>
                 </TableRow>
