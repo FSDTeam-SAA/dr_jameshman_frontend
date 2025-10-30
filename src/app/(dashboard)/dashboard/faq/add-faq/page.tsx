@@ -1,6 +1,7 @@
-import React from "react";
-import { AppTopBar } from "../_component/shared/app-topbar";
-import { ContactsTable } from "./_components/contacts-table";
+export const dynamic = "force-dynamic";
+
+import { AppTopBar } from "../../_component/shared/app-topbar";
+import AddEditFaq from "./_components/add-edit-faq";
 
 const page = () => {
   return (
@@ -10,7 +11,7 @@ const page = () => {
       </div>
 
       <div>
-        <ContactsTable />
+        <AddEditFaq />
       </div>
     </div>
   );

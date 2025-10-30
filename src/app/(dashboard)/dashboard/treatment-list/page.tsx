@@ -1,6 +1,6 @@
 import React from "react";
 import { AppTopBar } from "../_component/shared/app-topbar";
-import { ContactsTable } from "./_components/contacts-table";
+import { TreatmentsTable } from "./_components/tretments-table";
 
 const page = () => {
   return (
@@ -10,7 +10,7 @@ const page = () => {
       </div>
 
       <div>
-        <ContactsTable />
+        <TreatmentsTable />
       </div>
     </div>
   );
