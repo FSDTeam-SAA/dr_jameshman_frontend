@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
+"use client";
 import { Spinner } from "@/components/ui/spinner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash } from "lucide-react";
+import { useSession } from "next-auth/react";
 import React from "react";
 import { toast } from "sonner";
 
 export const DeleteContact = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const { mutateAsync, isPending } = useMutation<any, Error, string>({
     mutationKey: ["delete-contact"],
@@ -16,6 +19,10 @@ export const DeleteContact = ({ id }: { id: string }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`,
         {
           method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const data = await res.json();

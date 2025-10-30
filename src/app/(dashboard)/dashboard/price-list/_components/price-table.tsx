@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DeletePriceList } from "./delete-price-list";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 type PriceItem = {
   _id: string;
@@ -35,12 +36,21 @@ type PriceResponse = {
 
 export const PriceTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const { data: allPriceList, isLoading } = useQuery<PriceResponse>({
     queryKey: ["all-price-list", currentPage],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees?page=${currentPage}&limit=10`
+        `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees?page=${currentPage}&limit=10`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) throw new Error("Failed to fetch price list");
       return res.json();

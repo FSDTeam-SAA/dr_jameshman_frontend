@@ -3,11 +3,14 @@ import { AppTopBar } from "@/app/(dashboard)/dashboard/_component/shared/app-top
 import AddEditPriceListForm from "../../_components/add-edit-price-list-form";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 export const dynamic = "force-dynamic";
 
 const Page = () => {
   const { id } = useParams();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
   const { data: priceListDetails = {} } = useQuery({
     queryKey: ["all-price-list"],
@@ -18,6 +21,7 @@ const Page = () => {
           method: "GET",
           headers: {
             "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
