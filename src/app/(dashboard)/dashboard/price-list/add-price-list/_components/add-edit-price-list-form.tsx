@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { addPriceListSchema } from "@/schema/addPriceListSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { RichTextEditor } from "../../../_component/shared/rich-text-editor";
@@ -20,11 +20,25 @@ import { Save } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
+import { usePathname } from "next/navigation";
 
 type formType = z.input<typeof addPriceListSchema>;
 
-const AddEditPriceListForm = () => {
+type PriceItem = {
+  _id: string;
+  serviceName: string;
+  description: string;
+  rate: number;
+};
+
+interface Props {
+  priceListDetails?: PriceItem;
+  id?: string;
+}
+
+const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
   const queryClient = useQueryClient();
+  const pathName = usePathname();
 
   const form = useForm<formType>({
     resolver: zodResolver(addPriceListSchema),
@@ -35,19 +49,37 @@ const AddEditPriceListForm = () => {
     },
   });
 
+  useEffect(() => {
+    if (
+      pathName !== "/dashboard/price-list/add-price-list" &&
+      priceListDetails
+    ) {
+      form.reset({
+        serviceName: priceListDetails?.serviceName || "",
+        description: priceListDetails?.description || "",
+        rate: priceListDetails?.rate?.toString() || "",
+      });
+    }
+  }, [pathName, priceListDetails, form]);
+
   const { mutateAsync, isPending } = useMutation<any, any, formType>({
     mutationKey: ["add-price-list"],
     mutationFn: async (data) => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees`,
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
-      return await res.json();
+      const isAdd = pathName === "/dashboard/price-list/add-price-list";
+      const method = isAdd ? "POST" : "PUT";
+      const url = isAdd
+        ? `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees`
+        : `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees/${id}`;
+
+      const res = await fetch(url, {
+        method,
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      return res.json();
     },
+
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["all-price-list"] });
       toast.success(data.message);
@@ -59,7 +91,6 @@ const AddEditPriceListForm = () => {
   });
 
   const onSubmit = async (value: formType) => {
-    console.log("value: ", value);
     try {
       await mutateAsync(value);
     } catch (error) {
