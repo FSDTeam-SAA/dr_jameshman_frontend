@@ -2,6 +2,7 @@ import HeroSection from "@/components/common/hero-section";
 import React from "react";
 import GetInTouch from "../_components/get-in-touch";
 import ContactInformatioin from "../_components/contact-information";
+import FaqContainer from "../about-us/_components/faq";
 
 const ContactPage = () => {
   return (
@@ -13,6 +14,7 @@ const ContactPage = () => {
       />
       <GetInTouch />
       <ContactInformatioin />
+      <FaqContainer />
     </div>
   );
 };
