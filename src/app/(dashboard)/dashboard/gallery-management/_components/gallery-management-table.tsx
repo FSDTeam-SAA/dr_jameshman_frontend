@@ -8,12 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, Trash } from "lucide-react";
+import { Edit } from "lucide-react";
 import DashboardPagination from "../../_component/shared/pagination";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { DeleteGallery } from "./delete-gallery";
 
 interface GalleryItem {
   _id: string;
@@ -136,14 +137,16 @@ export const GalleryManagementTable = () => {
 
                   <TableCell className="py-6">
                     <div className="flex justify-center gap-2">
-                      <Link href={`/dashboard/gallery-management/add-gallery/edit-gallery/${gallery?._id}`}>
+                      <Link
+                        href={`/dashboard/gallery-management/add-gallery/edit-gallery/${gallery?._id}`}
+                      >
                         <button>
                           <Edit className="h-5 w-5" />
                         </button>
                       </Link>
-                      <button>
-                        <Trash className="h-5 w-5" />
-                      </button>
+                      <div>
+                        <DeleteGallery id={gallery?._id} />
+                      </div>
                     </div>
                   </TableCell>
                 </TableRow>
