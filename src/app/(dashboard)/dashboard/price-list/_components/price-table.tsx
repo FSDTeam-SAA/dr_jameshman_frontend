@@ -110,7 +110,11 @@ export const PriceTable = () => {
                     {priceList?.serviceName}
                   </TableCell>
                   <TableCell className="py-6">
-                    {priceList?.description}
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: priceList?.description || "",
+                      }}
+                    />
                   </TableCell>
                   <TableCell className="py-6">${priceList?.rate}</TableCell>
                   <TableCell className="py-6">
