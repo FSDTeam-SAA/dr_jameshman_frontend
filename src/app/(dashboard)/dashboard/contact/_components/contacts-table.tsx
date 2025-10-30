@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -11,8 +12,10 @@ import {
 } from "@/components/ui/table";
 import { Eye, Trash } from "lucide-react";
 import DashboardPagination from "../../_component/shared/pagination";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 type Contact = {
   _id: string;
@@ -40,6 +43,7 @@ type ContactsResponse = {
 
 export const ContactsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const queryClient = useQueryClient();
 
   const { data: allContacts, isLoading } = useQuery<ContactsResponse>({
     queryKey: ["all-contacts", currentPage],
@@ -52,11 +56,39 @@ export const ContactsTable = () => {
     },
   });
 
+  const { mutateAsync, isPending } = useMutation<any, Error, string>({
+    mutationKey: ["delete-booking"],
+    mutationFn: async (id: string) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const data = await res.json();
+      return data;
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      queryClient.invalidateQueries({ queryKey: ["all-contacts"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   const contacts = allContacts?.data || [];
   const pagination = allContacts?.pagination;
 
-  // Render skeleton rows styled like real table rows
-  const skeletonRows = Array.from({ length: 5 });
+  const skeletonRows = Array.from({ length: 10 });
+
+  const handleDelete = async (id: string) => {
+    try {
+      await mutateAsync(id);
+    } catch (error) {
+      console.log(`error from contact delete : ${error}`);
+    }
+  };
 
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 pb-5">
@@ -128,8 +160,8 @@ export const ContactsTable = () => {
                     <button>
                       <Eye className="h-5 w-5" />
                     </button>
-                    <button>
-                      <Trash className="h-5 w-5" />
+                    <button onClick={() => handleDelete(contact?._id)}>
+                      {isPending ? <Spinner /> : <Trash className="h-5 w-5" />}
                     </button>
                   </div>
                 </TableCell>
