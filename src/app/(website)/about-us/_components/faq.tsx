@@ -88,10 +88,8 @@ const FaqContainer = () => {
                     </span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="px-[15px] py-3">
-                  <div className="text-[#424242] text-base font-normal leading-[150%]">
-                    {faq?.answer}
-                  </div>
+                <AccordionContent className="px-[15px] py-3 bg-white">
+                  <div dangerouslySetInnerHTML={{ __html: faq?.answer }} className="text-[#343A40] text-base font-normal leading-[150%]"/>
                 </AccordionContent>
               </AccordionItem>
             ))}
