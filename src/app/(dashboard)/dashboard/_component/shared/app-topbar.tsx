@@ -4,6 +4,7 @@ import PathTracker from "./path-tracker";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export const AppTopBar = () => {
   const pathName = usePathname();
@@ -13,15 +14,19 @@ export const AppTopBar = () => {
       <PathTracker />
 
       {pathName === "/dashboard/treatment-list" && (
-        <Button className="h-[40px]">
-          <Plus /> Add Service
-        </Button>
+        <Link href={`/dashboard/treatment-list/add-treatment`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Service
+          </Button>
+        </Link>
       )}
 
       {pathName === "/dashboard/price-list" && (
-        <Button className="h-[40px]">
-          <Plus /> Add Price List
-        </Button>
+        <Link href={`/dashboard/price-list/add-price-list`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Price List
+          </Button>
+        </Link>
       )}
 
       {pathName === "/dashboard/gallery-management" && (
@@ -31,9 +36,11 @@ export const AppTopBar = () => {
       )}
 
       {pathName === "/dashboard/faq" && (
-        <Button className="h-[40px]">
-          <Plus /> Add FAQ
-        </Button>
+        <Link href={`/dashboard/faq/add-faq`}>
+          <Button className="h-[40px]">
+            <Plus /> Add FAQ
+          </Button>
+        </Link>
       )}
     </div>
   );
