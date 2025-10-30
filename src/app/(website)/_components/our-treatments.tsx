@@ -1,12 +1,12 @@
 "use client";
 import { TreatmentResponse } from "@/components/types/treatments-data-type";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import React from "react";
 import OurTreatmentSkeleton from "./our-treatment-skeleton";
 import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import TreatmentCart from "@/components/common/treatment-cart";
 
 const OurTreatments = () => {
   const { data, isLoading, isError, error } = useQuery<TreatmentResponse>({
@@ -24,6 +24,7 @@ const OurTreatments = () => {
     return (
       <ErrorContainer message={error?.message || "Something went wrong"} />
     );
+
   return (
     <div className="py-10 md:py-14 lg:py-20">
       <div className="container">
@@ -51,19 +52,7 @@ const OurTreatments = () => {
             console.log(item);
             return (
               <div key={item._id}>
-                <Image
-                  src={"/assets/images/no-image.jpg"}
-                  // src={
-                  //   item?.treatments[0]?.image || "/assets/images/no-image.jpg"
-                  // }
-                  alt={item?.treatments[0]?.serviceName || ""}
-                  width={1000}
-                  height={1000}
-                  className="w-full h-[431px] rounded-[8px] object-cover"
-                />
-                <h3 className="text-base md:text-lg font-medium leading-[120%] text-[#2F2F2F] text-center bg-white rounded-b-[8px] py-2 md:py-3">
-                  {item?.treatments[0]?.serviceName}
-                </h3>
+                <TreatmentCart item={item} />
               </div>
             );
           })}
