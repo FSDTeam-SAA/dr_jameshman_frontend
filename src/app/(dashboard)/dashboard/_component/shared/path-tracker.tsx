@@ -15,49 +15,63 @@ import { Fragment } from "react";
 const capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, " ");
 
+const isDynamicSegment = (segment: string) =>
+  /^[0-9a-fA-F]{24}$/.test(segment) || segment.match(/^[0-9a-fA-F-]{8,}$/);
+
+const routeNameMap: Record<string, string> = {
+  "add-price-list": "Add Price List",
+  "edit-price-list": "Edit Price List",
+  "price-list": "Price List",
+  dashboard: "Dashboard",
+};
+
 const PathTracker = () => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
+
+  const visibleSegments = segments.filter((s) => !isDynamicSegment(s));
 
   return (
     <div className="text-xl">
       <div className="mb-4">
         <h1 className="font-semibold">
-          {segments.length ? capitalize(segments[segments.length - 1]) : "Home"}
+          {visibleSegments.length
+            ? routeNameMap[visibleSegments[visibleSegments.length - 1]] ??
+              capitalize(visibleSegments[visibleSegments.length - 1])
+            : "Home"}
         </h1>
       </div>
 
-      <div>
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/">Home</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
 
-            {segments.map((segment, index) => {
-              const href = "/" + segments.slice(0, index + 1).join("/");
-              const isLast = index === segments.length - 1;
+          {visibleSegments.map((segment, index) => {
+            const href = "/" + visibleSegments.slice(0, index + 1).join("/");
+            const isLast = index === visibleSegments.length - 1;
+            const label = routeNameMap[segment] ?? capitalize(segment);
 
-              return (
-                <Fragment key={index}>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    {isLast ? (
-                      <BreadcrumbPage>{capitalize(segment)}</BreadcrumbPage>
-                    ) : (
-                      <BreadcrumbLink asChild>
-                        <Link href={href}>{capitalize(segment)}</Link>
-                      </BreadcrumbLink>
-                    )}
-                  </BreadcrumbItem>
-                </Fragment>
-              );
-            })}
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
+            return (
+              <Fragment key={index}>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  {isLast ? (
+                    <BreadcrumbPage>{label}</BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink asChild>
+                      <Link href={href}>{label}</Link>
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+              </Fragment>
+            );
+          })}
+        </BreadcrumbList>
+      </Breadcrumb>
     </div>
   );
 };

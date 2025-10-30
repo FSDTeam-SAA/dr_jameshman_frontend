@@ -6,14 +6,14 @@ import { Trash } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
-export const DeleteContact = ({ id }: { id: string }) => {
+export const DeleteBooking = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation<any, Error, string>({
-    mutationKey: ["delete-contact"],
+    mutationKey: ["delete-booking"],
     mutationFn: async (id: string) => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/bookings/${id}`,
         {
           method: "DELETE",
         }
@@ -23,7 +23,7 @@ export const DeleteContact = ({ id }: { id: string }) => {
     },
     onSuccess: (data) => {
       toast.success(data?.message);
-      queryClient.invalidateQueries({ queryKey: ["all-contacts"] });
+      queryClient.invalidateQueries({ queryKey: ["all-bookings"] });
     },
     onError: (error) => {
       toast.error(error.message);
@@ -34,7 +34,7 @@ export const DeleteContact = ({ id }: { id: string }) => {
     try {
       await mutateAsync(id);
     } catch (error) {
-      console.log(`error from contact delete : ${error}`);
+      console.log(`error from bookings delete : ${error}`);
     }
   };
 

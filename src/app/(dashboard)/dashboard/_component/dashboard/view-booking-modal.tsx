@@ -3,26 +3,26 @@
 import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 
-interface ContactModalProps {
+interface BookingsModalProps {
   isOpen: boolean;
   onClose: () => void;
   id: string;
 }
 
-export function ViewContactModal({ isOpen, onClose, id }: ContactModalProps) {
-  const { data: contactDetails } = useQuery({
-    queryKey: ["all-contacts", id],
+export function ViewBookingModal({ isOpen, onClose, id }: BookingsModalProps) {
+  const { data: bookingDetails } = useQuery({
+    queryKey: ["all-bookings", id],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/bookings/${id}`
       );
-      if (!res.ok) throw new Error("Failed to fetch contacts");
+      if (!res.ok) throw new Error("Failed to fetch bookings");
       return res.json();
     },
     enabled: !!id && isOpen,
   });
 
-  const contact = contactDetails?.contact;
+  const booking = bookingDetails?.data;
 
   if (!isOpen) return null;
 
@@ -30,7 +30,7 @@ export function ViewContactModal({ isOpen, onClose, id }: ContactModalProps) {
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between p-6 border-b border-gray-200">
-          <h1 className="text-2xl font-bold">Contact Details</h1>
+            <h1 className="text-2xl font-bold">Booking Details</h1>
           <button
             onClick={onClose}
             className="text-gray-600 hover:text-gray-900 transition-colors"
@@ -43,27 +43,27 @@ export function ViewContactModal({ isOpen, onClose, id }: ContactModalProps) {
         <div className="p-6 space-y-4 text-start">
           <div>
             <p className="text-gray-700">
-              <span className="font-semibold">Name:</span> {contact?.name}
+              <span className="font-semibold">Name:</span> {booking?.name}
             </p>
           </div>
 
           <div>
             <p className="text-gray-700">
               <span className="font-semibold">Email Address:</span>{" "}
-              {contact?.email}
+              {booking?.email}
             </p>
           </div>
 
           <div>
             <p className="text-gray-700">
               <span className="font-semibold">Phone Number:</span>{" "}
-              {contact?.phone}
+              {booking?.phone}
             </p>
           </div>
 
           <div>
             <p className="font-semibold text-gray-900 mb-2">Message:</p>
-            <p className="text-gray-700 leading-relaxed">{contact?.message}</p>
+            <p className="text-gray-700 leading-relaxed">{booking?.message}</p>
           </div>
         </div>
       </div>

@@ -8,23 +8,61 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, Trash } from "lucide-react";
+import { Eye } from "lucide-react";
 import DashboardPagination from "../shared/pagination";
 import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ViewBookingModal } from "./view-booking-modal";
+import { DeleteBooking } from "./delete-booking";
+
+type Booking = {
+  _id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  subject: string;
+  preferredDate: string;
+  preferredTime: string;
+  message: string;
+  consent: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Pagination = {
+  currentPage: number;
+  totalPages: number;
+  totalBookings: number;
+  itemsPerPage: number;
+};
+
+type BookingsResponse = {
+  status: boolean;
+  message: string;
+  data: Booking[];
+  pagination: Pagination;
+};
 
 export const BookingsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [contactId, setContactId] = useState("");
 
-  const { data: allBookings } = useQuery({
-    queryKey: ["all-bookings"],
+  const { data: allBookings, isLoading } = useQuery<BookingsResponse>({
+    queryKey: ["all-bookings", currentPage],
     queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`);
+      const res = await fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/bookings?page=${currentPage}&limit=${10}`
+      );
       const data = await res.json();
       return data;
     },
   });
 
-  console.log("allBookings: ", allBookings);
+  const bookings = allBookings?.data || [];
+  const pagination = allBookings?.pagination;
 
   return (
     <div>
@@ -58,69 +96,97 @@ export const BookingsTable = () => {
           </TableHeader>
 
           <TableBody>
-            <TableRow className="text-black/60 text-center">
-              <TableCell className="py-6">Dr. Fleming</TableCell>
-              <TableCell className="py-6">Braces</TableCell>
-              <TableCell className="py-6">hello@example.com</TableCell>
-              <TableCell className="py-6">+1234567890</TableCell>
-              <TableCell className="py-6">Oct 18, 2025</TableCell>
-              <TableCell className="py-6">10:00 am</TableCell>
-              <TableCell className="py-6">
-                Lorem Ipsum is simply dummy text of the pri
-              </TableCell>
-              <TableCell className="py-6">
-                <div className="space-x-2">
-                  <button>
-                    <Eye className="h-5 w-5" />
-                  </button>
+            {isLoading ? (
+              Array.from({ length: 10 }).map((_, i) => (
+                <TableRow key={i}>
+                  {Array.from({ length: 8 }).map((_, j) => (
+                    <TableCell key={j} className="py-6 text-center">
+                      <Skeleton className="h-5 w-24 mx-auto" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : bookings.length > 0 ? (
+              bookings.map((booking) => (
+                <TableRow
+                  key={booking?._id}
+                  className="text-black/60 text-center"
+                >
+                  <TableCell className="py-6">{booking?.name}</TableCell>
+                  <TableCell className="py-6">{booking?.subject}</TableCell>
+                  <TableCell className="py-6">{booking?.email}</TableCell>
+                  <TableCell className="py-6">{booking?.phoneNumber}</TableCell>
+                  <TableCell className="py-6">
+                    {new Date(booking?.preferredDate).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className="py-6">
+                    {/* preferredTime is already "15:30" — format it nicely */}
+                    {booking?.preferredTime
+                      ? new Date(
+                          `1970-01-01T${booking.preferredTime}`
+                        ).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })
+                      : "—"}
+                  </TableCell>
+                  <TableCell className="py-6">{booking?.message}</TableCell>
+                  <TableCell className="py-6">
+                    <div className="space-x-2 flex justify-center">
+                      <button
+                        onClick={() => {
+                          setContactId(booking?._id);
+                          setIsOpen(true);
+                        }}
+                      >
+                        <Eye className="h-5 w-5" />
+                      </button>
+                      <DeleteBooking id={booking?._id} />
+                    </div>
+                  </TableCell>
 
-                  <button>
-                    <Trash className="h-5 w-5"></Trash>
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
-
-            <TableRow className="text-black/60 text-center">
-              <TableCell className="py-6">Dr. Fleming</TableCell>
-              <TableCell className="py-6">Braces</TableCell>
-              <TableCell className="py-6">hello@example.com</TableCell>
-              <TableCell className="py-6">+1234567890</TableCell>
-              <TableCell className="py-6">Oct 18, 2025</TableCell>
-              <TableCell className="py-6">10:00 am</TableCell>
-              <TableCell className="py-6">
-                Lorem Ipsum is simply dummy text of the pri
-              </TableCell>
-              <TableCell className="py-6">
-                <div className="space-x-2">
-                  <button>
-                    <Eye className="h-5 w-5" />
-                  </button>
-
-                  <button>
-                    <Trash className="h-5 w-5"></Trash>
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
+                  <div>
+                    {isOpen && (
+                      <ViewBookingModal
+                        isOpen={isOpen}
+                        onClose={() => setIsOpen(false)}
+                        id={contactId}
+                      />
+                    )}
+                  </div>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={8}
+                  className="py-10 text-center text-black/60"
+                >
+                  No bookings found.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
 
-        <div className="px-5 pt-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm md:text-base text-black/60">
-              Showing page {currentPage} to {5} of {10} results
-            </p>
+        {pagination && (
+          <div className="px-5 pt-5">
+            <div className="flex items-center justify-between">
+              <p className="text-sm md:text-base text-black/60">
+                Showing {bookings.length > 0 ? 1 : 0}–{bookings.length} of{" "}
+                {pagination.totalBookings} results
+              </p>
 
-            <div>
-              <DashboardPagination
-                totalPages={5}
-                currentPage={currentPage}
-                onPageChange={(page) => setCurrentPage(page)}
-              />
+              <div>
+                <DashboardPagination
+                  totalPages={pagination.totalPages}
+                  currentPage={currentPage}
+                  onPageChange={(page) => setCurrentPage(page)}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
