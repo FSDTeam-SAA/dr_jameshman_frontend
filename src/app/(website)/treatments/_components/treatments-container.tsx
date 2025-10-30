@@ -24,6 +24,7 @@ const TreatmentsContainer = () => {
     return (
       <ErrorContainer message={error?.message || "Something went wrong"} />
     );
+    
   return (
     <div className='py-8 md:py-12 lg:py-12'>
       <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 pt-8 md:pt-10 lg:pt-12">
