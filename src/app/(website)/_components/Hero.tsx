@@ -18,20 +18,23 @@ const Hero = () => {
 
       <div className="relative z-10 text-white text-center">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-[150%] text-center">
-          Transforming Smiles <br className="block md:hidden"/> With <span className="text-primary">Specialist <br className="hidden md:block"/> Orthodontic Care</span>
+          Transforming Smiles <br className="block md:hidden" /> With{" "}
+          <span className="text-primary">
+            Specialist <br className="hidden md:block" /> Orthodontic Care
+          </span>
         </h1>
 
         <div className="pt-5 md:pt-7 lg:pt-9 flex flex-col md:flex-row justify-center items-center gap-[13px]">
-            <Link href="/booking">
-          <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[46px] rounded-[6px]">
-            Book Free Consult
-          </Button>
-        </Link>
-            <Link href="/">
-          <Button className="h-[46px] flex items-center gap-2 bg-transparent text-sm font-medium leading-[150%] text-white py-[14px] px-[22px] rounded-[6px] border-[1.5px] border-white">
-            Explore Services <ArrowRight className="w-5 h-5 text-white" />
-          </Button>
-        </Link>
+          <Link href="/booking">
+            <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[46px] rounded-[6px]">
+              Book Free Consult
+            </Button>
+          </Link>
+          <Link href="/treatments">
+            <Button className="h-[46px] flex items-center gap-2 bg-transparent text-sm font-medium leading-[150%] text-white py-[14px] px-[22px] rounded-[6px] border-[1.5px] border-white">
+              Explore Services <ArrowRight className="w-5 h-5 text-white" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
