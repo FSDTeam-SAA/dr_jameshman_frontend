@@ -132,7 +132,12 @@ export const ContactsTable = () => {
                 </TableCell>
                 <TableCell className="py-6">
                   <div className="flex justify-center space-x-2">
-                    <button onClick={() => {setContactId(contact?._id); setIsOpen(true)}}>
+                    <button
+                      onClick={() => {
+                        setContactId(contact?._id);
+                        setIsOpen(true);
+                      }}
+                    >
                       <Eye className="h-5 w-5" />
                     </button>
                     <DeleteContact id={contact?._id} />

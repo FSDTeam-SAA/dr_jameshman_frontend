@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import {
   Form,
@@ -16,21 +17,54 @@ import z from "zod";
 import { RichTextEditor } from "../../../_component/shared/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { Save } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 type formType = z.input<typeof addPriceListSchema>;
 
 const AddEditPriceListForm = () => {
+  const queryClient = useQueryClient();
+
   const form = useForm<formType>({
     resolver: zodResolver(addPriceListSchema),
     defaultValues: {
-      priceName: "",
-      rate: 0,
+      serviceName: "",
+      rate: "",
       description: "",
     },
   });
 
-  const onSubmit = (value: formType) => {
+  const { mutateAsync, isPending } = useMutation<any, any, formType>({
+    mutationKey: ["add-price-list"],
+    mutationFn: async (data) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+      return await res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["all-price-list"] });
+      toast.success(data.message);
+      form.reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const onSubmit = async (value: formType) => {
     console.log("value: ", value);
+    try {
+      await mutateAsync(value);
+    } catch (error) {
+      console.log(`error from add price list : ${error}`);
+    }
   };
 
   return (
@@ -40,10 +74,10 @@ const AddEditPriceListForm = () => {
           {/* priceName field */}
           <FormField
             control={form.control}
-            name="priceName"
+            name="serviceName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Price Name</FormLabel>
+                <FormLabel>Service Name</FormLabel>
 
                 <FormControl>
                   <Input
@@ -95,8 +129,20 @@ const AddEditPriceListForm = () => {
             )}
           />
 
-          <Button type="submit" className="w-full h-[50px] mt-5">
-            <Save /> Save
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="w-full h-[50px] mt-5 disabled:cursor-not-allowed"
+          >
+            {isPending ? (
+              <span className="flex items-center gap-1">
+                <Spinner /> Save
+              </span>
+            ) : (
+              <span className="flex items-center gap-1">
+                <Save /> Save
+              </span>
+            )}
           </Button>
         </form>
       </Form>
