@@ -36,9 +36,11 @@ export const AppTopBar = () => {
       )}
 
       {pathName === "/dashboard/faq" && (
-        <Button className="h-[40px]">
-          <Plus /> Add FAQ
-        </Button>
+        <Link href={`/dashboard/faq/add-faq`}>
+          <Button className="h-[40px]">
+            <Plus /> Add FAQ
+          </Button>
+        </Link>
       )}
     </div>
   );
