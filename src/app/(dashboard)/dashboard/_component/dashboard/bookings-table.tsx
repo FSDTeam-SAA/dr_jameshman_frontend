@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ViewBookingModal } from "./view-booking-modal";
 import { DeleteBooking } from "./delete-booking";
+import { useSession } from "next-auth/react";
 
 type Booking = {
   _id: string;
@@ -48,13 +49,23 @@ export const BookingsTable = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [contactId, setContactId] = useState("");
 
+  const session = useSession();
+  const token = (session?.data?.user as { accessToken: string })?.accessToken;
+
   const { data: allBookings, isLoading } = useQuery<BookingsResponse>({
     queryKey: ["all-bookings", currentPage],
     queryFn: async () => {
       const res = await fetch(
         `${
           process.env.NEXT_PUBLIC_API_URL
-        }/bookings?page=${currentPage}&limit=${10}`
+        }/bookings?page=${currentPage}&limit=${10}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const data = await res.json();
       return data;
