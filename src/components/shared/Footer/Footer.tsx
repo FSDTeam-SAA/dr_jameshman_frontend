@@ -46,18 +46,29 @@ const Footer = () => {
               Quick Links
             </h3>
             <ul className="pt-3 md:pt-4 lg:pt-6">
-              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2">
+             <Link href="/">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
                 Home
               </li>
-              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2">
+             </Link>
+             <Link href="/treatments">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
                 Services
               </li>
-              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2">
+             </Link>
+             <Link href="/about-us">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
                 About Us
               </li>
-              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2">
+             </Link>
+             <Link href="/contact">
+             <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
                 Contact
               </li>
+             </Link>
+             
+             
+              
             </ul>
           </div>
           <div className="md:col-span-1 ">
