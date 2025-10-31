@@ -4,7 +4,7 @@ import React from "react";
 
 export default function OurTreatmentSkeleton() {
   return (
-    <div className="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
+    <div className="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-10">
       {[...Array(4)].map((_, i) => (
         <div
           key={i}

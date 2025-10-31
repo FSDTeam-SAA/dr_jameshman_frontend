@@ -80,7 +80,7 @@ const aboutItems = [
                 if (item.label === "Pricing") {
                   return (
                     <li key={index} className="relative">
-                      <DropdownMenu>
+                      <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
                           <button
                             className={`flex items-center gap-1 p-2 px-4 text-base transition-all duration-500 ease-in-out ${textColor}`}
@@ -110,7 +110,7 @@ const aboutItems = [
                 if (item.label === "About Us") {
                   return (
                     <li key={index} className="relative">
-                      <DropdownMenu>
+                      <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
                           <button
                             className={`flex items-center gap-1 p-2 px-4 text-base transition-all duration-500 ease-in-out ${textColor}`}
