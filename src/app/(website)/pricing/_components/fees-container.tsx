@@ -1,4 +1,5 @@
 import { ArrowRight, CreditCard, DollarSign } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const FeesContainer = () => {
@@ -18,9 +19,11 @@ const FeesContainer = () => {
             View our complete fee schedule for consultations, braces, clear
             aligners, and retainers.{" "}
           </p>
-          <button className="flex items-center gap-2 text-primary text-sm font-semibold leading-[120%] ">
-            View Fees <ArrowRight className="w-4 h-4 text-primary" />
-          </button>
+          <Link href="/pricing/treatments-fees">
+            <button className="flex items-center gap-2 text-primary text-sm font-semibold leading-[120%] hover:underline">
+              View Fees <ArrowRight className="w-4 h-4 text-primary" />
+            </button>
+          </Link>
         </div>
         <div className="md:col-span-1 border-[2px] border-black/0 shadow-[0px_4px_10px_0px_#00000026] rounded-[16px] px-4 py-6 md:py-7 lg:py-8">
           <div className="flex items-center gap-2">
@@ -35,9 +38,11 @@ const FeesContainer = () => {
             View our complete fee schedule for consultations, braces, clear
             aligners, and retainers.
           </p>
-          <button className="flex items-center gap-2 text-primary text-sm font-semibold leading-[120%] ">
-            View Fees <ArrowRight className="w-4 h-4 text-primary" />
-          </button>
+          <Link href="/pricing/offers-and-payment-plans">
+            <button className="flex items-center gap-2 text-primary text-sm font-semibold leading-[120%] hover:underline">
+              View Fees <ArrowRight className="w-4 h-4 text-primary" />
+            </button>
+          </Link>
         </div>
       </div>
     </div>
