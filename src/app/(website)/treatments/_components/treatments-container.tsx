@@ -1,15 +1,15 @@
 "use client"
-import { TreatmentResponse } from '@/components/types/treatments-data-type';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react'
 import ErrorContainer from '@/components/shared/ErrorContainer/ErrorContainer';
 import TreatmentCart from '@/components/common/treatment-cart';
 import DashboardPagination from '@/app/(dashboard)/dashboard/_component/shared/pagination';
 import TreatmentSkeleton from '@/components/shared/Skeleton/TreatmentsSkeleton';
+import { TreatmentsResponse } from '@/components/types/treatments-data-type';
 
 const TreatmentsContainer = () => {
     const [currentPage, setCurrentPage] = useState(1);
-     const { data, isLoading, isError, error } = useQuery<TreatmentResponse>({
+     const { data, isLoading, isError, error } = useQuery<TreatmentsResponse>({
     queryKey: ["treatments", currentPage],
     queryFn: async () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatments?page=${currentPage}&limit=8`);
@@ -18,6 +18,7 @@ const TreatmentsContainer = () => {
   });
 
   console.log(data);
+  
 
   if (isLoading) return <TreatmentSkeleton />;
   if (isError)
@@ -41,7 +42,7 @@ const TreatmentsContainer = () => {
           {data && data?.pagination && data?.pagination?.totalPages > 1 && (
             <div className="flex items-center justify-between">
             <p className="text-sm md:text-base text-black/60">
-              Showing page {currentPage} to {data?.pagination?.itemsPerPage * currentPage} of {data?.pagination?.totalItems} results
+              Showing page {currentPage} to {data?.pagination?.itemsPerPage * currentPage} of {data?.pagination?.totalTreatments} results
             </p>
 
             <div>

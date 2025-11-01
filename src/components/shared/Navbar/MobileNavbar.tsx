@@ -8,14 +8,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import { TreatmentCategoryResponse } from "./Navbar";
+import { useQuery } from "@tanstack/react-query";
 
 const MobileNavbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+  const [showTreatments, setShowTreatments] = useState(false);
 
   const closeSheet = () => setIsOpen(false);
+
+    const {data, isLoading, isError, error} = useQuery<TreatmentCategoryResponse>({
+      queryKey: ["treatments-categories"],
+      queryFn: async () => {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`);
+        return res.json();
+      },
+    })
+  
+  console.log(data?.data)
+    // Get treatment categories from API
+    const treatmentCategories = data?.data?.map((cat) => ({
+      label: cat?.name,
+      link: `/treatments/${cat?._id}`
+    })) || [];
 
   const pricingItems = [
     { label: "Fees", link: "/pricing" },
@@ -26,6 +44,9 @@ const aboutItems = [
   { label: "Why Us", link: "/about-us#why-us" },
   { label: "Meet The Team", link: "/about-us#meet-the-team" },
 ];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
 
   return (
     <div className="md:hidden">
@@ -55,6 +76,44 @@ const aboutItems = [
                 {navLinks.map((item, index) => {
                   const isActive = item.link === pathname;
 
+                  // Treatments dropdown
+                  if (item.label === "Treatments") {
+                    return (
+                      <li key={index}>
+                        <button
+                          onClick={() => setShowTreatments(!showTreatments)}
+                          className={`flex items-center justify-between w-full p-3 rounded-lg font-medium transition-all duration-300 ${
+                            isActive
+                              ? "bg-[#e7e7e7] text-primary"
+                              : "hover:bg-[#f5f5f5]"
+                          }`}
+                        >
+                          <span>{item.label}</span>
+                          {showTreatments ? (
+                            <ChevronUp className="h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4" />
+                          )}
+                        </button>
+
+                        {showTreatments && (
+                          <ul className="pl-4 mt-2 space-y-2 border-l border-gray-200">
+                            {treatmentCategories?.map((subItem, idx) => (
+                              <li key={idx}>
+                                <Link
+                                  href={subItem.link}
+                                  onClick={closeSheet}
+                                  className="block p-2 rounded-md text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                                >
+                                  {subItem.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    );
+                  }
                   // Pricing dropdown
                   if (item.label === "Pricing") {
                     return (
@@ -170,80 +229,3 @@ export default MobileNavbar;
 
 
 
-
-
-
-
-
-// "use client";
-// import { Button } from "@/components/ui/button";
-// import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-// import { navLinks } from "@/utils/navLinks";
-// import { Menu } from "lucide-react";
-// import Image from "next/image";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-// import React, { useState } from "react";
-
-// const MobileNavbar = () => {
-//   const pathname = usePathname();
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const closeSheet = () => setIsOpen(false);
-
-//   return (
-//     <div className="md:hidden">
-//       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-//         <SheetTrigger asChild>
-//           <Button variant="ghost" size="icon">
-//             <Menu className="h-6 w-6" />
-//             <span className="sr-only">Toggle menu</span>
-//           </Button>
-//         </SheetTrigger>
-//         <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-//           <div className="flex flex-col h-full">
-//             {/* Header with close button */}
-//             <div className="flex items-center justify-between mb-8">
-//               <Link href="/" onClick={closeSheet}>
-//                 <Image
-//                   src={"/assets/images/black-logo.png"}
-//                   alt="logo.png"
-//                   width={1000}
-//                   height={1000}
-//                   className="h-[60px] w-[100px]"
-//                 />
-//               </Link>
-//             </div>
-
-//             {/* Navigation links */}
-//             <nav className="flex-1">
-//               <ul className="space-y-4">
-//                 {navLinks.map((item, index) => {
-//                   const isActive = item.link === pathname;
-
-//                   return (
-//                     <li key={index}>
-//                       <Link
-//                         href={item.link}
-//                         onClick={closeSheet}
-//                         className={`block p-3 rounded-lg font-medium transition-all duration-300 text-center ${
-//                           isActive
-//                             ? "bg-[#e7e7e7] text-primary"
-//                             : "hover:bg-[#f5f5f5]"
-//                         }`}
-//                       >
-//                         {item.label}
-//                       </Link>
-//                     </li>
-//                   );
-//                 })}
-//               </ul>
-//             </nav>
-//           </div>
-//         </SheetContent>
-//       </Sheet>
-//     </div>
-//   );
-// };
-
-// export default MobileNavbar;

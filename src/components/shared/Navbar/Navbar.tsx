@@ -13,10 +13,51 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+
+export interface TreatmentCategory {
+  _id: string;
+  name: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface Pagination {
+  currentPage: number;
+  totalPages: number;
+  totalCategories: number;
+  itemsPerPage: number;
+}
+
+export interface TreatmentCategoryResponse {
+  status: boolean;
+  mnessage: string; // Note: typo in your API key; ideally should be `message`
+  data: TreatmentCategory[];
+  pagination: Pagination;
+}
+
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
+
+  const {data, isLoading, isError, error} = useQuery<TreatmentCategoryResponse>({
+    queryKey: ["treatments-categories"],
+    queryFn: async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`);
+      return res.json();
+    },
+  })
+
+console.log(data?.data)
+  // Get treatment categories from API
+  const treatmentCategories = data?.data?.map((cat) => ({
+    label: cat?.name,
+    link: `/treatments/${cat?._id}`
+  })) || [];
+
 
   useEffect(() => {
     const handleScroll = () => setIsAtTop(window.scrollY <= 50);
@@ -47,6 +88,10 @@ const aboutItems = [
   const containerPadding =
     pathname === "/" && isAtTop ? "py-2" : "py-0";
 
+    
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
+
   return (
     <div
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
@@ -76,6 +121,35 @@ const aboutItems = [
                     ? "text-white"
                     : "text-black";
 
+                // Treatments dropdown
+                if (item?.label === "Treatments") {
+                  return (
+                    <li key={index} className="relative">
+                      <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            className={`flex items-center gap-1 p-2 px-4 text-base transition-all duration-500 ease-in-out ${textColor}`}
+                          >
+                            {item.label}
+                            <ChevronDown className="w-4 h-4 mt-[2px]" />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="mt-2 w-48 bg-white shadow-lg border rounded-lg">
+                          {treatmentCategories?.map((item, idx) => (
+                            <DropdownMenuItem key={idx} asChild>
+                              <Link
+                                href={item?.link}
+                                className="block w-full px-3 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"
+                              >
+                                {item?.label}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </li>
+                  );
+                }
                 // Pricing dropdown
                 if (item.label === "Pricing") {
                   return (
@@ -165,87 +239,3 @@ export default Navbar;
 
 
 
-
-
-
-// "use client";
-
-// import { navLinks } from "@/utils/navLinks";
-// import Image from "next/image";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-// import { useEffect, useState } from "react";
-// import MobileNavbar from "./MobileNavbar";
-
-// const Navbar = () => {
-//   const pathname = usePathname();
-//   const [isAtTop, setIsAtTop] = useState(true);
-
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       setIsAtTop(window.scrollY <= 50);
-//     };
-
-//     window.addEventListener("scroll", handleScroll);
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, []);
-
-//   // ✅ Choose logo based on scroll position
-//   const logoSrc =
-//     pathname === "/" && isAtTop
-//       ? "/assets/images/logo.png" 
-//       : "/assets/images/black-logo.png";
-
-//   return (
-//     <div
-//       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-//         pathname === "/" && isAtTop ? "bg-transparent" : "bg-white shadow-md"
-//       }`}
-//     >
-//       <div className="container py-1">
-//         <div className="flex items-center justify-between">
-//           {/* ✅ Logo */}
-//           <Link href={"/"}>
-//             <Image
-//               src={logoSrc}
-//               alt="logo"
-//               width={1000}
-//               height={1000}
-//               className="h-[72px] w-[125px] transition-all duration-500"
-//             />
-//           </Link>
-
-//           {/* Desktop navigation */}
-//           <div className="hidden md:block">
-//             <ul className="flex items-center gap-2 text-primary">
-//               {navLinks.map((item, index) => {
-//                 const isActive = item.link === pathname;
-//                 const textColor =
-//                   pathname === "/" && isAtTop && !isActive
-//                     ? "text-white"
-//                     : "text-black";
-//                 return (
-//                   <li key={index}>
-//                     <Link
-//                       href={item.link}
-//                       className={`p-2 px-4 text-base transition-all duration-500 ease-in-out ${textColor} ${
-//                         isActive ? "font-semibold underline" : "font-normal"
-//                       }`}
-//                     >
-//                       {item.label}
-//                     </Link>
-//                   </li>
-//                 );
-//               })}
-//             </ul>
-//           </div>
-
-//           {/* Mobile menu */}
-//           <MobileNavbar />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Navbar;

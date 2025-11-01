@@ -1,5 +1,4 @@
 "use client";
-import { TreatmentResponse } from "@/components/types/treatments-data-type";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import OurTreatmentSkeleton from "./our-treatment-skeleton";
@@ -7,9 +6,10 @@ import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import TreatmentCart from "@/components/common/treatment-cart";
+import {  TreatmentsResponse } from "@/components/types/treatments-data-type";
 
 const OurTreatments = () => {
-  const { data, isLoading, isError, error } = useQuery<TreatmentResponse>({
+  const { data, isLoading, isError, error } = useQuery<TreatmentsResponse>({
     queryKey: ["treatments"],
     queryFn: async () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatments`);
