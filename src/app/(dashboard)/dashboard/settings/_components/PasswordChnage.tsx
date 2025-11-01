@@ -1,9 +1,6 @@
 "use client"
 
 import {
-    toast
-} from "sonner"
-import {
     useForm
 } from "react-hook-form"
 import {
@@ -26,6 +23,9 @@ import {
 } from "@/components/ui/form"
 import { Card, CardContent } from "@/components/ui/card"
 import { PasswordInput } from "@/components/ui/password-input"
+import { useChnagePassword } from "@/hooks/APicalling"
+import { signOut, useSession } from "next-auth/react"
+import { Loader2 } from "lucide-react"
 
 
 const formSchema = z.object({
@@ -35,6 +35,10 @@ const formSchema = z.object({
 });
 
 export default function PasswordChange() {
+    const session = useSession()
+    const token = (session?.data?.user as { token: string })?.token
+
+    const changePasswrdMutation = useChnagePassword(token);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -42,16 +46,14 @@ export default function PasswordChange() {
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            console.log(values);
-            toast(
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-                </pre>
-            );
-        } catch (error) {
-            console.error("Form submission error", error);
-            toast.error("Failed to submit the form. Please try again.");
+        changePasswrdMutation.mutate({
+            oldPassword: values.currentPassword,
+            newPassword: values.newPassword,
+            confirmPassword: values.confirmPassword
+        });
+        if (changePasswrdMutation.status === 'success') {
+            form.reset();
+            signOut({ callbackUrl: '/login' });
         }
     }
 
@@ -120,7 +122,7 @@ export default function PasswordChange() {
                             )}
                         />
                         <div className="flex justify-end">
-                            <Button type="submit" className="bg-[#00383B] hover:bg-[#005356]">Save Changes</Button>
+                            <Button type="submit" className="bg-[#76A7A4] hover:bg-[#76A7A4]/90">Save Changes {changePasswrdMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}</Button>
                         </div>
                     </form>
                 </Form>
