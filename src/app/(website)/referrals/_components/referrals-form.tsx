@@ -40,11 +40,9 @@ const formSchema = z.object({
   patientEmail: z
     .string()
     .email({ message: "Please enter a valid email address." }),
-  patientPhone: z
-    .string()
-    .min(11, {
-      message: "patient Phone Number must be at least 11 characters.",
-    }),
+  patientPhone: z.string().min(11, {
+    message: "patient Phone Number must be at least 11 characters.",
+  }),
   dentistName: z
     .string()
     .min(2, { message: "Patient Name must be at least 2 characters." }),
@@ -54,11 +52,9 @@ const formSchema = z.object({
   dentistEmail: z
     .string()
     .email({ message: "Please enter a valid email address." }),
-  dentistPhone: z
-    .string()
-    .min(11, {
-      message: "Dentist Phone Number must be at least 11 characters.",
-    }),
+  dentistPhone: z.string().min(11, {
+    message: "Dentist Phone Number must be at least 11 characters.",
+  }),
   additionalNotes: z
     .string()
     .min(10, { message: "Message must be at least 10 characters." }),
@@ -112,7 +108,6 @@ const ReferralsForm = () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/referrals`, {
         method: "POST",
         body: formData,
-        headers: { "Content-Type": "application/json" },
       });
       return res.json();
     },
@@ -124,6 +119,7 @@ const ReferralsForm = () => {
       }
       toast.success(data?.message || "Referrals sent successfully");
       form.reset();
+      setPreviewFiles([]);
     },
   });
 
@@ -131,8 +127,29 @@ const ReferralsForm = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     const formData = new FormData();
+    const localDate = new Date(values.patientDOB);
+    const formattedDate = `${localDate.getFullYear()}-${String(
+      localDate.getMonth() + 1
+    ).padStart(2, "0")}-${String(localDate.getDate()).padStart(2, "0")}`;
+    // Patient info
+    formData.append("patientName", values.patientName);
+    formData.append("patientDOB", formattedDate);
+    formData.append("patientPhone", values.patientPhone);
+    formData.append("patientEmail", values.patientEmail);
+
+    // Dentist info
+    formData.append("dentistName", values.dentistName);
+    formData.append("dentistPractice", values.dentistPractice);
+    formData.append("dentistPhone", values.dentistPhone);
+    formData.append("dentistEmail", values.dentistEmail);
+
+    // Notes and consent
+    formData.append("additionalNotes", values.additionalNotes);
+    formData.append("consentGiven", String(values.consentGiven));
+
+    // Files
     previewFiles.forEach((file) => formData.append("files", file));
-    formData.append("data", JSON.stringify(values));
+
     mutate(formData);
   }
   return (

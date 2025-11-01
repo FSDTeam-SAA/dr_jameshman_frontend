@@ -66,23 +66,39 @@ const TreatmentFeesContainer = () => {
           depending on the type and length of treatment.
         </p>
         <div className="pt-8 md:pt-12 lg:pt-[60px]">
-            {
-                data?.data?.map((item)=>{
-                    return <div key={item?._id} className="mb-6 md:mb-8 lg:mb-10 ">
-                        <h4 className="text-base md:text-lg font-bold text-white bg-primary leading-[120%] py-3 md:py-4 px-5 md:px-6 rounded-t-[10px]">{item?.serviceName}</h4>
-                        <div>
-                            {
-                                item?.items?.map((i)=>{
-                                    return <div key={i?._id} className="py-4 md:py-5 px-5 md:px-6 bg-white w-full flex items-center justify-between rounded-b-[10px] border-b border-[#E5E7EB]" >
-                                        <p className="text-sm md:text-base font-normal text-[#374151] leading-[120%]">{i?.description}</p>
-                                        <p className="flex items-center gap-0 text-base md:text-lg font-semibold text-[#111827] leading-[120%]">{item?.currency ? <Euro className="w-5 h-5"/> : "Free"} {i?.rate}</p>
-                                    </div>
-                                })
-                            }
-                        </div>
-                    </div>
-                })
-            }
+          {data?.data?.map((item) => {
+            return (
+              <div key={item?._id} className="mb-6 md:mb-8 lg:mb-10 ">
+                <h4 className="text-base md:text-lg font-bold text-white bg-primary leading-[120%] py-3 md:py-4 px-5 md:px-6 rounded-t-[10px]">
+                  {item?.serviceName}
+                </h4>
+                <div>
+                  {item?.items?.map((i) => {
+                    return (
+                      <div
+                        key={i?._id}
+                        className="py-4 md:py-5 px-5 md:px-6 bg-white w-full flex items-center justify-between rounded-b-[10px] border-b border-[#E5E7EB]"
+                      >
+                        <p
+                          className="text-sm md:text-base font-normal text-[#374151] leading-[120%]"
+                          dangerouslySetInnerHTML={{ __html: i?.description }}
+                        />
+
+                        <p className="flex items-center gap-0 text-base md:text-lg font-semibold text-[#111827] leading-[120%]">
+                          {item?.currency ? (
+                            <Euro className="w-5 h-5" />
+                          ) : (
+                            "Free"
+                          )}{" "}
+                          {i?.rate}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
