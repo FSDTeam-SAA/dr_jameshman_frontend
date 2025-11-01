@@ -1,28 +1,32 @@
-export interface TreatmentResponse {
-  status: boolean;
-  message: string;
-  data: TreatmentGroup[];
-  pagination: Pagination;
-}
 
-export interface TreatmentGroup {
+export interface TreatmentCategory {
   _id: string;
-  treatments: Treatment[];
-  createdAt: string;
-  __v: number;
+  name: string;
+  image: string;
 }
 
 export interface Treatment {
+  _id: string;
   serviceName: string;
-  title: string;
   description: string;
   image: string;
-  _id: string;
+  cloudinaryId: string;
+  category: TreatmentCategory;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
 }
 
 export interface Pagination {
   currentPage: number;
   totalPages: number;
-  totalItems: number;
+  totalTreatments: number;
   itemsPerPage: number;
+}
+
+export interface TreatmentsResponse {
+  status: boolean;
+  message: string;
+  data: Treatment[];
+  pagination: Pagination;
 }
