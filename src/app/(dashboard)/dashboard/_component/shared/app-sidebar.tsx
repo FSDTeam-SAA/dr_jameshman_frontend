@@ -1,5 +1,6 @@
 "use client";
 import {
+  BookCheck,
   BookText,
   DollarSign,
   FileImage,
@@ -34,6 +35,11 @@ const items = [
     title: "Contact",
     url: "/dashboard/contact",
     icon: MessageSquareText,
+  },
+  {
+    title: "Treatment Category",
+    url: "/dashboard/treatment-category",
+    icon: BookCheck,
   },
   {
     title: "Treatment List",
