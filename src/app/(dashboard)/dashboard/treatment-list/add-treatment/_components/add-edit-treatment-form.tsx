@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { addTreatmentSchema } from "@/schema/addTreatmentSchema";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -16,12 +17,54 @@ import { RichTextEditor } from "../../../_component/shared/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { ImageUp, Plus, Save, X } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type FormType = z.infer<typeof addTreatmentSchema>;
 
+type TreatmentCategory = {
+  _id: string;
+  name: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export const AddEditTreatmentForm = () => {
   const [imagePreviews, setImagePreviews] = useState<(string | null)[]>([null]);
+  const queryClient = useQueryClient();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
+
+  // Fetch treatment categories
+  const { data: categories, isLoading: categoriesLoading } = useQuery<TreatmentCategory[]>({
+    queryKey: ["all-treatment-categories"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!res.ok) throw new Error("Failed to fetch treatment categories");
+      const data = await res.json();
+      return data.data || [];
+    },
+  });
 
   const form = useForm<FormType>({
     resolver: zodResolver(addTreatmentSchema),
@@ -29,7 +72,6 @@ export const AddEditTreatmentForm = () => {
       treatments: [
         {
           serviceName: "",
-          title: "",
           description: "",
           image: new File([], ""),
         },
@@ -40,6 +82,39 @@ export const AddEditTreatmentForm = () => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "treatments",
+  });
+
+  // Add category field to the mutation
+  const { mutateAsync, isPending } = useMutation<any, any, FormData>({
+    mutationKey: ["add-treatment"],
+    mutationFn: async (formData) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/treatments`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to add treatment");
+      }
+
+      return res.json();
+    },
+
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["all-price-list"] });
+      toast.success(data.message || "Treatment added successfully");
+      form.reset();
+      setImagePreviews([null]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to add treatment");
+    },
   });
 
   const clearSelection = (index: number) => {
@@ -56,9 +131,39 @@ export const AddEditTreatmentForm = () => {
     }
   };
 
-  const onSubmit = (value: FormType) => {
-    console.log("Submitted Data:", value);
+  const onSubmit = async (value: FormType) => {
+    try {
+      // Create FormData for each treatment
+      for (const treatment of value.treatments) {
+        const formData = new FormData();
+        formData.append("serviceName", treatment.serviceName);
+        formData.append("description", treatment.description);
+        
+        // Get category from form (you'll need to add this to your form)
+        const category = form.getValues(`treatments.${value.treatments.indexOf(treatment)}.category`);
+        if (category) {
+          formData.append("category", category);
+        }
+        
+        if (treatment.image && treatment.image.size > 0) {
+          formData.append("image", treatment.image);
+        }
+
+        await mutateAsync(formData);
+      }
+    } catch (error) {
+      console.log("Error submitting treatment:", error);
+    }
   };
+
+  // Update imagePreviews array when fields change
+  useEffect(() => {
+    if (fields.length > imagePreviews.length) {
+      setImagePreviews(prev => [...prev, null]);
+    } else if (fields.length < imagePreviews.length) {
+      setImagePreviews(prev => prev.slice(0, fields.length));
+    }
+  }, [fields.length, imagePreviews.length]);
 
   return (
     <Form {...form}>
@@ -96,16 +201,37 @@ export const AddEditTreatmentForm = () => {
               )}
             />
 
-            {/* Title */}
+            {/* Treatment Category */}
             <FormField
               control={form.control}
-              name={`treatments.${index}.title`}
+              name={`treatments.${index}.category`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter title" {...field} />
-                  </FormControl>
+                  <FormLabel>Treatment Category</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categoriesLoading ? (
+                        <SelectItem value="loading" disabled>
+                          Loading categories...
+                        </SelectItem>
+                      ) : categories && categories.length > 0 ? (
+                        categories.map((category) => (
+                          <SelectItem key={category._id} value={category._id}>
+                            {category.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="no-categories" disabled>
+                          No categories found
+                        </SelectItem>
+                      )}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -211,9 +337,9 @@ export const AddEditTreatmentForm = () => {
           onClick={() =>
             append({
               serviceName: "",
-              title: "",
               description: "",
               image: new File([], ""),
+              category: "",
             })
           }
           className="w-full bg-primary/20 hover:bg-primary/30 text-primary flex items-center justify-center gap-2"
@@ -221,8 +347,20 @@ export const AddEditTreatmentForm = () => {
           <Plus /> Add More Treatment
         </Button>
 
-        <Button type="submit" className="w-full h-[50px] mt-5">
-          <Save /> Save
+        <Button 
+          type="submit" 
+          className="w-full h-[50px] mt-5 disabled:cursor-not-allowed"
+          disabled={isPending}
+        >
+          {isPending ? (
+            <span className="flex items-center gap-1">
+              <Spinner /> Saving...
+            </span>
+          ) : (
+            <span className="flex items-center gap-1">
+              <Save /> Save
+            </span>
+          )}
         </Button>
       </form>
     </Form>
