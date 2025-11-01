@@ -36,6 +36,11 @@ const items = [
     icon: MessageSquareText,
   },
   {
+    title: "Treatment Category",
+    url: "/dashboard/treatment-category",
+    icon: List,
+  },
+  {
     title: "Treatment List",
     url: "/dashboard/treatment-list",
     icon: List,
