@@ -8,14 +8,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import { TreatmentCategoryResponse } from "./Navbar";
+import { useQuery } from "@tanstack/react-query";
 
 const MobileNavbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+  const [showTreatments, setShowTreatments] = useState(false);
 
   const closeSheet = () => setIsOpen(false);
+
+    const {data, isLoading, isError, error} = useQuery<TreatmentCategoryResponse>({
+      queryKey: ["treatments-categories"],
+      queryFn: async () => {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`);
+        return res.json();
+      },
+    })
+  
+  console.log(data?.data)
+    // Get treatment categories from API
+    const treatmentCategories = data?.data?.map((cat) => ({
+      label: cat?.name,
+      link: `/treatments/${cat?._id}`
+    })) || [];
 
   const pricingItems = [
     { label: "Fees", link: "/pricing" },
@@ -26,6 +44,9 @@ const aboutItems = [
   { label: "Why Us", link: "/about-us#why-us" },
   { label: "Meet The Team", link: "/about-us#meet-the-team" },
 ];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
 
   return (
     <div className="md:hidden">
@@ -55,6 +76,44 @@ const aboutItems = [
                 {navLinks.map((item, index) => {
                   const isActive = item.link === pathname;
 
+                  // Treatments dropdown
+                  if (item.label === "Treatments") {
+                    return (
+                      <li key={index}>
+                        <button
+                          onClick={() => setShowTreatments(!showTreatments)}
+                          className={`flex items-center justify-between w-full p-3 rounded-lg font-medium transition-all duration-300 ${
+                            isActive
+                              ? "bg-[#e7e7e7] text-primary"
+                              : "hover:bg-[#f5f5f5]"
+                          }`}
+                        >
+                          <span>{item.label}</span>
+                          {showTreatments ? (
+                            <ChevronUp className="h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4" />
+                          )}
+                        </button>
+
+                        {showTreatments && (
+                          <ul className="pl-4 mt-2 space-y-2 border-l border-gray-200">
+                            {treatmentCategories?.map((subItem, idx) => (
+                              <li key={idx}>
+                                <Link
+                                  href={subItem.link}
+                                  onClick={closeSheet}
+                                  className="block p-2 rounded-md text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                                >
+                                  {subItem.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    );
+                  }
                   // Pricing dropdown
                   if (item.label === "Pricing") {
                     return (

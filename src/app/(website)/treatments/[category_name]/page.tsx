@@ -3,11 +3,11 @@ import React from "react";
 import TreatmentCategoryContainer from "./_components/treatment-category-container";
 import FaqContainer from "../../about-us/_components/faq";
 
-const TreatmentCategoryPage = () => {
+const TreatmentCategoryPage = ({params}: {params: {category_name: string}}) => {
   return (
     <div>
       <HeroSection title="Our Treatments" description="" />
-      <TreatmentCategoryContainer />
+      <TreatmentCategoryContainer category_name={params?.category_name || ""} />
       <FaqContainer />
     </div>
   );
