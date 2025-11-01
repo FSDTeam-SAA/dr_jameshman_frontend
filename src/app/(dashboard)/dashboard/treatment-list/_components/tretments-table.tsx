@@ -203,7 +203,7 @@ export const TreatmentsTable = () => {
                     <div className="flex items-center gap-2">
                       {/* Edit Button */}
                       <Link
-                        href={`/dashboard/treatments/edit-treatment/${treatment._id}`}
+                        href={`/dashboard/treatment-list/add-treatment/edit-treatment/${treatment._id}`}
                       >
                         <button>
                           <Edit className="h-4 w-4" />
