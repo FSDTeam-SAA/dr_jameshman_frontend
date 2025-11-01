@@ -136,7 +136,7 @@ export const TreatmentCategoryTable = () => {
                   <TableCell className="py-6 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <Link
-                        href={`/dashboard/treatment-category/edit-treatment-category/${category._id}`}
+                        href={`/dashboard/treatment-category/add-treatment-category/edit-treatment-category/${category._id}`}
                       >
                         <button className="hover:text-primary transition-colors">
                           <Edit className="h-5 w-5" />

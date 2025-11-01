@@ -54,7 +54,10 @@ export const AddEditTreatmentCategory = ({ categoryDetails, id }: Props) => {
   });
 
   useEffect(() => {
-    if (pathName.includes("/edit-treatment-category/") && categoryDetails) {
+    if (
+      pathName !== "/dashboard/treatment-category/add-treatment-category" &&
+      categoryDetails
+    ) {
       form.reset({
         name: categoryDetails?.name || "",
         image: categoryDetails?.image || "",
@@ -66,7 +69,8 @@ export const AddEditTreatmentCategory = ({ categoryDetails, id }: Props) => {
   const { mutateAsync, isPending } = useMutation<any, any, FormData>({
     mutationKey: ["add-edit-treatment-category"],
     mutationFn: async (formData) => {
-      const isAdd = pathName === "/dashboard/treatment-category/add-treatment-category";
+      const isAdd =
+        pathName === "/dashboard/treatment-category/add-treatment-category";
       const method = isAdd ? "POST" : "PUT";
       const url = isAdd
         ? `${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`
