@@ -104,7 +104,7 @@ const GetInTouch = () => {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                            className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base leading-[120%] font-semibold"
                             placeholder="Name Here"
                             {...field}
                           />
@@ -123,7 +123,7 @@ const GetInTouch = () => {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                            className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base leading-[120%] font-semibold"
                             placeholder="hello@example.com"
                             {...field}
                           />
@@ -142,7 +142,7 @@ const GetInTouch = () => {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                            className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base leading-[120%] font-semibold"
                             placeholder="+1234567890"
                             {...field}
                           />
@@ -161,7 +161,7 @@ const GetInTouch = () => {
                         </FormLabel>
                         <FormControl>
                           <Textarea
-                            className="h-[200px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                            className="h-[200px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base md:text-base leading-[120%] font-semibold"
                             placeholder="Write your message Here"
                             {...field}
                           />
@@ -215,7 +215,7 @@ const GetInTouch = () => {
           </div>
           <div className="md:col-span-1">
             <Image
-              src="/assets/images/get-in-touch.png"
+              src="/assets/images/get-in-touch.jpg"
               alt="get in touch"
               width={1000}
               height={1000}

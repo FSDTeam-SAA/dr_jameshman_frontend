@@ -1,4 +1,5 @@
 import {
+  Clock,
   Facebook,
   InstagramIcon,
   Mail,
@@ -24,9 +25,7 @@ const Footer = () => {
               className="h-[90px] w-[243px] object-cover"
             />
             <p className="text-sm md:text-base font-normal text-white leading-[150%] py-3 md:py-4 lg:py-6">
-              Providing exceptional dental care with a focus on comfort and{" "}
-              <br className="hidden md:block"/>
-              results for over 10 years
+              “Providing exceptional dental care with a focus on comfort and <br/> results for over 15 years.”
             </p>
 
             <div className="flex items-center gap-3 ">
@@ -40,6 +39,12 @@ const Footer = () => {
                 <InstagramIcon className="w-8 h-8 text-white cursor-pointer" />
               </span>
             </div>
+            <div className="pt-4 md:pt-6 lg:pt-8 flex items-center gap-0">
+              <Image src="/assets/images/brand1.png" alt="brands-logo" width={1000} height={200} className="w-[100px] object-contain h-[35px]"/>
+              <Image src="/assets/images/brand2.png" alt="brands-logo" width={1000} height={200} className="w-[130px] object-contain h-[35px]"/>
+              <Image src="/assets/images/brand3.png" alt="brands-logo" width={1000} height={200} className="w-[140px] object-contain h-[35px]"/>
+              <Image src="/assets/images/brand4.png" alt="brands-logo" width={1000} height={200} className="w-[130px] object-contain h-[35px]"/>
+            </div>
           </div>
           <div className="md:col-span-1">
             <h3 className="text-base md:text-lg lg:text-xl font-medium text-white leading[120%]">
@@ -47,22 +52,22 @@ const Footer = () => {
             </h3>
             <ul className="pt-3 md:pt-4 lg:pt-6">
              <Link href="/">
-              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2 hover:underline">
                 Home
               </li>
              </Link>
              <Link href="/treatments">
-              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2 hover:underline">
                 Services
               </li>
              </Link>
              <Link href="/about-us">
-              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2 hover:underline">
                 About Us
               </li>
              </Link>
              <Link href="/contact">
-             <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2 hover:underline">
+             <li className="text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2 hover:underline">
                 Contact
               </li>
              </Link>
@@ -76,15 +81,17 @@ const Footer = () => {
               Contact Us
             </h3>
             <ul className="pt-3 md:pt-4 lg:pt-6">
-              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2">
-                <MapPin className="w-5 h-5 text-white" /> 123 Finance Street
-                Douala, Cameroon
+              <li className="flex items-start gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
+                <MapPin className="w-5 md:w-6 h-5 md:h-6 text-white" /> 44 Muckross Avenue, Perrystown, Dublin 12, D12VK49
               </li>
-              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2">
-                <Phone className="w-5 h-5 text-white" /> +237 123 456 789
+              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
+                <Phone className="w-5 h-5 text-white" /> 083 011 0533
               </li>
-              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1 md:py-2">
-                <Mail className="w-5 h-5 text-white" /> info@creditmatch.com
+              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
+                <Mail className="w-5 h-5 text-white" /> perrystownorthodontics@gmail.com
+              </li>
+              <li className="flex items-start gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
+                <Clock className="w-5 md:w-6 h-5 md:h-6 text-white" /> Opening hours: Monday to Friday 10 AM – 6:30 PM
               </li>
             </ul>
           </div>

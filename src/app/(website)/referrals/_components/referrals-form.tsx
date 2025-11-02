@@ -495,7 +495,7 @@ const ReferralsForm = () => {
                   className="w-full h-[60px] rounded-[8px] bg-primary text-[#F8F9FA] text-base font-medium leading-[120%]"
                   type="submit"
                 >
-                  {isPending ? "Sending..." : "Book Appointment"}
+                  {isPending ? "Sending..." : "Submit Referral"}
                 </Button>
               </div>
             </form>
