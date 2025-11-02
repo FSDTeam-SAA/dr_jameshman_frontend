@@ -8,7 +8,7 @@ const ReferralsPage = () => {
     <div>
       <HeroSection
         title="Referrals"
-        description="Working together to create confident smiles"
+        description=""
       />
       <ReferralsHeader />
       <ReferralsForm />
