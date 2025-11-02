@@ -1,6 +1,7 @@
 "use client";
 import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import TreatmentSkeleton from "@/components/shared/Skeleton/TreatmentsSkeleton";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -133,60 +134,70 @@ const TreatmentCategoryContainer = ({
               !isError &&
               (!data?.data?.treatments ||
                 data?.data?.treatments.length === 0) && (
-                <p className="text-center text-gray-500 py-10 text-lg">
+                <p className="text-center text-gray-500 py-10 font-bold text-2xl md:text-3xl">
                   No treatments found.
                 </p>
               )}
 
             {/* Treatments List */}
-            {data && data?.data && data?.data?.treatments && data?.data?.treatments?.length > 0 && (
-              <>
-                {data.data.treatments.map((item, index) => {
-                  const isEven = index % 2 === 0; 
+            {data &&
+              data?.data &&
+              data?.data?.treatments &&
+              data?.data?.treatments?.length > 0 && (
+                <>
+                  {data.data.treatments.map((item, index) => {
+                    const isEven = index % 2 === 0;
 
-                  return (
-                    <div
-                      key={item?._id}
-                      className={`grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-10 lg:gap-12 mb-6 md:mb-10 lg:mb-14 ${
-                        isEven ? "" : "md:[direction:rtl]"
-                      }`}
-                    >
-                      {/* Image Section */}
+                    return (
                       <div
-                        className={`md:col-span-2 ${
-                          !isEven ? "md:[direction:ltr]" : ""
+                        key={item?._id}
+                        className={`grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-10 lg:gap-12 mb-6 md:mb-10 lg:mb-14 ${
+                          isEven ? "" : "md:[direction:rtl]"
                         }`}
                       >
-                        <Image
-                          src={item?.image || "/assets/images/no-image.jpg"}
-                          alt={item?.serviceName || ""}
-                          width={1000}
-                          height={1000}
-                          className="w-full h-[400px] md:h-[500px] lg:h-[583px] object-cover rounded-2xl"
-                        />
-                      </div>
+                        {/* Image Section */}
+                        <div
+                          className={`md:col-span-2 ${
+                            !isEven ? "md:[direction:ltr]" : ""
+                          }`}
+                        >
+                          <Image
+                            src={item?.image || "/assets/images/no-image.jpg"}
+                            alt={item?.serviceName || ""}
+                            width={1000}
+                            height={1000}
+                            className="w-full h-[400px] md:h-[500px] lg:h-[583px] object-cover rounded-2xl"
+                          />
+                        </div>
 
-                      {/* Text Section */}
-                      <div
-                        className={`md:col-span-3 w-full flex flex-col justify-center ${
-                          !isEven ? "md:[direction:ltr]" : ""
-                        }`}
-                      >
-                        <h4 className="text-xl md:text-2xl font-semibold mb-3 text-gray-900">
-                          {item?.serviceName}
-                        </h4>
-                        <p
-                          className="text-gray-600 leading-relaxed"
-                          dangerouslySetInnerHTML={{
-                            __html: item?.description,
-                          }}
-                        />
+                        {/* Text Section */}
+                        <div
+                          className={`md:col-span-3 w-full flex flex-col justify-center ${
+                            !isEven ? "md:[direction:ltr]" : ""
+                          }`}
+                        >
+                          <h4 className="text-xl md:text-2xl font-semibold mb-3 text-gray-900">
+                            {item?.serviceName}
+                          </h4>
+                          <p
+                            className="text-gray-600 leading-relaxed"
+                            dangerouslySetInnerHTML={{
+                              __html: item?.description,
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </>
-            )}
+                    );
+                  })}
+                  <div className="pt-2 md:pt-3 lg:pt-[14px] flex flex-col md:flex-row justify-center items-center gap-[13px]">
+                    <Link href="/booking">
+                      <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[46px] rounded-[6px]">
+                        Book Free Consult
+                      </Button>
+                    </Link>
+                  </div>
+                </>
+              )}
           </div>
         </div>
       </div>
