@@ -4,6 +4,7 @@ import ContactInformatioin from './_components/contact-information'
 import WhyChooseOur from './_components/why-choose-our'
 import GetInTouch from './_components/get-in-touch'
 import OurTreatments from './_components/our-treatments'
+import QRCode from './_components/qr-code'
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
       <Hero/>
       <OurTreatments/>
       <WhyChooseOur/>
+      <QRCode/>
       <GetInTouch/>
       <ContactInformatioin/>
     </div>
