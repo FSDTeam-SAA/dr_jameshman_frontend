@@ -7,6 +7,7 @@ import {
   List,
   MessageSquareText,
   NotebookPen,
+  RefreshCcwDot,
   Settings,
 } from "lucide-react";
 
@@ -35,6 +36,11 @@ const items = [
     title: "Contact",
     url: "/dashboard/contact",
     icon: MessageSquareText,
+  },
+  {
+    title: "Referral",
+    url: "/dashboard/referral",
+    icon: RefreshCcwDot,
   },
   {
     title: "Treatment Category",
