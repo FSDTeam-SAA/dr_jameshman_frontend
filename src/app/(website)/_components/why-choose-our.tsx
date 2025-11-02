@@ -1,4 +1,4 @@
-import { Clock, Frown, Shield, Star } from "lucide-react";
+import { Clock, CreditCard, Frown, Shield, Star } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
@@ -12,9 +12,7 @@ const WhyChooseOur = () => {
             <span className="text-primary">Specialist Practice</span>
           </h3>
           <p className="text-sm md:text-base text-[#68706A] leading-[150%] font-normal">
-            At Perrystown Orthodontics, we focus exclusively on orthodontic
-            treatments. This specialization allows us to provide exceptional
-            care and results for our patients.
+            Our team are registered Specialist Orthodontists, dedicated to gentle, expert care and the latest treatments to create healthy, confident smiles for all ages.
           </p>
           <ul className="pt-6 md:pt-8 lg:pt-10">
             <li className=" py-2 md:py-4 lg:py-6">
@@ -37,14 +35,12 @@ const WhyChooseOur = () => {
               </span>
             </li>
             <li className=" py-2 md:py-4 lg:py-6">
-              <span className="flex items-start gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
-                <Frown className="w-7 h-7 text-primary" /> As an
-                orthodontics-only practice, we&#39;re 100% focused on creating
-                beautiful smiles.
+              <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
+                <Frown className="w-5 h-5 text-primary" /> As an
+                Focused Care
               </span>
               <span className="text-sm md:text-base font-[#505050] text-[#505050] leading-[120%] pt-2">
-                As an orthodontics-only practice, we&#39;re 100% focused on
-                creating beautiful smiles.
+                As an orthodontics-only practice, we&apos;re 100% focused on creating beautiful smiles.
               </span>
             </li>
             <li className=" py-2 md:py-4 lg:py-6">
@@ -54,6 +50,14 @@ const WhyChooseOur = () => {
               </span>
               <span className="text-sm md:text-base font-[#505050] text-[#505050] leading-[120%] pt-2">
                 Flexible scheduling and efficient visits to respect your time.
+              </span>
+            </li>
+            <li className=" py-2 md:py-4 lg:py-6">
+              <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
+                <CreditCard className="w-5 h-5 text-primary" /> Flexible Payment 
+              </span>
+              <span className="text-sm md:text-base font-[#505050] text-[#505050] leading-[120%] pt-2">
+                To make orthodontic treatment affordable and stress-free for families.
               </span>
             </li>
           </ul>
