@@ -6,7 +6,7 @@ import FeesContainer from './_components/fees-container'
 const PricingPage = () => {
   return (
     <div>
-      <HeroSection title="Pricing & Payment Information" description="Get to know our story, our mission, and the team dedicated to your dental health." />
+      <HeroSection title="Pricing & Payment Information" description="" />
       <TheFees/>
       <FeesContainer/>
     </div>

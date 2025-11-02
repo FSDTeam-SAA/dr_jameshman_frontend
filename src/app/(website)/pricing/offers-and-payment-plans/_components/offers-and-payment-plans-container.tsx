@@ -5,13 +5,17 @@ const OffersAndPaymentPlanContainer = () => {
   return (
     <div className="py-10 md:py-16 lg:py-24">
       <div className="container ">
-        <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%] text-center pb-3 md:pb-4">
+        <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
+          Get to know our story, our mission, and the team dedicated to your
+          dental health.
+        </h3>
+        <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%] text-center pb-3 md:pb-4  pt-6 md:pt-10 lg:pt-11">
           Making Great Smiles Affordable
         </h2>
         <p className="text-base md:text-lg lg:text-xl font-normal text-black leading-[150%] text-center">
-          At Perrystown Orthodontics, we believe every family deserves access to
-          quality orthodontic care. We offer a FREE consultation for all
-          treatments, giving you the chance to meet our team, explore your
+          At <strong>Perrystown Orthodontics,</strong> we believe every family deserves access to
+          quality orthodontic care. We offer a <strong>FREE consultation for all
+          treatments,</strong> giving you the chance to meet our team, explore your
           options, without any commitment or cost.
         </p>
 
@@ -83,8 +87,15 @@ const OffersAndPaymentPlanContainer = () => {
           </div>
         </div>
 
-        {/* notes  */}
+        {/* Seasonal Offers:  */}
         <div className="border border-[#E5E7EB] py-4 md:py-5 lg:py-[26px] px-4 rounded-[8px] bg-[#F9FAFB]">
+          <p className="text-xs font-normal text-[#4B5563] leading-[120%]">
+            <strong className="font-bold text-[#111827]">Seasonal Offers :</strong>{" "}
+             We also run special seasonal promotions throughout the year. Get in touch with our friendly team to find out what’s currently available.  
+          </p>
+        </div>
+        {/* notes  */}
+        <div className="border border-[#E5E7EB] py-4 md:py-5 lg:py-[26px] px-4 rounded-[8px] bg-[#F9FAFB]  mt-6 md:mt-8 lg:mt-10">
           <p className="text-xs font-normal text-[#4B5563] leading-[120%]">
             <strong className="font-bold text-[#111827]">Please note :</strong>{" "}
             Discounts cannot be combined or stacked. If more than one discount
