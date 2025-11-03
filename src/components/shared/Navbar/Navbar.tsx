@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { NavbarSkeleton } from "@/components/ui/navbar-skeleton";
 
 export interface TreatmentCategory {
   _id: string;
@@ -89,8 +90,8 @@ const aboutItems = [
     pathname === "/" && isAtTop ? "py-2" : "py-0";
 
     
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error?.message}</div>;
+  if (isLoading) return <NavbarSkeleton/>
+  if (isError) return <div className="bg-white py-10 text-black text-center leading-[120%] font-medium">Error: {error?.message}</div>;
 
   return (
     <div

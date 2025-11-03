@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { TreatmentCategoryResponse } from "./Navbar";
 import { useQuery } from "@tanstack/react-query";
+import { NavbarSkeletonMobile } from "@/components/ui/navbar-skeleton-mobile";
 
 const MobileNavbar = () => {
   const pathname = usePathname();
@@ -45,15 +46,15 @@ const aboutItems = [
   { label: "Meet The Team", link: "/about-us#meet-the-team" },
 ];
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error?.message}</div>;
+  if (isLoading) return <NavbarSkeletonMobile/>
+  if (isError) return <div className="bg-white py-10 text-black text-center leading-[120%] font-medium">Error: {error?.message}</div>;
 
   return (
     <div className="md:hidden">
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">
-            <Menu className="h-6 w-6" />
+            <Menu className="h-10 w-10" />
             <span className="sr-only">Toggle menu</span>
           </Button>
         </SheetTrigger>
