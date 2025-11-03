@@ -307,7 +307,6 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { useProfileQuery, useProfileUpdate } from "@/hooks/APicalling";
 
-// ✅ Validation schema
 const formSchema = z.object({
     firstName: z.string().min(1),
     lastName: z.string().min(1),
@@ -326,7 +325,7 @@ export default function PersonalInfo() {
     const id = (session?.user as { id: string })?.id;
 
     const updateMutation = useProfileUpdate(token, id);
-    const { data: userInfo } = useProfileQuery(token, id); 
+    const { data: userInfo } = useProfileQuery(token, id);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -336,10 +335,7 @@ export default function PersonalInfo() {
             emailAddress: "",
             phoneNumber: "",
             address: "",
-            joiningDate: undefined,
-            designation: "",
-            accessLevels: "",
-            lastoginTime: "",
+    
         },
     });
 
@@ -354,16 +350,11 @@ export default function PersonalInfo() {
                 phoneNumber: data.phoneNumber || "",
                 address: data.address || "",
                 joiningDate: data.createdAt ? new Date(data.createdAt) : undefined,
-                designation: data.designation || "",
-                accessLevels: data.role || "", // if your backend returns role instead of accessLevels
-                lastoginTime: data.updatedAt
-                    ? new Date(data.updatedAt).toLocaleString()
-                    : "",
+                designation: data.role || "",
             });
         }
     }, [userInfo, form]);
 
-    // ✅ Submit handler
     function onSubmit(values: z.infer<typeof formSchema>) {
         const payload = {
             firstName: values.firstName,
@@ -371,10 +362,6 @@ export default function PersonalInfo() {
             email: values.emailAddress,
             phoneNumber: values.phoneNumber,
             address: values.address,
-            joiningDate: values.joiningDate ?? new Date(),
-            designation: values.designation,
-            accessLevels: values.accessLevels || "",
-            lastoginTime: values.lastoginTime || "",
         };
         updateMutation.mutate(payload);
     }
@@ -438,7 +425,7 @@ export default function PersonalInfo() {
                                         <FormItem>
                                             <FormLabel>Email Address</FormLabel>
                                             <FormControl>
-                                                <Input type="email" placeholder="Email" {...field} />
+                                                <Input disabled type="email" placeholder="Email" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -491,6 +478,7 @@ export default function PersonalInfo() {
                                                     <FormControl>
                                                         <Button
                                                             variant="outline"
+                                                            disabled
                                                             className={cn(
                                                                 "w-full justify-start text-left font-normal",
                                                                 !field.value && "text-muted-foreground"
@@ -526,23 +514,23 @@ export default function PersonalInfo() {
                         </div>
 
                         {/* --- Role Info --- */}
-                        <div className="grid grid-cols-12 gap-4">
-                            <div className="col-span-4">
+                        <div className="grid grid-cols-12  gap-4">
+                            <div className="col-span-12">
                                 <FormField
                                     control={form.control}
                                     name="designation"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Designation</FormLabel>
+                                            <FormLabel>Role</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Designation" {...field} />
+                                                <Input disabled placeholder="Designation" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
                             </div>
-                            <div className="col-span-4">
+                            {/* <div className="col-span-4">
                                 <FormField
                                     control={form.control}
                                     name="accessLevels"
@@ -571,7 +559,7 @@ export default function PersonalInfo() {
                                         </FormItem>
                                     )}
                                 />
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* --- Submit --- */}

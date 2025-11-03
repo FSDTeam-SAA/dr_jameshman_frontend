@@ -51,7 +51,7 @@ export function useProfileUpdate(
     token: string, id: string, onSuccessCallback?: () => void) {
      const queryClient = useQueryClient();
         return useMutation({
-        mutationFn: (payload:{ firstName: string; lastName: string; email: string; phoneNumber: string; address: string; joiningDate: Date; designation: string; accessLevels: string; lastoginTime: string;}) =>
+        mutationFn: (payload:{ firstName: string; lastName: string; email: string; phoneNumber: string; address: string;}) =>
             updateProfile(token, payload, id),
         onSuccess: (data) => {
             toast.success(data?.message || "Password updated successfully");

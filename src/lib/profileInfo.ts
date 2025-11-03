@@ -49,7 +49,7 @@ export async function changePassword(token: string, payload: { oldPassword: stri
   return resData;
 }
 
-export async function updateProfile(token: string, payload:{ firstName: string; lastName: string; email: string; phoneNumber: string; address: string; joiningDate: Date; designation: string; accessLevels: string; lastoginTime: string;},id: string) {
+export async function updateProfile(token: string, payload:{ firstName: string; lastName: string; email: string; phoneNumber: string; address: string;},id: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/update-user/${id}`, {
     method: "PUT",
     headers: {
