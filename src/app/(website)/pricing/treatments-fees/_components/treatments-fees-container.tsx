@@ -72,7 +72,7 @@ const TreatmentFeesContainer = () => {
           {data?.data?.map((item) => {
             return (
               <div key={item?._id} className="mb-6 md:mb-8 lg:mb-10 ">
-                <h4 className="text-base md:text-lg font-bold text-white bg-primary leading-[120%] py-3 md:py-4 px-5 md:px-6 rounded-t-[10px] text-center">
+                <h4 className="text-base md:text-lg font-bold text-white bg-primary leading-[120%] py-3 md:py-4 px-5 md:px-6 rounded-t-[10px]">
                   {item?.serviceName}
                 </h4>
                 <div>
