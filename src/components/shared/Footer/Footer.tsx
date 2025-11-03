@@ -84,12 +84,17 @@ const Footer = () => {
               <li className="flex items-start gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
                 <MapPin className="w-5 md:w-6 h-5 md:h-6 text-white" /> 44 Muckross Avenue, Perrystown, Dublin 12, D12VK49
               </li>
+              <Link href="tel:083 011 0533">
               <li className="flex items-center gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
                 <Phone className="w-5 h-5 text-white" /> 083 011 0533
               </li>
+              </Link>
+              <Link href="mailto:perrystownorthodontics@gmail.com">
               <li className="flex items-center gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
                 <Mail className="w-5 h-5 text-white" /> perrystownorthodontics@gmail.com
               </li>
+              </Link>
+              
               <li className="flex items-start gap-2 text-sm md:text-base font-normal text-white leading-[120%] py-1.5 md:py-2">
                 <Clock className="w-5 md:w-6 h-5 md:h-6 text-white" /> Opening hours: Monday to Friday 10 AM – 6:30 PM
               </li>
