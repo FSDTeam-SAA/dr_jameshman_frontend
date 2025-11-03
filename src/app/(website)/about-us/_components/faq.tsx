@@ -62,13 +62,13 @@ const FaqContainer = () => {
       <ErrorContainer message={error?.message || "Something went wrong"} />
     );
   return (
-    <div className="pb-10 md:pb-16 lg:pb-24">
-      <div className="container">
+    <div className="pb-10 md:pb-16 lg:pb-24 bg-white">
+      <div className="container pt-3 md:pt-5">
         <div>
           <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-[#202020] leading-[150%] font-semibold text-center">
             Frequently Asked Questions
           </h2>
-          <p className="text-sm md:text-base text-[#373737] text-center pt-2 leading-[150%] font-normal">
+          <p className="text-sm md:text-base text-[#505050] text-center pt-2 leading-[150%] font-normal">
             Find answers to common questions about our treatments.
           </p>
         </div>

@@ -12,11 +12,11 @@ import { Input } from "@/components/ui/input";
 import { addPriceListSchema } from "@/schema/addPriceListSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import z from "zod";
 import { RichTextEditor } from "../../../_component/shared/rich-text-editor";
 import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
+import { Save, Plus, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
@@ -28,8 +28,11 @@ type formType = z.input<typeof addPriceListSchema>;
 type PriceItem = {
   _id: string;
   serviceName: string;
-  description: string;
-  rate: number;
+  items: {
+    description: string;
+    rate: number;
+  }[];
+  currency: string;
 };
 
 interface Props {
@@ -47,9 +50,13 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
     resolver: zodResolver(addPriceListSchema),
     defaultValues: {
       serviceName: "",
-      rate: "",
-      description: "",
+      items: [{ description: "", rate: "" }],
     },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "items",
   });
 
   useEffect(() => {
@@ -59,8 +66,10 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
     ) {
       form.reset({
         serviceName: priceListDetails?.serviceName || "",
-        description: priceListDetails?.description || "",
-        rate: priceListDetails?.rate?.toString() || "",
+        items: priceListDetails?.items?.map((item) => ({
+          description: item.description || "",
+          rate: item.rate?.toString() || "",
+        })) || [{ description: "", rate: "" }],
       });
     }
   }, [pathName, priceListDetails, form]);
@@ -74,13 +83,22 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
         ? `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees`
         : `${process.env.NEXT_PUBLIC_API_URL}/treatmentfees/${id}`;
 
+      // Convert rate from string to number for backend
+      const requestData = {
+        ...data,
+        items: data.items.map((item) => ({
+          ...item,
+          rate: parseFloat(item.rate) || 0,
+        })),
+      };
+
       const res = await fetch(url, {
         method,
         headers: {
           "content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(requestData),
       });
 
       return res.json();
@@ -104,23 +122,34 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
     }
   };
 
+  const addNewItem = () => {
+    append({ description: "", rate: "" });
+  };
+
+  const removeItem = (index: number) => {
+    if (fields.length > 1) {
+      remove(index);
+    } else {
+      toast.error("At least one item is required");
+    }
+  };
+
   return (
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {/* priceName field */}
+          {/* Service Name field */}
           <FormField
             control={form.control}
             name="serviceName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Service Name</FormLabel>
-
                 <FormControl>
                   <Input
                     type="text"
                     {...field}
-                    placeholder="Enter price name"
+                    placeholder="Enter service name"
                   />
                 </FormControl>
                 <FormMessage />
@@ -128,43 +157,75 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
             )}
           />
 
-          {/* rate field */}
-          <FormField
-            control={form.control}
-            name="rate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rate</FormLabel>
+          {/* Items Array */}
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h1>Price Items</h1>
+              <Button
+                type="button"
+                onClick={addNewItem}
+                variant="outline"
+                size="sm"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Item
+              </Button>
+            </div>
 
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    placeholder="Enter price name"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            {fields.map((field, index) => (
+              <div key={field.id} className="p-4 border rounded-lg space-y-4">
+                <div className="flex justify-between items-center">
+                  <h4 className="font-medium">Item {index + 1}</h4>
+                  <Button
+                    type="button"
+                    onClick={() => removeItem(index)}
+                    variant="destructive"
+                    size="sm"
+                    disabled={fields.length === 1}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
 
-          {/* Description */}
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <RichTextEditor
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                {/* Description Field */}
+                <FormField
+                  control={form.control}
+                  name={`items.${index}.description`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl>
+                        <RichTextEditor
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Rate Field - Now as string */}
+                <FormField
+                  control={form.control}
+                  name={`items.${index}.rate`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Rate (EUR)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          {...field}
+                          placeholder="Enter rate"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            ))}
+          </div>
 
           <Button
             type="submit"

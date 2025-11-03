@@ -7,7 +7,7 @@ const OffersAndPaymentPlans = () => {
     <div>
       <HeroSection
         title="Pricing & Payment Information"
-        description="Get to know our story, our mission, and the team dedicated to your dental health."
+        description=""
       />
       <OffersAndPaymentPlanContainer />
     </div>

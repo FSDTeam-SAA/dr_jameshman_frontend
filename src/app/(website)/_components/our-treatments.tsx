@@ -1,5 +1,4 @@
 "use client";
-import { TreatmentResponse } from "@/components/types/treatments-data-type";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import OurTreatmentSkeleton from "./our-treatment-skeleton";
@@ -7,15 +6,16 @@ import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import TreatmentCart from "@/components/common/treatment-cart";
+import { TreatmentCategoryResponse } from "@/components/shared/Navbar/Navbar";
 
 const OurTreatments = () => {
-  const { data, isLoading, isError, error } = useQuery<TreatmentResponse>({
-    queryKey: ["treatments"],
+  const {data, isLoading, isError, error} = useQuery<TreatmentCategoryResponse>({
+    queryKey: ["treatments-categories"],
     queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatments`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`);
       return res.json();
     },
-  });
+  })
 
   console.log(data);
 
@@ -28,14 +28,13 @@ const OurTreatments = () => {
   return (
     <div className="py-10 md:py-14 lg:py-20">
       <div className="container">
-        <div className="w-full flex items-center justify-between">
+        <div className="w-full flex items-center gap-6 md:gap-14 lg:gap-20 justify-between">
           <div>
             <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold leading-[150%] text-[#2F2F2F]">
               Our <span className="text-primary">Orthodontic Treatments</span>
             </h2>
             <p className="text-base md:text-lg font-normal text-black leading-[120%] pt-2 md:pt-3">
-              We provide orthodontic care designed to give you and your family
-              confident, lasting smiles.
+              We provide orthodontic care designed to give you and your family confident, lasting smiles. <span className="font-semibold">Metal Braces, Clear Braces, Invisalign Clear Aligners, Spark Clear Aligners, Early Intervention, Two-Phased Treatments, Retainers .</span>
             </p>
           </div>
           <div>

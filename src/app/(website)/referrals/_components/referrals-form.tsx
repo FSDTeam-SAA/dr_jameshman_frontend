@@ -478,10 +478,8 @@ const ReferralsForm = () => {
                         htmlFor="consentGiven"
                         className="text-xs md:text-sm text-[#8E938F] font-normal leading-[150%]"
                       >
-                        I consent to having this website store my submitted
-                        information so they can respond to my inquiry. See our{" "}
-                        <span className="text-primary">privacy policy</span> to
-                        learn more about how we use data.
+                        I consent to being contacted about this referral request and have read the 
+                        <span className="text-primary"> privacy policy</span>
                       </Label>
                       <FormMessage className="text-red-500" />
                     </div>
@@ -495,7 +493,7 @@ const ReferralsForm = () => {
                   className="w-full h-[60px] rounded-[8px] bg-primary text-[#F8F9FA] text-base font-medium leading-[120%]"
                   type="submit"
                 >
-                  {isPending ? "Sending..." : "Book Appointment"}
+                  {isPending ? "Sending..." : "Submit Referral"}
                 </Button>
               </div>
             </form>

@@ -8,7 +8,7 @@ const AboutUsPage = () => {
     <div>
       <HeroSection
         title="About Us"
-        description="Get to know our story, our mission, and the team dedicated to your dental health."
+        description=""
       />
       <section id="why-us">
         <WhyChooseUs />

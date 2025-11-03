@@ -1,23 +1,23 @@
 import Image from "next/image";
 import React from "react";
-import { TreatmentGroup } from "../types/treatments-data-type";
+import Link from "next/link";
+import { TreatmentCategory } from "../shared/Navbar/Navbar";
 
-const TreatmentCart = ({ item }: { item: TreatmentGroup }) => {
+const TreatmentCart = ({ item }: { item: TreatmentCategory }) => {
   return (
     <div>
-      <Image
-        src={"/assets/images/no-image.jpg"}
-        // src={
-        //   item?.treatments[0]?.image || "/assets/images/no-image.jpg"
-        // }
-        alt={item?.treatments?.[0]?.serviceName || ""}
-        width={1000}
-        height={1000}
-        className="w-full h-[431px] rounded-[8px] object-cover"
-      />
-      <h3 className="text-base md:text-lg font-medium leading-[120%] text-[#2F2F2F] text-center bg-white rounded-b-[8px] py-2 md:py-3">
-        {item?.treatments?.[0]?.serviceName}
-      </h3>
+      <Link href={`/treatments/${item?._id}`}>
+        <Image
+          src={item?.image || "/assets/images/no-image.jpg"}
+          alt={item?.name || ""}
+          width={1000}
+          height={1000}
+          className="w-full h-[431px] rounded-[8px] object-cover"
+        />
+        <h3 className="text-base md:text-lg font-medium leading-[120%] text-[#2F2F2F] text-center bg-white rounded-b-[8px] py-2 md:py-3">
+          {item?.name}
+        </h3>
+      </Link>
     </div>
   );
 };

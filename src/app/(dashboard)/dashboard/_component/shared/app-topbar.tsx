@@ -44,6 +44,14 @@ export const AppTopBar = () => {
           </Button>
         </Link>
       )}
+
+      {pathName === "/dashboard/treatment-category" && (
+        <Link href={`/dashboard/treatment-category/add-treatment-category`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Treatment Category
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
