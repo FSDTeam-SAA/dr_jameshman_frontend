@@ -192,7 +192,7 @@ const TreatmentCategoryContainer = ({
                   <div className="pt-2 md:pt-3 lg:pt-[14px] flex flex-col md:flex-row justify-center items-center gap-[13px]">
                     <Link href="/booking">
                       <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[46px] rounded-[6px]">
-                        Book Free Consult
+                        Book FREE Consult
                       </Button>
                     </Link>
                   </div>
