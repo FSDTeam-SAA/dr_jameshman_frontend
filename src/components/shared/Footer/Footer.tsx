@@ -39,12 +39,7 @@ const Footer = () => {
                 <InstagramIcon className="w-8 h-8 text-white cursor-pointer" />
               </span>
             </div>
-            <div className="pt-4 md:pt-6 lg:pt-8 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-0">
-              <Image src="/assets/images/brand1.png" alt="brands-logo" width={1000} height={200} className="w-[100px] object-contain h-[35px]"/>
-              <Image src="/assets/images/brand2.png" alt="brands-logo" width={1000} height={200} className="w-[130px] object-contain h-[35px]"/>
-              <Image src="/assets/images/brand3.png" alt="brands-logo" width={1000} height={200} className="w-[140px] object-contain h-[35px]"/>
-              <Image src="/assets/images/brand4.png" alt="brands-logo" width={1000} height={200} className="w-[130px] object-contain h-[35px]"/>
-            </div>
+           
           </div>
           <div className="md:col-span-1">
             <h3 className="text-base md:text-lg lg:text-xl font-medium text-white leading[120%]">

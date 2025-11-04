@@ -6,7 +6,7 @@ import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import TreatmentCart from "@/components/common/treatment-cart";
-import { TreatmentCategoryResponse } from "@/components/shared/Navbar/Navbar";
+import { TreatmentCategoryResponse } from "@/components/shared/Navbar/MobileTreatmentsDropdown";
 
 const OurTreatments = () => {
   const {data, isLoading, isError, error} = useQuery<TreatmentCategoryResponse>({
