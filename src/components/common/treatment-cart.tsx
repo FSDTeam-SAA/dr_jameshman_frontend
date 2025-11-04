@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { TreatmentCategory } from "../shared/Navbar/Navbar";
+import { TreatmentCategory } from "../types/treatments-data-type";
 
 const TreatmentCart = ({ item }: { item: TreatmentCategory }) => {
   return (
