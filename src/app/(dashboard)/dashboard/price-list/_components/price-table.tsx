@@ -59,6 +59,7 @@ export const PriceTable = () => {
       if (!res.ok) throw new Error("Failed to fetch price list");
       return res.json();
     },
+    enabled: !!token,
   });
 
   const priceLists = allPriceList?.data || [];
@@ -189,7 +190,7 @@ export const PriceTable = () => {
                                 className="flex justify-between items-start border-b pb-3 last:border-b-0"
                               >
                                 <div
-                                  className="flex-1 text-black/70"
+                                  className="lg:max-w-xl"
                                   dangerouslySetInnerHTML={{
                                     __html: item.description || "",
                                   }}

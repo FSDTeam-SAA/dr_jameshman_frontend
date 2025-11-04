@@ -66,6 +66,7 @@ export const ContactsTable = () => {
       if (!res.ok) throw new Error("Failed to fetch contacts");
       return res.json();
     },
+    enabled: !!token,
   });
 
   const contacts = allContacts?.data || [];

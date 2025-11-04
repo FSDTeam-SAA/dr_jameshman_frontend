@@ -143,7 +143,7 @@ export const BookingsTable = () => {
                         })
                       : "—"}
                   </TableCell>
-                  <TableCell className="py-6">{booking?.message}</TableCell>
+                  <TableCell className="py-6 lg:max-w-md mx-auto">{booking?.message}</TableCell>
                   <TableCell className="py-6">
                     <div className="space-x-2 flex justify-center">
                       <button
