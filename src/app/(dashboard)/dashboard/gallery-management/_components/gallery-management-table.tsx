@@ -19,10 +19,18 @@ import { useSession } from "next-auth/react";
 
 interface GalleryItem {
   _id: string;
-  imageName: string;
-  imageDescription: string;
-  imageUrl: string;
+  before: {
+    imageName: string;
+    cloudinaryId: string;
+    imageUrl: string;
+  };
+  after: {
+    imageName: string;
+    cloudinaryId: string;
+    imageUrl: string;
+  };
   createdAt: string;
+  updatedAt: string;
 }
 
 interface Pagination {
@@ -72,10 +80,16 @@ export const GalleryManagementTable = () => {
           <TableHeader className="bg-primary/20 py-5 rounded-lg">
             <TableRow>
               <TableHead className="py-6 text-black/85 text-center">
-                Image
+                Before Image
               </TableHead>
               <TableHead className="py-6 text-black/85 text-center">
-                Description
+                Before Name
+              </TableHead>
+              <TableHead className="py-6 text-black/85 text-center">
+                After Image
+              </TableHead>
+              <TableHead className="py-6 text-black/85 text-center">
+                After Name
               </TableHead>
               <TableHead className="py-6 text-black/85 text-center">
                 Date
@@ -95,7 +109,13 @@ export const GalleryManagementTable = () => {
                     <Skeleton className="h-[80px] w-[100px] mx-auto rounded-lg" />
                   </TableCell>
                   <TableCell className="py-6">
-                    <Skeleton className="h-5 w-[200px] mx-auto" />
+                    <Skeleton className="h-5 w-[120px] mx-auto" />
+                  </TableCell>
+                  <TableCell className="py-6">
+                    <Skeleton className="h-[80px] w-[100px] mx-auto rounded-lg" />
+                  </TableCell>
+                  <TableCell className="py-6">
+                    <Skeleton className="h-5 w-[120px] mx-auto" />
                   </TableCell>
                   <TableCell className="py-6">
                     <Skeleton className="h-5 w-[100px] mx-auto" />
@@ -111,7 +131,7 @@ export const GalleryManagementTable = () => {
             ) : galleries.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={6}
                   className="text-center py-10 text-black/60"
                 >
                   No galleries found
@@ -123,20 +143,51 @@ export const GalleryManagementTable = () => {
                   key={gallery?._id}
                   className="text-black/60 text-center"
                 >
+                  {/* Before Image */}
                   <TableCell className="py-6">
-                    <Image
-                      src={gallery?.imageUrl}
-                      alt={gallery?.imageName || "gallery image"}
-                      width={1000}
-                      height={1000}
-                      className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
-                    />
+                    {gallery?.before?.imageUrl ? (
+                      <Image
+                        src={gallery.before.imageUrl}
+                        alt={gallery.before.imageName || "Before image"}
+                        width={100}
+                        height={80}
+                        className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
+                      />
+                    ) : (
+                      <div className="h-[80px] w-[100px] bg-gray-200 rounded-lg mx-auto flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No Image</span>
+                      </div>
+                    )}
                   </TableCell>
 
+                  {/* Before Name */}
                   <TableCell className="py-6">
-                    {gallery?.imageDescription || "No description"}
+                    {gallery?.before?.imageName || "No name"}
                   </TableCell>
 
+                  {/* After Image */}
+                  <TableCell className="py-6">
+                    {gallery?.after?.imageUrl ? (
+                      <Image
+                        src={gallery.after.imageUrl}
+                        alt={gallery.after.imageName || "After image"}
+                        width={100}
+                        height={80}
+                        className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
+                      />
+                    ) : (
+                      <div className="h-[80px] w-[100px] bg-gray-200 rounded-lg mx-auto flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No Image</span>
+                      </div>
+                    )}
+                  </TableCell>
+
+                  {/* After Name */}
+                  <TableCell className="py-6">
+                    {gallery?.after?.imageName || "No name"}
+                  </TableCell>
+
+                  {/* Date */}
                   <TableCell className="py-6">
                     {new Date(gallery?.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -145,13 +196,14 @@ export const GalleryManagementTable = () => {
                     })}
                   </TableCell>
 
+                  {/* Actions */}
                   <TableCell className="py-6">
                     <div className="flex justify-center gap-2">
                       <Link
                         href={`/dashboard/gallery-management/add-gallery/edit-gallery/${gallery?._id}`}
                       >
-                        <button>
-                          <Edit className="h-5 w-5" />
+                        <button className="p-1 hover:bg-gray-100 rounded">
+                          <Edit className="h-4 w-4" />
                         </button>
                       </Link>
                       <div>
