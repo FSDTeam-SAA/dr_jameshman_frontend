@@ -70,7 +70,9 @@ export const BookingsTable = () => {
       const data = await res.json();
       return data;
     },
+    enabled: !!token,
   });
+
 
   const bookings = allBookings?.data || [];
   const pagination = allBookings?.pagination;
@@ -108,7 +110,7 @@ export const BookingsTable = () => {
 
           <TableBody>
             {isLoading ? (
-              Array.from({ length: 10 }).map((_, i) => (
+              Array.from({ length: 10 })?.map((_, i) => (
                 <TableRow key={i}>
                   {Array.from({ length: 8 }).map((_, j) => (
                     <TableCell key={j} className="py-6 text-center">
@@ -117,8 +119,8 @@ export const BookingsTable = () => {
                   ))}
                 </TableRow>
               ))
-            ) : bookings.length > 0 ? (
-              bookings.map((booking) => (
+            ) : bookings?.length > 0 ? (
+              bookings?.map((booking) => (
                 <TableRow
                   key={booking?._id}
                   className="text-black/60 text-center"
