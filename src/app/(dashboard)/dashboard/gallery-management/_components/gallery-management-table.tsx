@@ -22,12 +22,10 @@ interface GalleryItem {
   before: {
     imageName: string;
     cloudinaryId: string;
-    imageUrl: string;
   };
   after: {
     imageName: string;
     cloudinaryId: string;
-    imageUrl: string;
   };
   createdAt: string;
   updatedAt: string;
@@ -83,13 +81,7 @@ export const GalleryManagementTable = () => {
                 Before Image
               </TableHead>
               <TableHead className="py-6 text-black/85 text-center">
-                Before Name
-              </TableHead>
-              <TableHead className="py-6 text-black/85 text-center">
                 After Image
-              </TableHead>
-              <TableHead className="py-6 text-black/85 text-center">
-                After Name
               </TableHead>
               <TableHead className="py-6 text-black/85 text-center">
                 Date
@@ -109,16 +101,10 @@ export const GalleryManagementTable = () => {
                     <Skeleton className="h-[80px] w-[100px] mx-auto rounded-lg" />
                   </TableCell>
                   <TableCell className="py-6">
-                    <Skeleton className="h-5 w-[120px] mx-auto" />
-                  </TableCell>
-                  <TableCell className="py-6">
                     <Skeleton className="h-[80px] w-[100px] mx-auto rounded-lg" />
                   </TableCell>
                   <TableCell className="py-6">
                     <Skeleton className="h-5 w-[120px] mx-auto" />
-                  </TableCell>
-                  <TableCell className="py-6">
-                    <Skeleton className="h-5 w-[100px] mx-auto" />
                   </TableCell>
                   <TableCell className="py-6">
                     <div className="flex justify-center gap-3">
@@ -131,7 +117,7 @@ export const GalleryManagementTable = () => {
             ) : galleries.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={6}
+                  colSpan={4}
                   className="text-center py-10 text-black/60"
                 >
                   No galleries found
@@ -145,10 +131,10 @@ export const GalleryManagementTable = () => {
                 >
                   {/* Before Image */}
                   <TableCell className="py-6">
-                    {gallery?.before?.imageUrl ? (
+                    {gallery?.before?.imageName ? (
                       <Image
-                        src={gallery.before.imageUrl}
-                        alt={gallery.before.imageName || "Before image"}
+                        src={gallery.before.imageName}
+                        alt="Before image"
                         width={100}
                         height={80}
                         className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
@@ -158,19 +144,14 @@ export const GalleryManagementTable = () => {
                         <span className="text-xs text-gray-500">No Image</span>
                       </div>
                     )}
-                  </TableCell>
-
-                  {/* Before Name */}
-                  <TableCell className="py-6">
-                    {gallery?.before?.imageName || "No name"}
                   </TableCell>
 
                   {/* After Image */}
                   <TableCell className="py-6">
-                    {gallery?.after?.imageUrl ? (
+                    {gallery?.after?.imageName ? (
                       <Image
-                        src={gallery.after.imageUrl}
-                        alt={gallery.after.imageName || "After image"}
+                        src={gallery.after.imageName}
+                        alt="After image"
                         width={100}
                         height={80}
                         className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
@@ -180,11 +161,6 @@ export const GalleryManagementTable = () => {
                         <span className="text-xs text-gray-500">No Image</span>
                       </div>
                     )}
-                  </TableCell>
-
-                  {/* After Name */}
-                  <TableCell className="py-6">
-                    {gallery?.after?.imageName || "No name"}
                   </TableCell>
 
                   {/* Date */}
@@ -221,8 +197,16 @@ export const GalleryManagementTable = () => {
           <div className="px-5 pt-5">
             <div className="flex items-center justify-between">
               <p className="text-sm md:text-base text-black/60">
-                Showing {galleries.length > 0 ? 1 : 0}–{galleries.length} of{" "}
-                {pagination.totalItems} results
+                Showing{" "}
+                {galleries.length > 0
+                  ? (currentPage - 1) * pagination.itemsPerPage + 1
+                  : 0}
+                –
+                {Math.min(
+                  currentPage * pagination.itemsPerPage,
+                  pagination.totalItems
+                )}{" "}
+                of {pagination.totalItems} results
               </p>
 
               <div>

@@ -18,7 +18,6 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ImageUp, X, Save } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
@@ -31,12 +30,10 @@ interface GalleryItem {
   before: {
     imageName: string;
     cloudinaryId?: string;
-    imageUrl?: string;
   };
   after: {
     imageName: string;
     cloudinaryId?: string;
-    imageUrl?: string;
   };
 }
 
@@ -60,11 +57,9 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
     resolver: zodResolver(addGallerySchema),
     defaultValues: {
       before: {
-        imageName: "",
         imageFile: undefined,
       },
       after: {
-        imageName: "",
         imageFile: undefined,
       },
     },
@@ -75,20 +70,18 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
       pathName !== "/dashboard/gallery-management/add-gallery" &&
       galleryDetails
     ) {
-      if (galleryDetails.before.imageUrl) {
-        setBeforeImagePreview(galleryDetails.before.imageUrl);
+      if (galleryDetails.before.imageName) {
+        setBeforeImagePreview(galleryDetails.before.imageName);
       }
-      if (galleryDetails.after.imageUrl) {
-        setAfterImagePreview(galleryDetails.after.imageUrl);
+      if (galleryDetails.after.imageName) {
+        setAfterImagePreview(galleryDetails.after.imageName);
       }
 
       form.reset({
         before: {
-          imageName: galleryDetails.before.imageName || "",
           imageFile: undefined,
         },
         after: {
-          imageName: galleryDetails.after.imageName || "",
           imageFile: undefined,
         },
       });
@@ -128,14 +121,12 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
   const onSubmit = async (data: AddGalleryFormType) => {
     const formData = new FormData();
 
-    // Append before data
-    formData.append("before", data.before.imageName);
+    // Append before image file
     if (data.before.imageFile instanceof File) {
       formData.append("before", data.before.imageFile);
     }
 
-    // Append after data
-    formData.append("after", data.after.imageName);
+    // Append after image file
     if (data.after.imageFile instanceof File) {
       formData.append("after", data.after.imageFile);
     }
@@ -156,13 +147,11 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
   const clearBeforeSelection = () => {
     setBeforeImagePreview(null);
     form.setValue("before.imageFile", undefined);
-    form.setValue("before.imageName", "");
   };
 
   const clearAfterSelection = () => {
     setAfterImagePreview(null);
     form.setValue("after.imageFile", undefined);
-    form.setValue("after.imageName", "");
   };
 
   const handleImageUpload = (
@@ -184,21 +173,6 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
           {/* Before Section */}
           <div className="border rounded-lg p-6">
             <h3 className="text-lg font-semibold mb-4">Before Image</h3>
-
-            {/* Before Image Name */}
-            <FormField
-              control={form.control}
-              name="before.imageName"
-              render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>Before Image Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter before image name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             {/* Before Image Upload */}
             <FormField
@@ -274,21 +248,6 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
           {/* After Section */}
           <div className="border rounded-lg p-6">
             <h3 className="text-lg font-semibold mb-4">After Image</h3>
-
-            {/* After Image Name */}
-            <FormField
-              control={form.control}
-              name="after.imageName"
-              render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>After Image Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter after image name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             {/* After Image Upload */}
             <FormField
