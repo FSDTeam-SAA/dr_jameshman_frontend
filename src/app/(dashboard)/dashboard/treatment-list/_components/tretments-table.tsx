@@ -64,6 +64,7 @@ export const TreatmentsTable = () => {
       if (!res.ok) throw new Error("Failed to fetch treatments");
       return res.json();
     },
+    enabled: !!token,
   });
 
   const treatments = treatmentsData?.data || [];
@@ -184,7 +185,7 @@ export const TreatmentsTable = () => {
 
                   <TableCell className="py-6 text-start">
                     <div
-                      className="max-w-md line-clamp-2"
+                      className="max-w-lg line-clamp-2"
                       title={stripHtml(treatment.description)}
                     >
                       {truncateText(stripHtml(treatment.description), 100)}

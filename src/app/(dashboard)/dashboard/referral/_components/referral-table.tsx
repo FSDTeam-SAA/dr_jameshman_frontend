@@ -91,6 +91,7 @@ export const ReferralTable = () => {
       if (!res.ok) throw new Error("Failed to fetch referrals");
       return res.json();
     },
+    enabled: !!token,
   });
 
   const referrals = allReferrals?.data || [];
@@ -274,7 +275,7 @@ export const ReferralTable = () => {
                       <button
                         onClick={() => {
                           handleViewReferral(referral);
-                          setReferralID(referral?._id)
+                          setReferralID(referral?._id);
                         }}
                         className="p-1 hover:bg-gray-100 rounded"
                         title="View Referral Details"
