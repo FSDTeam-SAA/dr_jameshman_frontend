@@ -59,6 +59,7 @@ export const TreatmentCategoryTable = () => {
         if (!res.ok) throw new Error("Failed to fetch treatment categories");
         return res.json();
       },
+      enabled: !!token,
     });
 
   const categories = allCategories?.data || [];

@@ -19,10 +19,16 @@ import { useSession } from "next-auth/react";
 
 interface GalleryItem {
   _id: string;
-  imageName: string;
-  imageDescription: string;
-  imageUrl: string;
+  before: {
+    imageName: string;
+    cloudinaryId: string;
+  };
+  after: {
+    imageName: string;
+    cloudinaryId: string;
+  };
   createdAt: string;
+  updatedAt: string;
 }
 
 interface Pagination {
@@ -72,10 +78,10 @@ export const GalleryManagementTable = () => {
           <TableHeader className="bg-primary/20 py-5 rounded-lg">
             <TableRow>
               <TableHead className="py-6 text-black/85 text-center">
-                Image
+                Before Image
               </TableHead>
               <TableHead className="py-6 text-black/85 text-center">
-                Description
+                After Image
               </TableHead>
               <TableHead className="py-6 text-black/85 text-center">
                 Date
@@ -95,10 +101,10 @@ export const GalleryManagementTable = () => {
                     <Skeleton className="h-[80px] w-[100px] mx-auto rounded-lg" />
                   </TableCell>
                   <TableCell className="py-6">
-                    <Skeleton className="h-5 w-[200px] mx-auto" />
+                    <Skeleton className="h-[80px] w-[100px] mx-auto rounded-lg" />
                   </TableCell>
                   <TableCell className="py-6">
-                    <Skeleton className="h-5 w-[100px] mx-auto" />
+                    <Skeleton className="h-5 w-[120px] mx-auto" />
                   </TableCell>
                   <TableCell className="py-6">
                     <div className="flex justify-center gap-3">
@@ -123,20 +129,41 @@ export const GalleryManagementTable = () => {
                   key={gallery?._id}
                   className="text-black/60 text-center"
                 >
+                  {/* Before Image */}
                   <TableCell className="py-6">
-                    <Image
-                      src={gallery?.imageUrl}
-                      alt={gallery?.imageName || "gallery image"}
-                      width={1000}
-                      height={1000}
-                      className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
-                    />
+                    {gallery?.before?.imageName ? (
+                      <Image
+                        src={gallery.before.imageName}
+                        alt="Before image"
+                        width={100}
+                        height={80}
+                        className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
+                      />
+                    ) : (
+                      <div className="h-[80px] w-[100px] bg-gray-200 rounded-lg mx-auto flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No Image</span>
+                      </div>
+                    )}
                   </TableCell>
 
+                  {/* After Image */}
                   <TableCell className="py-6">
-                    {gallery?.imageDescription || "No description"}
+                    {gallery?.after?.imageName ? (
+                      <Image
+                        src={gallery.after.imageName}
+                        alt="After image"
+                        width={100}
+                        height={80}
+                        className="h-[80px] w-[100px] object-cover rounded-lg mx-auto"
+                      />
+                    ) : (
+                      <div className="h-[80px] w-[100px] bg-gray-200 rounded-lg mx-auto flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No Image</span>
+                      </div>
+                    )}
                   </TableCell>
 
+                  {/* Date */}
                   <TableCell className="py-6">
                     {new Date(gallery?.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -145,13 +172,14 @@ export const GalleryManagementTable = () => {
                     })}
                   </TableCell>
 
+                  {/* Actions */}
                   <TableCell className="py-6">
                     <div className="flex justify-center gap-2">
                       <Link
                         href={`/dashboard/gallery-management/add-gallery/edit-gallery/${gallery?._id}`}
                       >
-                        <button>
-                          <Edit className="h-5 w-5" />
+                        <button className="p-1 hover:bg-gray-100 rounded">
+                          <Edit className="h-4 w-4" />
                         </button>
                       </Link>
                       <div>
@@ -169,8 +197,16 @@ export const GalleryManagementTable = () => {
           <div className="px-5 pt-5">
             <div className="flex items-center justify-between">
               <p className="text-sm md:text-base text-black/60">
-                Showing {galleries.length > 0 ? 1 : 0}–{galleries.length} of{" "}
-                {pagination.totalItems} results
+                Showing{" "}
+                {galleries.length > 0
+                  ? (currentPage - 1) * pagination.itemsPerPage + 1
+                  : 0}
+                –
+                {Math.min(
+                  currentPage * pagination.itemsPerPage,
+                  pagination.totalItems
+                )}{" "}
+                of {pagination.totalItems} results
               </p>
 
               <div>
