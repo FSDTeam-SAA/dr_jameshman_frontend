@@ -2,9 +2,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { toast } from "sonner";
 import Link from "next/link";
 import {
   Table,
@@ -16,10 +15,11 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Edit, Trash2, User } from "lucide-react";
+import { Edit, User } from "lucide-react";
 import { Doctor } from "@/schema/addDoctorSchema";
 import DashboardPagination from "../../_component/shared/pagination";
 import Image from "next/image";
+import { DeleteDoctor } from "./delete-doctor";
 
 interface DoctorsResponse {
   data: Doctor[];
@@ -31,7 +31,6 @@ interface DoctorsResponse {
 
 const DoctorsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const queryClient = useQueryClient();
   const { data: session } = useSession();
   const token = (session?.user as { token: string })?.token;
 
@@ -52,36 +51,6 @@ const DoctorsTable = () => {
     },
     enabled: !!token,
   });
-
-  // Delete doctor mutation
-  const { mutate: deleteDoctor } = useMutation({
-    mutationFn: async (id: string) => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/doctors/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!res.ok) throw new Error("Failed to delete doctor");
-      return res.json();
-    },
-    onSuccess: () => {
-      toast.success("Doctor deleted successfully");
-      queryClient.invalidateQueries({ queryKey: ["doctors"] });
-    },
-    onError: (error: Error) => {
-      toast.error(error.message);
-    },
-  });
-
-  const handleDelete = (id: string, name: string) => {
-    if (confirm(`Are you sure you want to delete ${name}?`)) {
-      deleteDoctor(id);
-    }
-  };
 
   const doctors = doctorsData?.data || [];
   const pagination = doctorsData?.pagination;
@@ -141,13 +110,13 @@ const DoctorsTable = () => {
 
             {!isLoading &&
               doctors.map((doctor) => (
-                <TableRow key={doctor._id} className="text-gray-700">
+                <TableRow key={doctor?._id} className="text-gray-700">
                   <TableCell className="py-6">
                     <div className="flex items-center gap-3">
-                      {doctor.image ? (
+                      {doctor?.image ? (
                         <Image
-                          src={doctor.image}
-                          alt={doctor.name}
+                          src={doctor?.image}
+                          alt={doctor?.name}
                           width={1000}
                           height={1000}
                           className="h-12 w-12 rounded-full object-cover"
@@ -157,30 +126,23 @@ const DoctorsTable = () => {
                           <User className="h-6 w-6 text-gray-400" />
                         </div>
                       )}
-                      <span className="font-medium">{doctor.name}</span>
+                      <span className="font-medium">{doctor?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="py-6">{doctor.title}</TableCell>
+                  <TableCell className="py-6">{doctor?.title}</TableCell>
                   <TableCell className="py-6">
                     <p className="line-clamp-2 max-w-md">
-                      {doctor.description}
+                      {doctor?.description}
                     </p>
                   </TableCell>
                   <TableCell className="py-6">
                     <div className="flex items-center gap-2">
-                      <Link href={`/dashboard/doctors/edit/${doctor._id}`}>
+                      <Link href={`/dashboard/doctors/edit/${doctor?._id}`}>
                         <button>
                           <Edit className="h-4 w-4 mr-1" />
                         </button>
                       </Link>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDelete(doctor._id, doctor.name)}
-                      >
-                        <Trash2 className="h-4 w-4 mr-1" />
-                        Delete
-                      </Button>
+                      <DeleteDoctor id={doctor?._id} />
                     </div>
                   </TableCell>
                 </TableRow>
