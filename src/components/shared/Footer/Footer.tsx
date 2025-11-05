@@ -17,6 +17,7 @@ const Footer = () => {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-8 md:pb-10 lg:pb-12">
           <div className="md:col-span-2">
+            <Link href="/">
             <Image
               src="/assets/images/footer-logo.png"
               alt="logo.png"
@@ -24,6 +25,7 @@ const Footer = () => {
               height={1000}
               className="h-[90px] w-[243px] object-cover"
             />
+            </Link>
             <p className="text-sm md:text-base font-normal text-white leading-[150%] py-3 md:py-4 lg:py-6">
               “Providing exceptional dental care with a focus on comfort and <br/> results for over 15 years.”
             </p>
