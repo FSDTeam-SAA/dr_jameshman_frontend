@@ -6,7 +6,6 @@ import GetInTouch from "./_components/get-in-touch";
 import OurTreatments from "./_components/our-treatments";
 import QRCode from "./_components/qr-code";
 import Brands from "./_components/brands";
-// import { SmileLanding } from '@/components/ui/SmileLanding'
 
 const HomePage = () => {
   return (
@@ -15,7 +14,6 @@ const HomePage = () => {
       <OurTreatments />
       <QRCode />
       <WhyChooseOur />
-      {/* <SmileLanding /> */}
       <GetInTouch />
       <ContactInformatioin />
       <Brands/>

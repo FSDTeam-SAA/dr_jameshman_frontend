@@ -7,7 +7,6 @@ const TreatmentsFeesPage = () => {
     <div>
       <HeroSection
         title="Pricing & Payment Information"
-        description=""
       />
       <TreatmentFeesContainer />
     </div>

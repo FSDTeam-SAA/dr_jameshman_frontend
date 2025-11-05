@@ -1,8 +1,8 @@
 import HeroSection from "@/components/common/hero-section";
 import React from "react";
-import GetInTouch from "../_components/get-in-touch";
 import ContactInformation from "./_components/contact-information";
 import GoogleMap from "./_components/google-map";
+import ContactGetInTouch from "./_components/contact-get-in-touch";
 
 const ContactPage = () => {
   return (
@@ -11,7 +11,7 @@ const ContactPage = () => {
         title="Contact Us"
       />
       <ContactInformation />
-      <GetInTouch />
+      <ContactGetInTouch />
       <GoogleMap/>
     </div>
   );

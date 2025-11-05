@@ -179,6 +179,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
   // CarouselNext,
   // CarouselPrevious,
 } from "@/components/ui/carousel";
@@ -268,7 +270,7 @@ const GallerisContainer = () => {
               loop: true,
               skipSnaps: false,
             }}
-            className="w-full"
+            className="w-[97%] mx-auto bg-[#1C1C1C]"
           >
             <CarouselContent className="flex gap-6">
               {data?.data?.map((item) => (
@@ -276,11 +278,11 @@ const GallerisContainer = () => {
                   key={item._id}
                   className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
-                    <div className="flex flex-col">
+                  <div className="border border-white my-2 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div className="flex flex-col  ">
                       {/* Before Image */}
                       <div>
-                        <h4 className="text-center text-sm md:text-base font-medium bg-gray-100 py-2">
+                        <h4 className="text-center text-sm md:text-base lg:text-lg font-medium bg-[#1C1C1C] text-white py-2">
                           Before
                         </h4>
                         <Image
@@ -294,7 +296,7 @@ const GallerisContainer = () => {
 
                       {/* After Image */}
                       <div>
-                        <h4 className="text-center text-sm md:text-base font-medium bg-gray-100 py-2">
+                        <h4 className="text-center text-sm md:text-base lg:text-lg font-medium bg-[#1C1C1C] text-white py-2">
                           After
                         </h4>
                         <Image
@@ -312,8 +314,8 @@ const GallerisContainer = () => {
             </CarouselContent>
 
             {/* Arrows */}
-            {/* <CarouselPrevious className="left-0 md:-left-6" />
-    <CarouselNext className="right-0 md:-right-6" /> */}
+            <CarouselNext className="right-0 md:-right-6" />
+            <CarouselPrevious className="left-0 md:-left-6" />
           </Carousel>
         </div>
 
