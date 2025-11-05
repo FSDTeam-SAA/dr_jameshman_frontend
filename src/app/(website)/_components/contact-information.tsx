@@ -43,7 +43,7 @@ const ContactInformatioin = () => {
               <MapPin className="w-5 h-5 text-primary" /> 44 Muckross Avenue, Perrystown, Dublin 12, D12VK49
             </li>
             <li className="flex items-start gap-2 text-sm md:text-base font-normal text-[#343A40] leading-[120%] py-1 md:py-2">
-              <Clock className="w-5 h-5 text-primary" /> Opening hours: Monday to Friday 10 AM – 6:30 PM
+              <Clock className="w-5 h-5 text-primary" /> Opening hours : Monday to Friday 10 AM – 6:30 PM
             </li>
           </ul>
         </div>
