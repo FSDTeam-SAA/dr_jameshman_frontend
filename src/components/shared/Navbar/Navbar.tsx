@@ -29,7 +29,7 @@ const Navbar = () => {
   const logoSrc =
     pathname === "/" && isAtTop
       ? "/assets/images/logo.png"
-      : "/assets/images/black-logo.png";
+      : "/assets/images/update-black-logo.png";
 
   // Dropdown items
   const pricingItems = [
@@ -65,7 +65,7 @@ const Navbar = () => {
               alt="logo"
               width={1000}
               height={1000}
-              className="h-[72px] w-[125px] transition-all duration-500"
+              className="h-[72px] w-[216px] transition-all duration-500"
             />
           </Link>
 

@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Dr. Jameshman",
-  description: "",
+  description: "Transforming Smiles With Specialist Orthodontic Care",
 };
 
 export default function RootLayout({
