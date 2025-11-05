@@ -10,6 +10,7 @@ import {
   NotebookPen,
   RefreshCcwDot,
   Settings,
+  Users,
 } from "lucide-react";
 
 import {
@@ -69,6 +70,11 @@ const items = [
     title: "FAQ",
     url: "/dashboard/faq",
     icon: NotebookPen,
+  },
+  {
+    title: "Doctors",
+    url: "/dashboard/doctors",
+    icon: Users,
   },
   {
     title: "Settings",
