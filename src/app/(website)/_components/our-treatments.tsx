@@ -30,11 +30,11 @@ const OurTreatments = () => {
       <div className="container">
         <div className="w-full flex items-center gap-6 md:gap-14 lg:gap-20 justify-between">
           <div>
-            <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold leading-[150%] text-[#2F2F2F]">
-              Our <span className="text-primary">Orthodontic Treatments</span>
+            <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold leading-[150%] text-primary">
+              Our Orthodontic Treatments
             </h2>
             <p className="text-base md:text-lg font-normal text-black leading-[120%] pt-2 md:pt-3">
-              We provide orthodontic care designed to give you and your family confident, lasting smiles. <span className="font-semibold">Metal Braces, Clear Braces, Invisalign Clear Aligners, Spark Clear Aligners, Early Intervention, Two-Phased Treatments, Retainers .</span>
+              We provide orthodontic care designed to give you and your family confident, lasting smiles.
             </p>
           </div>
           <div>

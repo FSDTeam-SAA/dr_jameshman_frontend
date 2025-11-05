@@ -6,7 +6,7 @@ import FeesContainer from './_components/fees-container'
 const PricingPage = () => {
   return (
     <div>
-      <HeroSection title="Pricing & Payment Information" description="" />
+      <HeroSection title="Pricing & Payment Information" />
       <TheFees/>
       <FeesContainer/>
     </div>

@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
-const HeroSection = ({title, description}: {title: string, description: string}) => {
+const HeroSection = ({title}: {title: string}) => {
     const session = useSession();
   console.log(session);
   return (
@@ -12,7 +12,7 @@ const HeroSection = ({title, description}: {title: string, description: string})
     <div className="relative min-h-[calc(100vh)] flex items-center justify-center overflow-hidden">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
-        src="/assets/videos/hero-video.mp4"
+        src="/assets/videos/update-video.mp4"
         autoPlay
         loop
         muted
@@ -24,7 +24,6 @@ const HeroSection = ({title, description}: {title: string, description: string})
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-[150%] text-center">
           {title}
         </h1>
-        <p className="text-sm md:text-base font-medium text-white leadint-[150%] pt-2 md:pt-3 lg:pt-[14px] text-center">{description}</p>
 
         <div className="pt-2 md:pt-3 lg:pt-[14px] flex flex-col md:flex-row justify-center items-center gap-[13px]">
             <Link href="/booking">

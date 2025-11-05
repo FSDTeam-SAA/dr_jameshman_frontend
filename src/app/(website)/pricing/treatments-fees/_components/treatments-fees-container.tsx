@@ -56,9 +56,9 @@ const TreatmentFeesContainer = () => {
   return (
     <div className="py-10 md:py-16 lg:py-24">
       <div className="container">
-        <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
+        {/* <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
           Get to know our story, our mission, and the team dedicated to your dental health.
-        </h3>
+        </h3> */}
         <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-primary leading-[150%] font-semibold  pt-6 md:pt-10 lg:pt-11">
           Treatment Fees
         </h2>

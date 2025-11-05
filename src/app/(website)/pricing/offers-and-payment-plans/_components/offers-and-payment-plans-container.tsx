@@ -5,14 +5,14 @@ const OffersAndPaymentPlanContainer = () => {
   return (
     <div className="py-10 md:py-16 lg:py-24">
       <div className="container ">
-        <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
+        {/* <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
           Get to know our story, our mission, and the team dedicated to your
           dental health.
-        </h3>
-        <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%] text-center pb-3 md:pb-4  pt-6 md:pt-10 lg:pt-11">
+        </h3> */}
+        <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%] pb-3 md:pb-4  pt-6 md:pt-10 lg:pt-11">
           Making Great Smiles Affordable
         </h2>
-        <p className="text-base md:text-lg lg:text-xl font-normal text-black leading-[150%] text-center">
+        <p className="text-base md:text-lg lg:text-xl font-normal text-black leading-[150%]">
           At <strong>Perrystown Orthodontics,</strong> we believe every family deserves access to
           quality orthodontic care. We offer a <strong>FREE consultation for all
           treatments,</strong> giving you the chance to meet our team, explore your

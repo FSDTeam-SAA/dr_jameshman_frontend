@@ -45,11 +45,11 @@ const MobileNavbar = () => {
             <div className="flex items-center justify-between mb-8">
               <Link href="/" onClick={closeSheet}>
                 <Image
-                  src={"/assets/images/black-logo.png"}
+                  src={"/assets/images/update-black-logo.png"}
                   alt="logo"
                   width={1000}
                   height={1000}
-                  className="h-[60px] w-[100px]"
+                  className="h-[60px] w-[150px]"
                 />
               </Link>
             </div>

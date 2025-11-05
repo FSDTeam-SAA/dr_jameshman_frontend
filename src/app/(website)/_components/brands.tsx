@@ -14,10 +14,10 @@ const brandsImages = [
   "/assets/images/brand2.png",
   "/assets/images/brand3.png",
   "/assets/images/brand4.png",
-  "/assets/images/brand1.png",
-  "/assets/images/brand2.png",
-  "/assets/images/brand3.png",
-  "/assets/images/brand4.png",
+  "/assets/images/brand5.png",
+  "/assets/images/brand6.png",
+  "/assets/images/brand7.png",
+  "/assets/images/brand8.jpeg",
 ];
 
 const Brands = () => {
@@ -32,9 +32,9 @@ const Brands = () => {
         onMouseEnter={() => plugin.current.stop()}
         onMouseLeave={() => plugin.current.play()}
       >
-        <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-black leading-[150%] text-center pb-2">
+        {/* <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-black leading-[150%] text-center pb-2">
           Our Trusted Brands
-        </h2>
+        </h2> */}
 
         <Carousel
           plugins={[plugin.current]}

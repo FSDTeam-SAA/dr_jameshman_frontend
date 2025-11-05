@@ -7,7 +7,6 @@ const TreatmentsPage = () => {
     <div>
       <HeroSection
         title="Our Treatments"
-        description=""
       />
       <TreatmentsContainer/>
     </div>

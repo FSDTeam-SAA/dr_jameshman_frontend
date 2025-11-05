@@ -176,7 +176,7 @@ const TreatmentCategoryContainer = ({
                             !isEven ? "md:[direction:ltr]" : ""
                           }`}
                         >
-                          <h4 className="text-xl md:text-2xl font-semibold mb-3 text-gray-900">
+                          <h4 className="text-xl md:text-2xl font-semibold mb-3 text-primary">
                             {item?.serviceName}
                           </h4>
                           <p

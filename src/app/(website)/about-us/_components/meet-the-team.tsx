@@ -76,9 +76,7 @@ const MeetTheTeam = () => {
                 <h5 className="text-sm font-medium text-primary leading-[120%] py-2 md:py-[10px]">
                   {member?.title}
                 </h5>
-                <p className="text-xs font-normal text-[#656565] leading-[120%] text-justify">
-                  {member?.description}
-                </p>
+                <p dangerouslySetInnerHTML={{__html: member?.description}} className="text-xs font-normal text-[#656565] leading-[120%] text-justify"/>
               </div>
             </div>
           );
@@ -90,12 +88,12 @@ const MeetTheTeam = () => {
   return (
     <div className="pb-10 md:pb-16 lg:pb-24">
       <div className="container">
-        <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-[#202020] leading-[150%] font-semibold text-center">
+        <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-primary leading-[150%] font-semibold text-center">
           Meet The Team
         </h2>
-        <p className="text-sm md:text-base text-[#373737] text-center pt-2 leading-[150%] font-normal">
+        {/* <p className="text-sm md:text-base text-[#373737] text-center pt-2 leading-[150%] font-normal">
           Our diverse team combines expertise in finding your problem.
-        </p>
+        </p> */}
 
         <div>{content}</div>
       </div>
