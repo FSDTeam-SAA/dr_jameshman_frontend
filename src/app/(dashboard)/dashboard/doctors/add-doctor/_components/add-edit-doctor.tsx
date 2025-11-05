@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
 import { ImageUp, X } from "lucide-react";
 import Image from "next/image";
@@ -28,6 +27,7 @@ import {
   Doctor,
   DoctorFormData,
 } from "@/schema/addDoctorSchema";
+import { RichTextEditor } from "../../../_component/shared/rich-text-editor";
 
 interface AddEditDoctorsProps {
   doctorData?: Doctor;
@@ -190,12 +190,11 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description *</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Enter doctor description"
-                    className="min-h-[120px]"
-                    {...field}
+                  <RichTextEditor
+                    value={field.value}
+                    onChange={field.onChange}
                   />
                 </FormControl>
                 <FormMessage />

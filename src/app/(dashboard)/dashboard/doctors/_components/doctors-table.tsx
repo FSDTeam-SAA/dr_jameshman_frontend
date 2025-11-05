@@ -123,18 +123,27 @@ const DoctorsTable = () => {
                   </TableCell>
                   <TableCell className="py-6">{doctor?.title}</TableCell>
                   <TableCell className="py-6">
-                    <p className="line-clamp-2 max-w-md">
-                      {doctor?.description}
-                    </p>
+                    <p
+                      className="lg:max-w-xl"
+                      dangerouslySetInnerHTML={{
+                        __html: doctor?.description || "",
+                      }}
+                    ></p>
                   </TableCell>
                   <TableCell className="py-6">
                     <div className="flex items-center gap-2">
-                      <Link href={`/dashboard/doctors/edit/${doctor?._id}`}>
-                        <button>
-                          <Edit className="h-4 w-4 mr-1" />
-                        </button>
-                      </Link>
-                      <DeleteDoctor id={doctor?._id} />
+                      <div>
+                        <Link
+                          href={`/dashboard/doctors/add-doctor/edit-doctor/${doctor?._id}`}
+                        >
+                          <button>
+                            <Edit className="h-5 w-5" />
+                          </button>
+                        </Link>
+                      </div>
+                      <div>
+                        <DeleteDoctor id={doctor?._id} />
+                      </div>
                     </div>
                   </TableCell>
                 </TableRow>

@@ -72,8 +72,8 @@ const items = [
     icon: NotebookPen,
   },
   {
-    title: "Teams",
-    url: "/dashboard/teams",
+    title: "Doctors",
+    url: "/dashboard/doctors",
     icon: Users,
   },
   {
