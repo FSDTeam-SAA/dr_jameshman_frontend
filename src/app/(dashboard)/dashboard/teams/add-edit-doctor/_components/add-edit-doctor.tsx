@@ -5,10 +5,9 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
-import { z } from "zod";
 
 import {
   Form,
@@ -22,9 +21,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
-import { doctorSchema, type DoctorFormData, type Doctor } from "@/schema/doctorSchema";
 import { ImageUp, X } from "lucide-react";
 import Image from "next/image";
+import {
+  addDoctorSchema,
+  Doctor,
+  DoctorFormData,
+} from "@/schema/addDoctorSchema";
 
 interface AddEditDoctorsProps {
   doctorData?: Doctor;
@@ -32,7 +35,6 @@ interface AddEditDoctorsProps {
 }
 
 const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
-  const router = useRouter();
   const pathname = usePathname();
   const queryClient = useQueryClient();
   const { data: session } = useSession();
@@ -42,7 +44,7 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const form = useForm<DoctorFormData>({
-    resolver: zodResolver(doctorSchema),
+    resolver: zodResolver(addDoctorSchema),
     defaultValues: {
       name: "",
       title: "",
@@ -76,77 +78,64 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
     setSelectedImage(null);
     setImagePreview(null);
     form.setValue("image", "");
-    form.setValue("cloudinaryId", "");
-  };
-
-  const uploadToCloudinary = async (file: File): Promise<{ image: string; cloudinaryId: string }> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "doctors_preset"); // Replace with your upload preset
-
-    const response = await fetch(`https://api.cloudinary.com/v1_1/your-cloud-name/image/upload`, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error("Image upload failed");
-    }
-
-    const data = await response.json();
-    return {
-      image: data.secure_url,
-      cloudinaryId: data.public_id,
-    };
   };
 
   const { mutateAsync: createUpdateDoctor, isPending } = useMutation({
     mutationKey: ["doctors"],
     mutationFn: async (data: DoctorFormData) => {
-      let imageData = {
-        image: data.image,
-        cloudinaryId: data.cloudinaryId,
-      };
+      const isEdit = pathname.includes("/edit") && id;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/doctors${
+        isEdit ? `/${id}` : ""
+      }`;
+
+      const formData = new FormData();
+
+      formData.append("name", data.name);
+      formData.append("title", data.title);
+      formData.append("description", data.description);
 
       if (selectedImage) {
-        imageData = await uploadToCloudinary(selectedImage);
+        formData.append("image", selectedImage);
       }
 
-      const requestData = {
-        ...data,
-        ...imageData,
-      };
+      if (isEdit && !selectedImage && data.image) {
+        formData.append("image", data.image);
+      }
 
-      const isEdit = pathname.includes("/edit") && id;
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/doctors${isEdit ? `/${id}` : ""}`;
       const method = isEdit ? "PUT" : "POST";
 
       const response = await fetch(url, {
         method,
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(requestData),
+        body: formData,
       });
 
       if (!response.ok) {
-        throw new Error(isEdit ? "Failed to update doctor" : "Failed to create doctor");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message ||
+            (isEdit ? "Failed to update doctor" : "Failed to create doctor")
+        );
       }
 
       return response.json();
     },
     onSuccess: (data) => {
-      toast.success(data?.message);
+      toast.success(
+        data?.message ||
+          (pathname.includes("/edit")
+            ? "Doctor updated successfully"
+            : "Doctor created successfully")
+      );
       queryClient.invalidateQueries({ queryKey: ["doctors"] });
-      
+
       if (!pathname.includes("/edit")) {
         form.reset();
         setImagePreview(null);
         setSelectedImage(null);
       }
-      
-      router.push("/dashboard/doctors");
     },
     onError: (error: Error) => {
       toast.error(error.message);
@@ -162,11 +151,7 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">
-        {pathname.includes("/edit") ? "Edit Doctor" : "Add New Doctor"}
-      </h1>
-
+    <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Name Field */}
@@ -175,7 +160,7 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Doctor Name</FormLabel>
+                <FormLabel>Doctor Name *</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter doctor name" {...field} />
                 </FormControl>
@@ -190,7 +175,7 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title/Position</FormLabel>
+                <FormLabel>Title/Position *</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter doctor title" {...field} />
                 </FormControl>
@@ -205,7 +190,7 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Description *</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Enter doctor description"
@@ -264,7 +249,9 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
                           variant="outline"
                           className="w-full h-52 border-2 border-dashed border-gray-300 flex items-center justify-center"
                           type="button"
-                          onClick={() => document.getElementById("image-upload")?.click()}
+                          onClick={() =>
+                            document.getElementById("image-upload")?.click()
+                          }
                         >
                           <div className="flex flex-col items-center gap-2 opacity-40">
                             <ImageUp className="h-12 w-12" />
@@ -280,22 +267,24 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
             )}
           />
 
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full h-[50px] mt-5 disabled:cursor-not-allowed"
-          >
-            {isPending ? (
-              <span className="flex items-center gap-2">
-                <Spinner className="h-4 w-4" />
-                {pathname.includes("/edit") ? "Updating..." : "Creating..."}
-              </span>
-            ) : (
-              <span>
-                {pathname.includes("/edit") ? "Update Doctor" : "Add Doctor"}
-              </span>
-            )}
-          </Button>
+          <div>
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="w-full h-[50px] disabled:cursor-not-allowed"
+            >
+              {isPending ? (
+                <span className="flex items-center gap-2">
+                  <Spinner className="h-4 w-4" />
+                  {pathname.includes("/edit") ? "Updating..." : "Creating..."}
+                </span>
+              ) : (
+                <span>
+                  {pathname.includes("/edit") ? "Update Doctor" : "Add Doctor"}
+                </span>
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Edit, User } from "lucide-react";
 import { Doctor } from "@/schema/addDoctorSchema";
@@ -57,13 +56,6 @@ const DoctorsTable = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Doctors</h1>
-        <Link href="/dashboard/doctors/add">
-          <Button>Add New Doctor</Button>
-        </Link>
-      </div>
-
       <div className="overflow-hidden rounded-lg border border-gray-200">
         <Table>
           <TableHeader className="bg-primary/20">

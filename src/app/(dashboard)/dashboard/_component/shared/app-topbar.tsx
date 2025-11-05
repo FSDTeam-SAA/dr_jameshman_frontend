@@ -52,6 +52,14 @@ export const AppTopBar = () => {
           </Button>
         </Link>
       )}
+
+      {pathName === "/dashboard/teams" && (
+        <Link href={`/dashboard/teams/add-edit-doctor`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Treatment Category
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
