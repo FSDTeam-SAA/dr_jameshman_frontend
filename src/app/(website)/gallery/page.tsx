@@ -5,7 +5,7 @@ import GallerisContainer from './_components/gallery-container'
 const GalleryPage = () => {
   return (
     <div>
-      <HeroSection title="Our Gallery" description="" />
+      <HeroSection title="Our Gallery" />
       <GallerisContainer/>
     </div>
   )

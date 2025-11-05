@@ -7,7 +7,6 @@ const OffersAndPaymentPlans = () => {
     <div>
       <HeroSection
         title="Pricing & Payment Information"
-        description=""
       />
       <OffersAndPaymentPlanContainer />
     </div>

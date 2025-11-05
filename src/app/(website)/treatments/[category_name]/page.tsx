@@ -6,7 +6,7 @@ import FaqContainer from "../../about-us/_components/faq";
 const TreatmentCategoryPage = ({params}: {params: {category_name: string}}) => {
   return (
     <div>
-      <HeroSection title="Our Treatments" description="" />
+      <HeroSection title="Our Treatments" />
       <TreatmentCategoryContainer category_name={params?.category_name || ""} />
       <FaqContainer />
     </div>
