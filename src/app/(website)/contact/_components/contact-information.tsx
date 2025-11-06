@@ -7,7 +7,7 @@ import { FaInstagramSquare } from "react-icons/fa";
 
 const ContactInformation = () => {
   return (
-    <div className="pt-8 md:pt-10 lg:pt-12 pb-10 md:pb-14 lg:pb-20">
+    <div className="pt-10 md:pt-16 lg:pt-24">
       <div className="container grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 lg:gap-12">
         <div className="md:col-span-3">
           <Image

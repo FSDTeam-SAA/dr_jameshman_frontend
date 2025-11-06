@@ -12,7 +12,7 @@ const HeroSection = ({title}: {title: string}) => {
     <div className="relative min-h-[calc(100vh)] flex items-center justify-center overflow-hidden">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
-        src="/assets/videos/update-video.mp4"
+        src="/assets/videos/hero-video.mp4"
         autoPlay
         loop
         muted

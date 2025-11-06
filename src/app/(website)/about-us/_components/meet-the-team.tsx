@@ -1,10 +1,25 @@
+
+
 "use client";
+
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
 import { DoctorsGridSkeleton } from "./DoctorCardSkeleton";
 import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import NotFound from "@/components/shared/NotFound/NotFound";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import Autoplay from "embla-carousel-autoplay";
+
+// get all start
 
 export interface Doctor {
   _id: string;
@@ -30,7 +45,38 @@ export interface DoctorsResponse {
   pagination: Pagination;
 }
 
+// get all end 
+// get by id start 
+export interface SingleDoctorResponse {
+  status: boolean;
+  message: string;
+  data: SingleDoctor;
+}
+
+export interface SingleDoctor {
+  _id: string;
+  name: string;
+  title: string;
+  image: string;
+  cloudinaryId: string;
+  description: string;
+  __v: number;
+}
+
+// get by id end
+
 const MeetTheTeam = () => {
+  const autoplay = React.useRef(
+    Autoplay({
+      delay: 2500,
+      stopOnInteraction: true,
+      stopOnMouseEnter: true,
+    })
+  );
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const [open, setOpen] = React.useState(false);
+
+  // ✅ Fetch all doctors
   const { data, isLoading, isError, error } = useQuery<DoctorsResponse>({
     queryKey: ["doctors"],
     queryFn: async () => {
@@ -39,49 +85,44 @@ const MeetTheTeam = () => {
     },
   });
 
-  let content;
+  // ✅ Fetch individual doctor details (only when modal opens)
+  const { data: doctorDetail, isFetching } = useQuery<SingleDoctorResponse>({
+    queryKey: ["doctor", selectedId],
+    queryFn: async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/doctors/${selectedId}`);
+      return res.json();
+      
+    },
+    enabled: !!selectedId && open, 
+   
+  });
+
+  // console.log(doctorDetail)
+
+  const handleReadMore = (id: string) => {
+    setSelectedId(id);
+    setOpen(true);
+  };
+
   if (isLoading) {
-    content = (
-      <div className="">
+    return (
+      <div className="py-12">
         <DoctorsGridSkeleton />
       </div>
     );
-  } else if (isError) {
-    content = (
-      <div className="w-full h-[400px] md:h-[500px]">
-        <ErrorContainer message={error?.message || "Something went Wrong"} />
+  }
+
+  if (isError) {
+    return (
+      <div className="w-full h-[400px] md:h-[500px] flex items-center justify-center">
+        <ErrorContainer message={error?.message || "Something went wrong."} />
       </div>
     );
-  } else if (data && data.data && data.data.length === 0) {
-    content = (
-      <NotFound message="Oops! No data available. Modify your filters or check your internet connection." />
-    );
-  } else if (data && data.data && data.data.length > 0) {
-    content = (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 pt-8 md:pt-12 lg:pt-12">
-        {data?.data?.map((member) => {
-          return (
-            <div key={member?._id} className="h-auto bg-white rounded-b-[8px]">
-              <Image
-                src={member?.image}
-                alt={member?.name}
-                width={1000}
-                height={1000}
-                className="w-full h-[300px] object-cover rounded-t-[8px]"
-              />
-              <div className=" p-4 ">
-                <h3 className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#202020] leading-[150%]">
-                  {member?.name}
-                </h3>
-                <h5 className="text-sm font-medium text-primary leading-[120%] py-2 md:py-[10px]">
-                  {member?.title}
-                </h5>
-                <p dangerouslySetInnerHTML={{__html: member?.description}} className="text-xs font-normal text-[#656565] leading-[120%] text-justify"/>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+  }
+
+  if (!data?.data?.length) {
+    return (
+      <NotFound message="Oops! No data available. Please try again later." />
     );
   }
 
@@ -91,12 +132,101 @@ const MeetTheTeam = () => {
         <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-primary leading-[150%] font-semibold text-center">
           Meet The Team
         </h2>
-        {/* <p className="text-sm md:text-base text-[#373737] text-center pt-2 leading-[150%] font-normal">
-          Our diverse team combines expertise in finding your problem.
-        </p> */}
 
-        <div>{content}</div>
+        <div className="w-[98%] mx-auto relative mt-10">
+          <Carousel
+            plugins={[autoplay.current]}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            onMouseEnter={() => autoplay.current.stop()}
+            onMouseLeave={() => autoplay.current.play()}
+            className="w-full"
+          >
+            <CarouselContent>
+              {data.data.map((member) => (
+                <CarouselItem
+                  key={member._id}
+                  className="basis-full md:basis-1/2 lg:basis-1/4 px-3 "
+                >
+                  <div className="h-[450px] md:h-[473px] bg-white rounded-[8px] shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      width={500}
+                      height={500}
+                      className="w-full h-[300px] object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#202020] leading-[150%]">
+                        {member.name}
+                      </h3>
+                      <h5 className="text-sm font-medium text-primary leading-[120%] py-2 md:py-[10px]">
+                        {member.title}
+                      </h5>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: member.description?.slice(0, 100),
+                        }}
+                        className=" text-xs font-normal text-[#656565] leading-[140%] text-justify"
+                      />
+                      {member.description.length > 150 && (
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="p-0 h-auto text-primary hover:text-primary/80 font-medium mt-1"
+                          onClick={() => handleReadMore(member._id)}
+                        >
+                          Read more
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+
+            {/* ✅ Navigation Buttons */}
+            <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+            <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+          </Carousel>
+        </div>
       </div>
+
+      {/* ✅ Modal Popup for Full Details */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-semibold text-primary">
+              {doctorDetail?.data?.name || "Loading..."}
+            </DialogTitle>
+          </DialogHeader>
+
+          {isFetching ? (
+            <p className="text-sm text-gray-500">Loading details...</p>
+          ) : (
+            doctorDetail && (
+              <div className="space-y-4">
+                <Image
+                  src={doctorDetail.data?.image}
+                  alt={doctorDetail.data?.name}
+                  width={600}
+                  height={400}
+                  className="w-full h-[300px] object-cover rounded-md"
+                />
+                <h4 className="text-lg font-medium text-[#202020]">
+                  {doctorDetail.data?.title}
+                </h4>
+                <div
+                  dangerouslySetInnerHTML={{ __html: doctorDetail.data?.description }}
+                  className="text-sm text-[#555] leading-[160%] text-justify"
+                />
+              </div>
+            )
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
