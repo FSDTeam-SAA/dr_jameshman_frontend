@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -36,6 +36,7 @@ interface AddEditDoctorsProps {
 
 const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
   const pathname = usePathname();
+  const route = useRouter();
   const queryClient = useQueryClient();
   const { data: session } = useSession();
   const token = (session?.user as { token: string })?.token;
@@ -123,13 +124,9 @@ const AddEditDoctors = ({ doctorData, id }: AddEditDoctorsProps) => {
       return response.json();
     },
     onSuccess: (data) => {
-      toast.success(
-        data?.message ||
-          (pathname.includes("/edit")
-            ? "Doctor updated successfully"
-            : "Doctor created successfully")
-      );
+      toast.success(data?.message);
       queryClient.invalidateQueries({ queryKey: ["doctors"] });
+      route.push("/dashboard/doctors");
 
       if (!pathname.includes("/edit")) {
         form.reset();

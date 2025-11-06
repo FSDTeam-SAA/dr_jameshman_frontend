@@ -56,7 +56,7 @@ export const AppTopBar = () => {
       {pathName === "/dashboard/doctors" && (
         <Link href={`/dashboard/doctors/add-doctor`}>
           <Button className="h-[40px]">
-            <Plus /> Add Treatment Category
+            <Plus /> Add Doctors
           </Button>
         </Link>
       )}
