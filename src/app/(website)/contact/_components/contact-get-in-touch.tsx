@@ -196,7 +196,7 @@ const ContactGetInTouch = () => {
                             </span>
                             to learn more about how we use data.
                           </Label>
-                          <FormMessage className="text-red-500" />
+                          <FormMessage className="text-red-500 pt-2" />
                         </div>
                       </FormItem>
                     )}

@@ -304,13 +304,13 @@ const BookingContainer = () => {
                 control={form.control}
                 name="consent"
                 render={({ field }) => (
-                  <FormItem className="flex items-start space-x-3">
+                  <FormItem className="flex items-center space-x-3">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
                         id="consent"
-                        className="mt-1"
+                        className=""
                       />
                     </FormControl>
                     <div className="space-y-0 leading-none">
@@ -323,7 +323,7 @@ const BookingContainer = () => {
                         <span className="text-primary">privacy policy</span> to
                         learn more about how we use data.
                       </Label>
-                      <FormMessage className="text-red-500" />
+                      <FormMessage className="text-red-500 pt-2" />
                     </div>
                   </FormItem>
                 )}

@@ -171,7 +171,7 @@ const MeetTheTeam = () => {
                         }}
                         className=" text-xs font-normal text-[#656565] leading-[140%] text-justify"
                       />
-                      {member.description.length > 150 && (
+                      {member.description.length > 10 && (
                         <Button
                           variant="link"
                           size="sm"

@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Dr. Jameshman",
+  title: "Perrystown Orthodontics",
   description: "Transforming Smiles With Specialist Orthodontic Care",
 };
 

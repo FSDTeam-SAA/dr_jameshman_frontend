@@ -175,7 +175,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Name Here"
                           {...field}
                         />
@@ -236,7 +236,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Phone number"
                           {...field}
                         />
@@ -255,7 +255,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="email@example.com"
                           {...field}
                         />
@@ -280,7 +280,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Dentist full name"
                           {...field}
                         />
@@ -299,7 +299,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Practice name"
                           {...field}
                         />
@@ -322,7 +322,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Phone number"
                           {...field}
                         />
@@ -341,7 +341,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="email@example.com"
                           {...field}
                         />
@@ -366,7 +366,7 @@ const ReferralsForm = () => {
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        className="h-[114px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                        className="h-[114px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                         placeholder="Please provide any additional information about the referral..."
                         {...field}
                       />
@@ -481,7 +481,7 @@ const ReferralsForm = () => {
                         I consent to being contacted about this referral request and have read the 
                         <span className="text-primary"> privacy policy</span>
                       </Label>
-                      <FormMessage className="text-red-500" />
+                      <FormMessage className="text-red-500 pt-2" />
                     </div>
                   </FormItem>
                 )}

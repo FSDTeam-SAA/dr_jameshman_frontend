@@ -106,18 +106,18 @@ const Footer = () => {
           </p>
 
           <ul className="flex items-center gap-3 md:gap-4">
-            <Link href="/">
-              <li className="text-sm md:text-base font-normal text-white leading-[120%]">
+            <Link href="/privacy-policy">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] hover:underline">
                 Privacy Policy
               </li>
             </Link>
-            <Link href="/">
-              <li className="text-sm md:text-base font-normal text-white leading-[120%]">
+            <Link href="/gdpr">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] hover:underline">
                 GDPR
               </li>
             </Link>
-            <Link href="/">
-              <li className="text-sm md:text-base font-normal text-white leading-[120%]">
+            <Link href="/terms-and-condition">
+              <li className="text-sm md:text-base font-normal text-white leading-[120%] hover:underline">
                 Terms of Service
               </li>
             </Link>

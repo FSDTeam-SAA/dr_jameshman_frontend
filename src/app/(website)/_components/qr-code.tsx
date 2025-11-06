@@ -8,7 +8,7 @@ const QRCode = () => {
         <div className="container grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
           <div className="relative md:col-span-1 flex justify-center items-center">
             <video
-              className="w-full h-[347px] object-cover rounded-lg"
+              className="w-full h-[320px] md:h-[347px] object-cover rounded-lg"
               src="/assets/videos/qr-code-videos.mp4"
               autoPlay
               loop
@@ -18,28 +18,28 @@ const QRCode = () => {
           </div>
 
           <div className="md:col-span-2 h-full flex flex-col justify-center">
-            <h4 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-black leading-[150%]">
+            <h4 className="text-xl md:text-2xl lg:text-[28px] font-semibold text-black leading-[150%]">
               See Your Invisalign® Smile in Seconds!
             </h4>
-            <p className="text-base md:text-lg lg:text-xl font-normal text-[#3E3E3E] leading-[150%] pt-1">
+            <p className="text-base md:text-lg font-normal text-[#3E3E3E] leading-[150%] pt-1">
               Curious how your new smile could look? It’s easy!
             </p>
             <ol className=" list-inside py-2 md:py-3">
-              <li className="text-base md:text-lg lg:text-xl font-normal text-black leadig-[150%] py-1.5 md:py-2">
+              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 📱 Grab your phone
               </li>
-              <li className="text-base md:text-lg lg:text-xl font-normal text-black leadig-[150%] py-1.5 md:py-2">
+              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 📷 Open your camera and scan the QR code
               </li>
-              <li className="text-base md:text-lg lg:text-xl font-normal text-black leadig-[150%] py-1.5 md:py-2">
+              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 🤳 Snap a quick selfie
               </li>
-              <li className="text-base md:text-lg lg:text-xl font-normal text-black leadig-[150%] py-1.5 md:py-2">
+              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 ✨ See your smile transformation — instantly! Delete ‘your
                 phone’
               </li>
             </ol>
-            <p className="text-base md:text-lg lg:text-xl font-normal text-[#3E3E3E] leading-[150%] pt-1">
+            <p className="text-base md:text-lg font-normal text-[#3E3E3E] leading-[150%]">
               Discover how Invisalign® clear aligners can help you achieve the
               confident, natural smile you’ve always wanted.
             </p>
