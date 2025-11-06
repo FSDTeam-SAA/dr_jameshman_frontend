@@ -196,7 +196,7 @@ const GetInTouch = () => {
                             </span>
                             to learn more about how we use data.
                           </Label>
-                          <FormMessage className="text-red-500" />
+                          <FormMessage className="text-red-500 pt-2" />
                         </div>
                       </FormItem>
                     )}
@@ -219,7 +219,7 @@ const GetInTouch = () => {
               alt="get in touch"
               width={1000}
               height={1000}
-              className="w-full h-[400px] md:h-[500px] lg:h-[825px] object-cover"
+              className="w-full h-[350px] md:h-[500px] lg:h-[825px] object-cover"
             />
           </div>
         </div>

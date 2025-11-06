@@ -8,16 +8,29 @@ import Link from "next/link";
 import TreatmentCart from "@/components/common/treatment-cart";
 import { TreatmentCategoryResponse } from "@/components/shared/Navbar/MobileTreatmentsDropdown";
 
-const OurTreatments = () => {
-  const {data, isLoading, isError, error} = useQuery<TreatmentCategoryResponse>({
-    queryKey: ["treatments-categories"],
-    queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`);
-      return res.json();
-    },
-  })
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
-  console.log(data);
+const OurTreatments = () => {
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: false })
+  );
+  const { data, isLoading, isError, error } =
+    useQuery<TreatmentCategoryResponse>({
+      queryKey: ["treatments-categories"],
+      queryFn: async () => {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`
+        );
+        return res.json();
+      },
+    });
+
+  // console.log(data);
 
   if (isLoading) return <OurTreatmentSkeleton />;
   if (isError)
@@ -34,7 +47,8 @@ const OurTreatments = () => {
               Our Orthodontic Treatments
             </h2>
             <p className="text-base md:text-lg font-normal text-black leading-[120%] pt-2 md:pt-3">
-              We provide orthodontic care designed to give you and your family confident, lasting smiles.
+              We provide orthodontic care designed to give you and your family
+              confident, lasting smiles.
             </p>
           </div>
           <div>
@@ -46,16 +60,27 @@ const OurTreatments = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 pt-8 md:pt-10 lg:pt-12">
-          {data?.data?.slice(0, 4)?.map((item) => {
-            console.log(item);
-            return (
-              <div key={item._id}>
-                <TreatmentCart item={item} />
-              </div>
-            );
-          })}
-        </div>
+        <Carousel
+          plugins={[plugin.current]}
+          className="w-full"
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
+          <CarouselContent className="-ml-4 md:-ml-6 pt-6 md:pt-8 lg:pt-10">
+            {data?.data?.map((item, index) => (
+              <CarouselItem
+                key={index}
+                className="basis-1/1 md:basis-1/2 lg:basis-1/4 pl-4 md:pl-6 flex items-center justify-center"
+              >
+                <div key={item._id}>
+                  <TreatmentCart item={item} />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </div>
     </div>
   );

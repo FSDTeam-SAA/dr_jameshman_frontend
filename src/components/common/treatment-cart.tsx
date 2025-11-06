@@ -12,7 +12,7 @@ const TreatmentCart = ({ item }: { item: TreatmentCategory }) => {
           alt={item?.name || ""}
           width={1000}
           height={1000}
-          className="w-full h-[431px] rounded-[8px] object-cover"
+          className="w-full h-[300px] md:h-[400px] lg:h-[431px] rounded-[8px] object-cover"
         />
         <h3 className="text-base md:text-lg font-medium leading-[120%] text-[#2F2F2F] text-center bg-white rounded-b-[8px] py-2 md:py-3">
           {item?.name}
