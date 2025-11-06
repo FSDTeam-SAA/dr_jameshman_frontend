@@ -20,7 +20,7 @@ import { Save, Plus, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 type formType = z.input<typeof addPriceListSchema>;
@@ -43,6 +43,7 @@ interface Props {
 const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
   const queryClient = useQueryClient();
   const pathName = usePathname();
+  const router = useRouter();
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
 
@@ -107,6 +108,7 @@ const AddEditPriceListForm = ({ priceListDetails, id }: Props) => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["all-price-list"] });
       toast.success(data.message);
+      router.push('/dashboard/price-list')
       form.reset();
     },
     onError: (error) => {

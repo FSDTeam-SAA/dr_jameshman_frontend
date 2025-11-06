@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { ImageUp, X, Save } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { Spinner } from "@/components/ui/spinner";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -50,6 +50,7 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
     null
   );
   const pathName = usePathname();
+  const router = useRouter();
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
 
@@ -110,6 +111,7 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
 
     onSuccess: (data) => {
       toast.success(data?.message);
+      router.push("/dashboard/gallery-management");
     },
 
     onError: (err: any) => {
