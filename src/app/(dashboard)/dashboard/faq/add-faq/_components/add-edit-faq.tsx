@@ -18,7 +18,7 @@ import { RichTextEditor } from "../../../_component/shared/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { Save } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "next-auth/react";
@@ -38,6 +38,7 @@ interface Props {
 
 const AddEditFaq = ({ id, faqDetails }: Props) => {
   const pathName = usePathname();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
@@ -83,6 +84,7 @@ const AddEditFaq = ({ id, faqDetails }: Props) => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["all-faq"] });
       toast.success(data.message);
+      router.push('/dashboard/faq')
       form.reset();
     },
     onError: (error) => {
