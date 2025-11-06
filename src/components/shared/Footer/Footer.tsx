@@ -102,7 +102,7 @@ const Footer = () => {
         {/* bottom part  */}
         <div className="w-full flex flex-col md:flex-row items-center justify-between gap-3 border-t border-[#D9D9D980] pt-4 md:pt-6 lg:pt-8">
           <p className="text-sm md:text-base font-normal text-white leading-[120%]">
-            © Perrystown Orthodontics. All rights reserved.
+            © {new Date().getFullYear()} Perrystown Orthodontics. All rights reserved.
           </p>
 
           <ul className="flex items-center gap-3 md:gap-4">
