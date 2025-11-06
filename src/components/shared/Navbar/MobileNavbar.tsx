@@ -164,8 +164,17 @@ const MobileNavbar = () => {
                   );
                 })}
               </ul>
-            </nav>
+              <div className=" pt-5">
+            <Link href="/booking">
+              <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[23px] rounded-[6px]">
+                Book FREE Consult
+              </Button>
+            </Link>
           </div>
+            </nav>
+            
+          </div>
+           
         </SheetContent>
       </Sheet>
     </div>

@@ -88,12 +88,14 @@ const TreatmentFeesContainer = () => {
                         />
 
                         <p className="flex items-center gap-0 text-base md:text-lg font-semibold text-[#111827] leading-[120%]">
-                          {item?.currency ? (
-                            <Euro className="w-5 h-5" />
+                          {i?.rate === 0 ? (
+                            "FREE"
                           ) : (
-                            "Free"
+                            <>
+                              <Euro /> {i?.rate}
+                            </>
                           )}{" "}
-                          {i?.rate}
+                         
                         </p>
                       </div>
                     );

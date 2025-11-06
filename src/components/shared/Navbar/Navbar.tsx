@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import TreatmentsDropdown from "./DynamicDropDown";
-
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -80,13 +80,10 @@ const Navbar = () => {
                     : "text-black";
 
                 // Treatments dropdown
-              
+
                 if (item?.label === "Treatments") {
                   return (
-                    <li
-                      key={index}
-                      className="relative "
-                    >
+                    <li key={index} className="relative ">
                       <TreatmentsDropdown textColor={textColor} />
                     </li>
                   );
@@ -121,7 +118,6 @@ const Navbar = () => {
                     </li>
                   );
                 }
-
 
                 // About Us dropdown
                 if (item.label === "About Us") {
@@ -168,6 +164,13 @@ const Navbar = () => {
                 );
               })}
             </ul>
+          </div>
+          <div className="hidden md:block">
+            <Link href="/booking">
+              <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[23px] rounded-[6px]">
+                Book FREE Consult
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu */}
