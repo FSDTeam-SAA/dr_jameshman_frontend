@@ -21,25 +21,25 @@ const QRCode = () => {
             <h4 className="text-xl md:text-2xl lg:text-[28px] font-semibold text-black leading-[150%]">
               See Your Invisalign® Smile in Seconds!
             </h4>
-            <p className="text-base md:text-lg font-normal text-[#3E3E3E] leading-[150%] pt-1">
+            <p className="text-base font-normal text-[#3E3E3E] leading-[150%] pt-1">
               Curious how your new smile could look? It’s easy!
             </p>
             <ol className=" list-inside py-2 md:py-3">
-              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
+              <li className="text-base font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 📱 Grab your phone
               </li>
-              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
+              <li className="text-base font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 📷 Open your camera and scan the QR code
               </li>
-              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
+              <li className="text-base font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 🤳 Snap a quick selfie
               </li>
-              <li className="text-base md:text-lg font-normal text-black leadig-[150%] py-1 md:py-1.5">
+              <li className="text-base font-normal text-black leadig-[150%] py-1 md:py-1.5">
                 ✨ See your smile transformation — instantly! Delete ‘your
                 phone’
               </li>
             </ol>
-            <p className="text-base md:text-lg font-normal text-[#3E3E3E] leading-[150%]">
+            <p className="text-base font-normal text-[#3E3E3E] leading-[150%]">
               Discover how Invisalign® clear aligners can help you achieve the
               confident, natural smile you’ve always wanted.
             </p>

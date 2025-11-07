@@ -310,7 +310,7 @@ const BookingContainer = () => {
                         checked={field.value}
                         onCheckedChange={field.onChange}
                         id="consent"
-                        className=""
+                        className="mt-[8px]"
                       />
                     </FormControl>
                     <div className="space-y-0 leading-none">
