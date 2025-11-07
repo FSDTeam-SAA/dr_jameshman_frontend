@@ -464,7 +464,7 @@ const ReferralsForm = () => {
                 control={form.control}
                 name="consentGiven"
                 render={({ field }) => (
-                  <FormItem className="flex items-start space-x-3 space-y-0">
+                  <FormItem className="flex items-center space-x-3 ">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
