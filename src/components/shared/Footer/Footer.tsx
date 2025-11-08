@@ -27,7 +27,7 @@ const Footer = () => {
             />
             </Link>
             <p className="text-sm md:text-base font-normal text-white leading-[150%] py-3 md:py-4 lg:py-6">
-              “Providing exceptional dental care with a focus on comfort and <br/> results for over 15 years.”
+              “Providing exceptional dental care with a focus on comfort and <br/> results for over {new Date().getFullYear() - 2015} years.”
             </p>
 
             <div className="flex items-center gap-3 ">

@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
@@ -15,9 +13,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Autoplay from "embla-carousel-autoplay";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // get all start
 
@@ -45,8 +49,8 @@ export interface DoctorsResponse {
   pagination: Pagination;
 }
 
-// get all end 
-// get by id start 
+// get all end
+// get by id start
 export interface SingleDoctorResponse {
   status: boolean;
   message: string;
@@ -89,12 +93,12 @@ const MeetTheTeam = () => {
   const { data: doctorDetail, isFetching } = useQuery<SingleDoctorResponse>({
     queryKey: ["doctor", selectedId],
     queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/doctors/${selectedId}`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/doctors/${selectedId}`
+      );
       return res.json();
-      
     },
-    enabled: !!selectedId && open, 
-   
+    enabled: !!selectedId && open,
   });
 
   // console.log(doctorDetail)
@@ -128,12 +132,12 @@ const MeetTheTeam = () => {
 
   return (
     <div className="pb-10 md:pb-16 lg:pb-24">
-      <div className="container">
+      <div className="px-6 md:px-2 container">
         <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-primary leading-[150%] font-semibold text-center">
           Meet The Team
         </h2>
 
-        <div className="w-[98%] mx-auto relative mt-10">
+        <div className="w-[90%] md:w-[92%] lg:w-[94%] mx-auto relative mt-10  border-2 border-red-500">
           <Carousel
             plugins={[autoplay.current]}
             opts={{
@@ -148,9 +152,9 @@ const MeetTheTeam = () => {
               {data.data.map((member) => (
                 <CarouselItem
                   key={member._id}
-                  className="basis-full md:basis-1/2 lg:basis-1/4 px-3 "
+                  className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-4 lg:pl-6 pr-2 lg:pr-3 "
                 >
-                  <div className="h-[450px] md:h-[473px] bg-white rounded-[8px] shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                  <div className="w-full h-[462px] md:h-[467px] bg-white rounded-[8px] shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                     <Image
                       src={member.image}
                       alt={member.name}
@@ -167,9 +171,9 @@ const MeetTheTeam = () => {
                       </h5>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: member.description?.slice(0, 100),
+                          __html: member.description,
                         }}
-                        className=" text-xs font-normal text-[#656565] leading-[140%] text-justify"
+                        className=" text-xs font-normal text-[#656565] leading-[140%] text-justify line-clamp-3"
                       />
                       {member.description.length > 10 && (
                         <Button
@@ -188,17 +192,17 @@ const MeetTheTeam = () => {
             </CarouselContent>
 
             {/* ✅ Navigation Buttons */}
-            <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
-            <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+            <CarouselPrevious className="absolute -left-10 lg:-left-12 xl:-left-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+            <CarouselNext className="absolute -right-10 lg:-right-9 xl:-right-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
           </Carousel>
         </div>
       </div>
 
       {/* ✅ Modal Popup for Full Details */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[600px] ">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-primary">
+            <DialogTitle className="text-2xl font-semibold text-primary text-left">
               {doctorDetail?.data?.name || "Loading..."}
             </DialogTitle>
           </DialogHeader>
@@ -213,15 +217,19 @@ const MeetTheTeam = () => {
                   alt={doctorDetail.data?.name}
                   width={600}
                   height={400}
-                  className="w-full h-[300px] object-cover rounded-md"
+                  className="w-full h-[250px] object-cover rounded-md"
                 />
                 <h4 className="text-lg font-medium text-[#202020]">
                   {doctorDetail.data?.title}
                 </h4>
-                <div
-                  dangerouslySetInnerHTML={{ __html: doctorDetail.data?.description }}
-                  className="text-sm text-[#555] leading-[160%] text-justify"
-                />
+                <ScrollArea className="h-[200px] md:h-[250px] lg:h-[300px] w-full pr-5">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: doctorDetail.data?.description,
+                    }}
+                    className="text-sm text-[#555] leading-[160%] text-justify "
+                  />
+                </ScrollArea>
               </div>
             )
           )}

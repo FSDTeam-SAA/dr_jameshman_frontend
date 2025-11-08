@@ -13,12 +13,12 @@ const config: Config = {
   			center: true,
   			padding: {
   				DEFAULT: '14px',
-  				md: '30px',
-  				lg: '40px'
+  				md: '40px',
+  				lg: '50px'
   			},
   			screens: {
   				sm: '100%',
-  				md: '100%',
+  				md: '97%',
   				lg: '1400px'
   			}
   		},
