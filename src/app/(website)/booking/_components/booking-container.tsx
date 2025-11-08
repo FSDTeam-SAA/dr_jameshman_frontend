@@ -14,6 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -269,9 +276,24 @@ const BookingContainer = () => {
                       <FormLabel className="text-base font-semibold text-black">
                         Preferred Time *
                       </FormLabel>
-                      <FormControl>
-                        <Input type="time" className="h-12" {...field} />
-                      </FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] font-semibold">
+                            <SelectValue placeholder="Select time" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="anytime">Anytime</SelectItem>
+                          <SelectItem value="morning">Morning</SelectItem>
+                          <SelectItem value="midday">Afternoon</SelectItem>
+                          <SelectItem value="afternoon">Evening</SelectItem>
+                          <SelectItem value="night">Night</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -347,7 +369,3 @@ const BookingContainer = () => {
 };
 
 export default BookingContainer;
-
-
-
-
