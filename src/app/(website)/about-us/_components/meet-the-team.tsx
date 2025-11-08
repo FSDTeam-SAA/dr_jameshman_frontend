@@ -137,7 +137,7 @@ const MeetTheTeam = () => {
           Meet The Team
         </h2>
 
-        <div className="w-[90%] md:w-[92%] lg:w-[94%] mx-auto relative mt-10  border-2 border-red-500">
+        <div className="w-[90%] md:w-[92%] lg:w-[94%] mx-auto relative mt-10">
           <Carousel
             plugins={[autoplay.current]}
             opts={{

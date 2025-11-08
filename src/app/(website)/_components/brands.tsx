@@ -22,7 +22,11 @@ const brandsImages = [
 
 const Brands = () => {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: false })
+    Autoplay({
+      delay: 500,
+      stopOnInteraction: false,
+      stopOnMouseEnter: false,
+       })
   );
 
   return (
@@ -32,9 +36,6 @@ const Brands = () => {
         onMouseEnter={() => plugin.current.stop()}
         onMouseLeave={() => plugin.current.play()}
       >
-        {/* <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-black leading-[150%] text-center pb-2">
-          Our Trusted Brands
-        </h2> */}
 
         <Carousel
           plugins={[plugin.current]}
@@ -57,7 +58,6 @@ const Brands = () => {
                     width={150}
                     height={80}
                     className="w-auto h-16 md:h-20 object-contain"
-                    // className="w-auto h-16 md:h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300"
                   />
                 </div>
               </CarouselItem>
