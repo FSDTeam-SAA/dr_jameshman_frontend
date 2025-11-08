@@ -34,7 +34,7 @@ const OffersAndPaymentPlanContainer = () => {
               </span>
             </div>
             <p className="text-sm font-normal text-[#4B5563] leading-[120%] py-3 md:py-4">
-              Start treatment with an upfront deposit from €500, then spread the
+              Start treatment with an upfront payment from €500, then spread the
               remaining balance across easy monthly instalments with no interest
               added.
             </p>

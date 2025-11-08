@@ -99,13 +99,13 @@ const GallerisContainer = () => {
               loop: true,
               skipSnaps: false,
             }}
-            className="w-[97%] mx-auto bg-[#1C1C1C]"
+            className="w-[90%] md:w-[92%] lg:w-[94%] mx-auto bg-[#1C1C1C]"
           >
             <CarouselContent className="flex gap-6">
               {data?.data?.map((item) => (
                 <CarouselItem
                   key={item._id}
-                  className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                  className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3 xl:basis-1/4"
                 >
                   <div className="border border-white my-2 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
                     <div className="flex flex-col  ">
@@ -143,8 +143,10 @@ const GallerisContainer = () => {
             </CarouselContent>
 
             {/* Arrows */}
-            <CarouselNext className="right-0 md:-right-6" />
-            <CarouselPrevious className="left-0 md:-left-6" />
+            {/* <CarouselNext className="right-0 md:-right-6" />
+            <CarouselPrevious className="left-0 md:-left-6" /> */}
+             <CarouselPrevious className="absolute -left-10 lg:-left-12 xl:-left-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+            <CarouselNext className="absolute -right-10 lg:-right-8 xl:-right-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
           </Carousel>
         </div>
 

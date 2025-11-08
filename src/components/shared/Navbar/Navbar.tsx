@@ -27,7 +27,7 @@ const Navbar = () => {
   }, []);
 
   const logoSrc =
-    pathname === "/" && isAtTop
+    pathname !== "/booking" && isAtTop
       ? "/assets/images/logo.png"
       : "/assets/images/update-black-logo.png";
 
@@ -51,7 +51,8 @@ const Navbar = () => {
   return (
     <div
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        pathname === "/" && isAtTop ? "bg-transparent" : "bg-white shadow-md"
+        isAtTop ? "bg-transparent" : "bg-white shadow-md"
+        // pathname === "/" && isAtTop ? "bg-transparent" : "bg-white shadow-md"
       }`}
     >
       <div
@@ -75,9 +76,9 @@ const Navbar = () => {
               {navLinks.map((item, index) => {
                 const isActive = item.link === pathname;
                 const textColor =
-                  pathname === "/" && isAtTop && !isActive
+                   isAtTop && !isActive
                     ? "text-white"
-                    : "text-black";
+                    : isAtTop && isActive ? "text-white" : "text-black";
 
                 // Treatments dropdown
 
