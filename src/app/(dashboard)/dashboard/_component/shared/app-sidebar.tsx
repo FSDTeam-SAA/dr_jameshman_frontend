@@ -77,6 +77,11 @@ const items = [
     icon: Users,
   },
   {
+    title: "Contact Info",
+    url: "/dashboard/contact-info",
+    icon: Users,
+  },
+  {
     title: "Settings",
     url: "/dashboard/settings",
     icon: Settings,
