@@ -60,6 +60,14 @@ export const AppTopBar = () => {
           </Button>
         </Link>
       )}
+
+      {pathName === "/dashboard/contact-info" && (
+        <Link href={`/dashboard/contact-info/add-contact-info`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Contact Info
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
