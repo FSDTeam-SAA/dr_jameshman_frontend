@@ -66,7 +66,7 @@ const ContactInformation = () => {
             </Link>
 
             <Link href={`tel:${data?.data[0]?.phoneNumbers[0] || "083 011 0533"}`}>
-              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-[#343A40]">
+              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-[#343A40] pt-2">
                 <Phone className="w-5 h-5 text-primary" />
                 {data?.data[0]?.phoneNumbers[0] || "083 011 0533"}
               </li>

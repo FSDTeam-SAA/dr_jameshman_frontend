@@ -23,7 +23,7 @@ const brandsImages = [
 const Brands = () => {
   const plugin = React.useRef(
     Autoplay({
-      delay: 500,
+      delay: 3000,
       stopOnInteraction: false,
       stopOnMouseEnter: false,
        })
