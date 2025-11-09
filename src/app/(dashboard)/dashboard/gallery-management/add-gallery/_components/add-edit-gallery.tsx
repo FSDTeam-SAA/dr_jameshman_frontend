@@ -71,11 +71,11 @@ const AddEditGallery = ({ id, galleryDetails }: Props) => {
       pathName !== "/dashboard/gallery-management/add-gallery" &&
       galleryDetails
     ) {
-      if (galleryDetails.before.imageName) {
-        setBeforeImagePreview(galleryDetails.before.imageName);
+      if (galleryDetails?.before?.imageName) {
+        setBeforeImagePreview(galleryDetails?.before?.imageName);
       }
-      if (galleryDetails.after.imageName) {
-        setAfterImagePreview(galleryDetails.after.imageName);
+      if (galleryDetails?.after?.imageName) {
+        setAfterImagePreview(galleryDetails?.after?.imageName);
       }
 
       form.reset({
