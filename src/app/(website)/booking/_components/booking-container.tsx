@@ -291,7 +291,7 @@ const BookingContainer = () => {
                           <SelectItem value="morning">Morning</SelectItem>
                           <SelectItem value="midday">Afternoon</SelectItem>
                           <SelectItem value="afternoon">Evening</SelectItem>
-                          <SelectItem value="night">Night</SelectItem>
+                          {/* <SelectItem value="night">Night</SelectItem> */}
                         </SelectContent>
                       </Select>
                       <FormMessage />

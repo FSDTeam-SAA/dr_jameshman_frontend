@@ -154,7 +154,7 @@ const MeetTheTeam = () => {
                   key={member._id}
                   className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-4 lg:pl-6 pr-2 lg:pr-3 "
                 >
-                  <div className="w-full h-[462px] md:h-[467px] bg-white rounded-[8px] shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                  <div className="w-full h-full bg-white rounded-[8px] shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                     <Image
                       src={member.image}
                       alt={member.name}

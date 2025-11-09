@@ -79,7 +79,7 @@ const ContactGetInTouch = () => {
   return (
     <div className="pt-10 md:pt-16 lg:pt-24">
       <div className="container">
-        <div className=" bg-white rounded-[20px] grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className=" bg-white rounded-[20px] grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-1">
           <div className="w-full md:col-span-1 p-4 md:p-6 lg:p-8">
             <h3 className="text-2xl md:text-[28px] lg:text-[32px] text-[#2F2F2F] leading-[120%] font-semibold">
               Get in Touch
@@ -161,7 +161,7 @@ const ContactGetInTouch = () => {
                         </FormLabel>
                         <FormControl>
                           <Textarea
-                            className="h-[200px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base md:text-base leading-[120%] font-semibold"
+                            className="h-[150px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base md:text-base leading-[120%] font-semibold"
                             placeholder="Write your message Here"
                             {...field}
                           />
@@ -219,7 +219,7 @@ const ContactGetInTouch = () => {
               alt="get in touch"
               width={1000}
               height={1000}
-              className="w-full h-[400px] md:h-[500px] lg:h-[825px] object-cover"
+              className="w-full h-[400px] md:h-[500px] lg:h-[775px] object-cover"
             />
           </div>
         </div>

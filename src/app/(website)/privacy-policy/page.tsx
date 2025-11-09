@@ -28,10 +28,11 @@ const PrivacyPolicyPage = () => {
               <li>
                 Website:{" "}
                 <Link
-                  href="https://www.perrystownorthodontics.ie"
+                  target="_blank"
+                  href="https://www.perrystownorthodontics.com"
                   className="text-blue-600 hover:underline"
                 >
-                  www.perrystownorthodontics.ie
+                  www.perrystownorthodontics.com
                 </Link>
               </li>
               <li>Email: perrystownorthodontics@gmail.com</li>

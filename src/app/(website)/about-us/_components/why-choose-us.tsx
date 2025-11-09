@@ -9,17 +9,17 @@ const WhyChooseUs = () => {
           Discover the heart of our practice — our mission, our story, and the friendly team behind your orthodontic care.
         </h3>
 
-        <div className=" grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-11 lg:gap-[53px] pt-6 md:pt-10 lg:pt-11">
-          <div className="md:col-span-2">
+        <div className=" grid grid-cols-1 md:grid-cols-7 gap-8 md:gap-11 lg:gap-[53px] pt-6 md:pt-10 lg:pt-11">
+          <div className="md:col-span-3">
             <Image
-              src="/assets/images/about-us.jpg"
+              src="/assets/images/about-why-us.jpg"
               alt="about-us"
               width={1000}
               height={1000}
               className="w-full h-[420px] md:h-[520px] lg:h-[628px] object-cover rounded-[20px]"
             />
           </div>
-          <div className="md:col-span-3 flex flex-col justify-center">
+          <div className="md:col-span-4 flex flex-col justify-center">
             <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
               Why Choose Us
             </h2>

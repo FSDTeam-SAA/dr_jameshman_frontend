@@ -161,7 +161,7 @@ const GetInTouch = () => {
                         </FormLabel>
                         <FormControl>
                           <Textarea
-                            className="h-[200px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base md:text-base leading-[120%] font-semibold"
+                            className="h-[150px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base md:text-base leading-[120%] font-semibold"
                             placeholder="Write your message Here"
                             {...field}
                           />
@@ -219,7 +219,7 @@ const GetInTouch = () => {
               alt="get in touch"
               width={1000}
               height={1000}
-              className="w-full h-[350px] md:h-[500px] lg:h-[825px] object-cover"
+              className="w-full h-[350px] md:h-[500px] lg:h-[775px] object-cover"
             />
           </div>
         </div>

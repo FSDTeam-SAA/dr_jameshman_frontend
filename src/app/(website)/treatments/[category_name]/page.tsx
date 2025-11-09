@@ -3,11 +3,20 @@ import React from "react";
 import TreatmentCategoryContainer from "./_components/treatment-category-container";
 import FaqContainer from "../../about-us/_components/faq";
 
-const TreatmentCategoryPage = ({params}: {params: {category_name: string}}) => {
+const TreatmentCategoryPage = ({
+  params,
+}: {
+  params: { category_name: string };
+}) => {
   return (
     <div>
       <HeroSection title="Our Treatments" />
-      <TreatmentCategoryContainer category_name={params?.category_name || ""} />
+      <section id="our-treatments">
+        <TreatmentCategoryContainer
+          category_name={params?.category_name || ""}
+        />
+      </section>
+
       <FaqContainer />
     </div>
   );

@@ -54,8 +54,9 @@ const TermsAndConditionPage = () => {
           <section className="mb-6">
             <h3 className="text-lg font-semibold">5. Intellectual Property</h3>
             <p className="mt-2 text-gray-700">
-              All text, photos, and materials on this site are the property of Perrystown Orthodontics Ltd and may
-              not be copied or used without permission.
+              {/* All text, photos, and materials on this site are the property of Perrystown Orthodontics Ltd and may
+              not be copied or used without permission. */}
+              All text, photos, and materials on this site are the property of <strong>Perrystown Orthodontics Ltd</strong> (to be changed to - Ortholife Ltd) and may not be copied or used without permission.
             </p>
           </section>
 

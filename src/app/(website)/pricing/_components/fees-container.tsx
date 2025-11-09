@@ -19,7 +19,7 @@ const FeesContainer = () => {
             View our complete fee schedule for consultations, braces, clear
             aligners, and retainers.{" "}
           </p>
-          <Link href="/pricing/treatments-fees">
+          <Link href={`/pricing/treatments-fees#treatments-fees`}>
             <button className="flex items-center gap-2 text-primary text-sm font-semibold leading-[120%] hover:underline">
               View Fees <ArrowRight className="w-4 h-4 text-primary" />
             </button>
@@ -38,7 +38,7 @@ const FeesContainer = () => {
             View our complete fee schedule for consultations, braces, clear
             aligners, and retainers.
           </p>
-          <Link href="/pricing/offers-and-payment-plans">
+          <Link href={`/pricing/offers-and-payment-plans#offers-and-payment-plans`}>
             <button className="flex items-center gap-2 text-primary text-sm font-semibold leading-[120%] hover:underline">
               View Fees <ArrowRight className="w-4 h-4 text-primary" />
             </button>

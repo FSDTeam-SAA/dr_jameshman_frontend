@@ -5,16 +5,16 @@ import { TreatmentCategory } from "../types/treatments-data-type";
 
 const TreatmentCart = ({ item }: { item: TreatmentCategory }) => {
   return (
-    <div>
-      <Link href={`/treatments/${item?._id}`}>
+    <div className="">
+      <Link href={`/treatments/${item?._id}#our-treatments`}>
         <Image
           src={item?.image || "/assets/images/no-image.jpg"}
           alt={item?.name || ""}
           width={1000}
           height={1000}
-          className="w-full h-[300px] md:h-[400px] lg:h-[431px] rounded-[8px] object-cover"
+          className="w-[300px] md:w-full h-[300px] md:h-[320px] lg:h-[340px] rounded-[8px] md:object-cover"
         />
-        <h3 className="text-base md:text-lg font-medium leading-[120%] text-[#2F2F2F] text-center bg-white rounded-b-[8px] py-2 md:py-3">
+        <h3 className="text-base font-semibold leading-[120%] text-[#2F2F2F] text-center bg-white rounded-b-[8px] py-2 md:py-3">
           {item?.name}
         </h3>
       </Link>

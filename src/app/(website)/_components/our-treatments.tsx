@@ -12,6 +12,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -40,7 +42,7 @@ const OurTreatments = () => {
 
   return (
     <div className="py-10 md:py-14 lg:py-20">
-      <div className="container">
+      <div className="container ">
         <div className="w-full flex items-center gap-6 md:gap-14 lg:gap-20 justify-between">
           <div>
             <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold leading-[150%] text-primary">
@@ -60,7 +62,8 @@ const OurTreatments = () => {
           </div>
         </div>
 
-        <Carousel
+        <div className="w-[83%] md:w-[92%] lg:w-[94%] mx-auto">
+          <Carousel
           plugins={[plugin.current]}
           className="w-full"
           opts={{
@@ -80,7 +83,10 @@ const OurTreatments = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
+           <CarouselPrevious className="absolute -left-10 lg:-left-12 xl:-left-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+            <CarouselNext className="absolute -right-10 lg:-right-9 xl:-right-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
         </Carousel>
+        </div>
       </div>
     </div>
   );
