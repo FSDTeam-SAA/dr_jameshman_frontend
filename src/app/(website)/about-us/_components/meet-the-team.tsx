@@ -202,7 +202,7 @@ const MeetTheTeam = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[600px] ">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-primary text-left">
+            <DialogTitle className="text-xl lg:text-2xl font-semibold text-primary text-left">
               {doctorDetail?.data?.name || "Loading..."}
             </DialogTitle>
           </DialogHeader>
@@ -211,18 +211,18 @@ const MeetTheTeam = () => {
             <p className="text-sm text-gray-500">Loading details...</p>
           ) : (
             doctorDetail && (
-              <div className="space-y-4">
+              <div className="space-y-2 md:space-y-4">
                 <Image
                   src={doctorDetail.data?.image}
                   alt={doctorDetail.data?.name}
                   width={600}
                   height={400}
-                  className="w-full h-[250px] object-cover rounded-md"
+                  className="w-full h-[160px] md:h-[200px] lg:h-[250px] object-cover rounded-md"
                 />
                 <h4 className="text-lg font-medium text-[#202020]">
                   {doctorDetail.data?.title}
                 </h4>
-                <ScrollArea className="h-[200px] md:h-[250px] lg:h-[300px] w-full pr-5">
+                <ScrollArea className="h-[140px] md:h-[170px] lg:h-[200px] w-full pr-5">
                   <div
                     dangerouslySetInnerHTML={{
                       __html: doctorDetail.data?.description,
