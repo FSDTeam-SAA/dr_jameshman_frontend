@@ -40,8 +40,8 @@ const formSchema = z.object({
   patientEmail: z
     .string()
     .email({ message: "Please enter a valid email address." }),
-  patientPhone: z.string().min(11, {
-    message: "patient Phone Number must be at least 11 characters.",
+  patientPhone: z.string().min(9, {
+    message: "patient Phone Number must be at least 9 characters.",
   }),
   dentistName: z
     .string()
@@ -52,8 +52,8 @@ const formSchema = z.object({
   dentistEmail: z
     .string()
     .email({ message: "Please enter a valid email address." }),
-  dentistPhone: z.string().min(11, {
-    message: "Dentist Phone Number must be at least 11 characters.",
+  dentistPhone: z.string().min(9, {
+    message: "Dentist Phone Number must be at least 9 characters.",
   }),
   additionalNotes: z
     .string()
