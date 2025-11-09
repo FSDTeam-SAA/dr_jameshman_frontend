@@ -14,8 +14,8 @@ const WhyChooseOur = () => {
           <p className="text-sm md:text-base text-[#68706A] leading-[150%] font-normal">
             Our team are registered Specialist Orthodontists, dedicated to gentle, expert care and the latest treatments to create healthy, confident smiles for all ages.
           </p>
-          <ul className="pt-6 md:pt-8 lg:pt-10">
-            <li className=" py-2 md:py-4 lg:py-6">
+          <ul className="pt-6 md:pt-8">
+            <li className=" py-2 md:py-4">
               <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
                 <Shield className="w-5 h-5 text-primary" /> Specialist Expertise
               </span>
@@ -24,7 +24,7 @@ const WhyChooseOur = () => {
                 training and experience.
               </span>
             </li>
-            <li className=" py-2 md:py-4 lg:py-6">
+            <li className=" py-2 md:py-4">
               <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
                 <Star className="w-5 h-5 text-primary" />
                 Latest Technology
@@ -34,7 +34,7 @@ const WhyChooseOur = () => {
                 precise results.
               </span>
             </li>
-            <li className=" py-2 md:py-4 lg:py-6">
+            <li className=" py-2 md:py-4 ">
               <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
                 <Frown className="w-5 h-5 text-primary" /> As an
                 Focused Care
@@ -43,7 +43,7 @@ const WhyChooseOur = () => {
                 As an orthodontics-only practice, we&apos;re 100% focused on creating beautiful smiles.
               </span>
             </li>
-            <li className=" py-2 md:py-4 lg:py-6">
+            <li className=" py-2 md:py-4">
               <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
                 <Clock className="w-5 h-5 text-primary" /> Convenient
                 Appointments
@@ -52,7 +52,7 @@ const WhyChooseOur = () => {
                 Flexible scheduling and efficient visits to respect your time.
               </span>
             </li>
-            <li className=" py-2 md:py-4 lg:py-6">
+            <li className=" py-2 md:py-4">
               <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
                 <CreditCard className="w-5 h-5 text-primary" /> Flexible Payment 
               </span>
@@ -63,7 +63,7 @@ const WhyChooseOur = () => {
           </ul>
         </div>
         <div className="md:col-span-1">
-            <Image src="/assets/images/why-choose-us.png" alt="why-choose-us" width={1000} height={1000} className="w-full h-[350px] md:h-[500px] lg:h-[834px] object-cover"/>
+            <Image src="/assets/images/contact-get-in-touch.jpg" alt="why-choose-us" width={1000} height={1000} className="w-full h-[350px] md:h-[500px] lg:h-[720px] object-cover"/>
         </div>
       </div>
     </div>
