@@ -20,7 +20,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Save } from "lucide-react";
 
 const privacyPolicySchema = z.object({
-  policyContent: z.string().min(1, "Privacy policy content is required"),
+  termsContent: z.string().min(1, "Privacy policy content is required"),
 });
 
 type FormType = z.infer<typeof privacyPolicySchema>;
@@ -30,13 +30,13 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
 interface Props {
-  privacyPolicyDetails?: {
+  termsContent?: {
     _id: string;
-    policyContent: string;
+    termsContent: string;
   };
 }
 
-const EditPrivacyPolicy = ({ privacyPolicyDetails }: Props) => {
+const EditTermsService = ({ termsContent }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const session = useSession();
@@ -45,23 +45,23 @@ const EditPrivacyPolicy = ({ privacyPolicyDetails }: Props) => {
   const form = useForm<FormType>({
     resolver: zodResolver(privacyPolicySchema),
     defaultValues: {
-      policyContent: "",
+      termsContent: "",
     },
   });
 
   useEffect(() => {
-    if (privacyPolicyDetails) {
+    if (termsContent) {
       form.reset({
-        policyContent: privacyPolicyDetails?.policyContent || "",
+        termsContent: termsContent?.termsContent || "",
       });
     }
-  }, [privacyPolicyDetails, form]);
+  }, [termsContent, form]);
 
   const { mutateAsync, isPending } = useMutation<any, any, FormType>({
     mutationKey: ["privacy-policy"],
     mutationFn: async (data) => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/privacy-policy/edit-policy`,
+        `${process.env.NEXT_PUBLIC_API_URL}/terms-service/edit-terms`,
         {
           method: "PUT",
           headers: {
@@ -82,7 +82,7 @@ const EditPrivacyPolicy = ({ privacyPolicyDetails }: Props) => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["privacy-policy"] });
       toast.success(data.message);
-      router.push("/dashboard/privacy-policy");
+      router.push("/dashboard/terms-of-service");
       form.reset();
     },
     onError: (error) => {
@@ -145,7 +145,7 @@ const EditPrivacyPolicy = ({ privacyPolicyDetails }: Props) => {
           {/* Content field */}
           <FormField
             control={form.control}
-            name="policyContent"
+            name="termsContent"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -156,7 +156,7 @@ const EditPrivacyPolicy = ({ privacyPolicyDetails }: Props) => {
                       onChange={field.onChange}
                       modules={modules}
                       formats={formats}
-                      placeholder="Enter your privacy policy content here..."
+                      placeholder="Enter your terms of service content here..."
                       className="h-96 mb-12"
                     />
                   </div>
@@ -187,4 +187,4 @@ const EditPrivacyPolicy = ({ privacyPolicyDetails }: Props) => {
   );
 };
 
-export default EditPrivacyPolicy;
+export default EditTermsService;
