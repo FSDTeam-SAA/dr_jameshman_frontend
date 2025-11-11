@@ -12,7 +12,9 @@ const ContactInformation = () => {
   const { data, isLoading, isError, error } = useQuery<ContactInfoResponse>({
     queryKey: ["contact-info"],
     queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact-info`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contact-info`
+      );
       return res.json();
     },
   });
@@ -58,10 +60,18 @@ const ContactInformation = () => {
           </p>
 
           <ul className="pt-4 md:pt-6 lg:pt-8 space-y-2">
-            <Link href={`tel:${data?.data[0]?.phoneNumbers[0] || "083 011 0533"}`}>
-              <li className="flex items-center gap-2 text-sm md:text-base font-normal text-[#343A40]">
-                <Phone className="w-5 h-5 text-primary" />
-                {data?.data[0]?.phoneNumbers[0] || "083 011 0533"}
+            <Link
+              href={`tel:${data?.data[0]?.phoneNumbers[0] || "083 011 0533"}`}
+            >
+              <li className="flex flex-col gap-2 text-sm md:text-base font-normal text-[#343A40]">
+                {data?.data[0]?.phoneNumbers.map((number, index) => (
+                  <div key={index}>
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-5 h-5 text-primary" />
+                      {number}
+                    </div>
+                  </div>
+                )) || "083 011 0533"}
               </li>
             </Link>
 
@@ -106,22 +116,6 @@ const ContactInformation = () => {
 };
 
 export default ContactInformation;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client"
 
