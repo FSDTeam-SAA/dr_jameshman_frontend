@@ -11,7 +11,7 @@ const TreatmentCategoryPage = ({
   return (
     <div>
       <HeroSection title="Our Treatments" />
-      <section id="our-treatments">
+      <section id="treatment_content">
         <TreatmentCategoryContainer
           category_name={params?.category_name || ""}
         />
