@@ -87,10 +87,21 @@ const Footer = () => {
             </p>
 
             <div className="flex items-center gap-3">
-              <Facebook className="w-8 h-8 text-white cursor-pointer" />
-              <Twitter className="w-8 h-8 text-white cursor-pointer" />
-              <InstagramIcon className="w-8 h-8 text-white cursor-pointer" />
-              <FaTiktok className="w-8 h-8 text-white cursor-pointer" />
+              <Link
+                href={"https://www.facebook.com/profile.php?id=61583533137378"}
+                target="_blank"
+              >
+                <Facebook className="w-8 h-8 text-white cursor-pointer" />
+              </Link>
+              <Link href={"https://x.com/PerrystownOrtho"} target="_blank">
+                <Twitter className="w-8 h-8 text-white cursor-pointer" />
+              </Link>
+              <Link href={"https://www.instagram.com/perrystownorthodontics/"} target="_blank">
+                <InstagramIcon className="w-8 h-8 text-white cursor-pointer" />
+              </Link>
+              <Link href={"https://www.tiktok.com/@perrystownorthodontics"} target="_blank">
+                <FaTiktok className="w-8 h-8 text-white cursor-pointer" />
+              </Link>
             </div>
           </div>
 
