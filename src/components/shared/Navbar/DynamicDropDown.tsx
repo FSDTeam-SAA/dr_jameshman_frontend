@@ -63,7 +63,7 @@ const TreatmentsDropdown = ({ textColor }: TreatmentsDropdownProps) => {
   const categories =
     data?.data?.map((cat) => ({
       label: cat?.name,
-      link: `/treatments/${cat?._id}`,
+      link: `/treatments/${cat?._id}#treatment_content`,
     })) || [];
 
   return (

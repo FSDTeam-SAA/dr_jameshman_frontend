@@ -8,7 +8,7 @@ const QRCode = () => {
         <div className="container grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
           <div className="relative md:col-span-1 flex justify-center items-center">
             <video
-              className="w-full h-[320px] md:h-[347px] object-cover rounded-lg"
+              className="w-full lg:h-[300px] object-cover rounded-lg"
               src="/assets/videos/qr-code-videos.mp4"
               autoPlay
               loop
@@ -35,8 +35,7 @@ const QRCode = () => {
                 🤳 Snap a quick selfie
               </li>
               <li className="text-base font-normal text-black leadig-[150%] py-1 md:py-1.5">
-                ✨ See your smile transformation — instantly! Delete ‘your
-                phone’
+                ✨ See your smile transformation — instantly
               </li>
             </ol>
             <p className="text-base font-normal text-[#3E3E3E] leading-[150%]">

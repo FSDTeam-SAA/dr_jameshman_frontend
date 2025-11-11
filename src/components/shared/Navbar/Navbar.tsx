@@ -26,17 +26,35 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Define routes where navbar should be white at top
+  const whiteNavRoutes = [
+    "/",
+    "/treatments",
+    "/pricing",
+    "/about-us",
+    "/referrals",
+    "/gallery",
+    "/contact",
+  ];
+
+  // Check if current route is in whiteNavRoutes
+  const isWhiteNavRoute = whiteNavRoutes.includes(pathname);
+
+  // Logo logic
   const logoSrc =
-    pathname !== "/booking" && isAtTop
-      ? "/assets/images/logo.png"
-      : "/assets/images/update-black-logo.png";
+    isWhiteNavRoute && isAtTop
+      ? "/assets/images/logo.png" // white logo
+      : "/assets/images/update-black-logo.png"; // black logo
+
+  // ✅ Adjust padding dynamically
+  const containerPadding = pathname === "/" && isAtTop ? "py-2" : "py-0";
 
   // Dropdown items
   const pricingItems = [
-    { label: "Fees", link: "/pricing" },
+    { label: "Fees", link: "/pricing#pricing" },
     {
       label: "Offers & Payment Plans",
-      link: "/pricing/offers-and-payment-plans",
+      link: "/pricing/offers-and-payment-plans#offers-and-payment-plans",
     },
   ];
 
@@ -45,14 +63,10 @@ const Navbar = () => {
     { label: "Meet The Team", link: "/about-us#meet-the-team" },
   ];
 
-  // ✅ Adjust padding dynamically
-  const containerPadding = pathname === "/" && isAtTop ? "py-2" : "py-0";
-
   return (
     <div
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        isAtTop ? "bg-transparent" : "bg-white shadow-md"
-        // pathname === "/" && isAtTop ? "bg-transparent" : "bg-white shadow-md"
+        isAtTop && isWhiteNavRoute ? "bg-transparent" : "bg-white shadow-md"
       }`}
     >
       <div
@@ -75,13 +89,12 @@ const Navbar = () => {
             <ul className="flex items-center gap-2 text-primary">
               {navLinks.map((item, index) => {
                 const isActive = item.link === pathname;
+
+                // Text color logic
                 const textColor =
-                   isAtTop && !isActive
-                    ? "text-white"
-                    : isAtTop && isActive ? "text-white" : "text-black";
+                  isWhiteNavRoute && isAtTop ? "text-white" : "text-black";
 
                 // Treatments dropdown
-
                 if (item?.label === "Treatments") {
                   return (
                     <li key={index} className="relative ">

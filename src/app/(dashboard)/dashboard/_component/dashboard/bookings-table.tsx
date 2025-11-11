@@ -73,7 +73,6 @@ export const BookingsTable = () => {
     enabled: !!token,
   });
 
-
   const bookings = allBookings?.data || [];
   const pagination = allBookings?.pagination;
 
@@ -133,17 +132,11 @@ export const BookingsTable = () => {
                     {new Date(booking?.preferredDate).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="py-6">
-                    {/* preferredTime is already "15:30" — format it nicely */}
-                    {booking?.preferredTime
-                      ? new Date(
-                          `1970-01-01T${booking.preferredTime}`
-                        ).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })
-                      : "—"}
+                    {booking?.preferredTime}
                   </TableCell>
-                  <TableCell className="py-6 lg:max-w-md mx-auto">{booking?.message}</TableCell>
+                  <TableCell className="py-6 lg:max-w-md mx-auto">
+                    {booking?.message}
+                  </TableCell>
                   <TableCell className="py-6">
                     <div className="space-x-2 flex justify-center">
                       <button

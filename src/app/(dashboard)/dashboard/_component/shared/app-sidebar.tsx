@@ -82,6 +82,21 @@ const items = [
     icon: Users,
   },
   {
+    title: "Privacy Policy",
+    url: "/dashboard/privacy-policy",
+    icon: Users,
+  },
+  {
+    title: "GDPR",
+    url: "/dashboard/gdpr",
+    icon: Users,
+  },
+  {
+    title: "Terms of Service",
+    url: "/dashboard/terms-of-service",
+    icon: Users,
+  },
+  {
     title: "Settings",
     url: "/dashboard/settings",
     icon: Settings,
@@ -99,7 +114,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar className="border-none">
-      <SidebarContent className="bg-white shadow-2xl">
+      <SidebarContent className="bg-white shadow-2xl scrollbar-hide">
         <SidebarGroup className="p-0">
           <div className="flex flex-col justify-between min-h-screen pb-5">
             <div>
@@ -126,8 +141,9 @@ export function AppSidebar() {
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton
-                          className={`h-[60px] rounded-none text-[20px] hover:bg-primary hover:text-white transition-all duration-300 pl-5 ${
-                            isActive && "bg-primary text-white font-medium"
+                          className={`h-[60px] rounded-none text-[20px] hover:bg-primary/20 hover:text-black transition-all duration-300 pl-5 ${
+                            isActive &&
+                            "bg-primary hover:bg-primary text-white hover:text-white font-medium"
                           }`}
                           asChild
                         >

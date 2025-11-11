@@ -61,12 +61,14 @@ const TreatmentCategoryContainer = ({
         return res.json();
       },
     });
-  console.log(data);
+
   if (isLoading) return <TreatmentSkeleton />;
+
   if (isError)
     return (
       <ErrorContainer message={error?.message || "Something went wrong"} />
     );
+
   return (
     <div className="py-10 md:py-16 lg:py-24">
       <div className="container">

@@ -42,7 +42,7 @@ const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   subject: z
     .string()
-    .min(2, { message: "Subject must be at least 2 characters." }),
+    .min(2, { message: "Surname must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   phoneNumber: z
     .string()
@@ -168,12 +168,12 @@ const BookingContainer = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base md:text-lg font-medium text-[#2F2F2F]">
-                        Subject *
+                        Surname *
                       </FormLabel>
                       <FormControl>
                         <Input
                           className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] font-semibold"
-                          placeholder="Subject Here"
+                          placeholder="Surname Here"
                           {...field}
                         />
                       </FormControl>

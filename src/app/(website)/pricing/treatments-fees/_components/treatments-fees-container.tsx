@@ -91,11 +91,13 @@ const TreatmentFeesContainer = () => {
                           {i?.rate === 0 ? (
                             "FREE"
                           ) : (
-                            <>
-                              <Euro /> {i?.rate}
-                            </>
+                            <div className="flex items-center gap-2">
+                              From{" "}
+                              <span className="flex items-center">
+                                <Euro /> {i?.rate}
+                              </span>
+                            </div>
                           )}{" "}
-                         
                         </p>
                       </div>
                     );
