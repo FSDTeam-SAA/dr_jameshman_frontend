@@ -2,7 +2,7 @@
 import React from "react";
 import PathTracker from "./path-tracker";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Edit, Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -65,6 +65,14 @@ export const AppTopBar = () => {
         <Link href={`/dashboard/contact-info/add-contact-info`}>
           <Button className="h-[40px]">
             <Plus /> Add Contact Info
+          </Button>
+        </Link>
+      )}
+
+      {pathName === "/dashboard/privacy-policy" && (
+        <Link href={`/dashboard/privacy-policy/edit-privacy-policy`}>
+          <Button className="h-[40px]">
+            <Edit /> Edit Privacy Policy
           </Button>
         </Link>
       )}
