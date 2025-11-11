@@ -76,6 +76,14 @@ export const AppTopBar = () => {
           </Button>
         </Link>
       )}
+
+      {pathName === "/dashboard/terms-of-service" && (
+        <Link href={`/dashboard/terms-of-service/edit-terms-of-service`}>
+          <Button className="h-[40px]">
+            <Edit /> Edit Terms of Service
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
