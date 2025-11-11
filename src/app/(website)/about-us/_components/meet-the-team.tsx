@@ -23,8 +23,6 @@ import { Button } from "@/components/ui/button";
 import Autoplay from "embla-carousel-autoplay";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// get all start
-
 export interface Doctor {
   _id: string;
   name: string;
@@ -49,8 +47,6 @@ export interface DoctorsResponse {
   pagination: Pagination;
 }
 
-// get all end
-// get by id start
 export interface SingleDoctorResponse {
   status: boolean;
   message: string;
@@ -67,8 +63,6 @@ export interface SingleDoctor {
   __v: number;
 }
 
-// get by id end
-
 const MeetTheTeam = () => {
   const autoplay = React.useRef(
     Autoplay({
@@ -80,7 +74,6 @@ const MeetTheTeam = () => {
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [open, setOpen] = React.useState(false);
 
-  // ✅ Fetch all doctors
   const { data, isLoading, isError, error } = useQuery<DoctorsResponse>({
     queryKey: ["doctors"],
     queryFn: async () => {
@@ -89,7 +82,6 @@ const MeetTheTeam = () => {
     },
   });
 
-  // ✅ Fetch individual doctor details (only when modal opens)
   const { data: doctorDetail, isFetching } = useQuery<SingleDoctorResponse>({
     queryKey: ["doctor", selectedId],
     queryFn: async () => {
@@ -100,8 +92,6 @@ const MeetTheTeam = () => {
     },
     enabled: !!selectedId && open,
   });
-
-  // console.log(doctorDetail)
 
   const handleReadMore = (id: string) => {
     setSelectedId(id);
@@ -191,43 +181,47 @@ const MeetTheTeam = () => {
               ))}
             </CarouselContent>
 
-            {/* ✅ Navigation Buttons */}
             <CarouselPrevious className="absolute -left-10 lg:-left-12 xl:-left-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
             <CarouselNext className="absolute -right-10 lg:-right-9 xl:-right-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
           </Carousel>
         </div>
       </div>
 
-      {/* ✅ Modal Popup for Full Details */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[600px] ">
-          <DialogHeader>
-            <DialogTitle className="text-xl lg:text-2xl font-semibold text-primary text-left">
+        <DialogContent className="max-w-[95vw] w-full mx-auto p-4 md:p-6 lg:p-8 max-h-[90vh] md:max-h-[85vh] lg:max-h-[80vh] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px] flex flex-col gap-3 md:gap-4 lg:gap-5">
+          <DialogHeader className="px-1 md:px-2">
+            <DialogTitle className="text-lg md:text-xl lg:text-2xl font-semibold text-primary text-left leading-tight">
               {doctorDetail?.data?.name || "Loading..."}
             </DialogTitle>
           </DialogHeader>
 
           {isFetching ? (
-            <p className="text-sm text-gray-500">Loading details...</p>
+            <div className="flex justify-center items-center py-8 md:py-12">
+              <p className="text-sm md:text-base text-gray-500">Loading details...</p>
+            </div>
           ) : (
             doctorDetail && (
-              <div className="space-y-2 md:space-y-4">
-                <Image
-                  src={doctorDetail.data?.image}
-                  alt={doctorDetail.data?.name}
-                  width={600}
-                  height={400}
-                  className="w-full h-[160px] md:h-[200px] lg:h-[250px] object-cover rounded-md"
-                />
-                <h4 className="text-lg font-medium text-[#202020]">
+              <div className="space-y-3 md:space-y-4 lg:space-y-5 flex-1 overflow-hidden">
+                <div className="w-full h-[140px] sm:h-[160px] md:h-[200px] lg:h-[250px] relative">
+                  <Image
+                    src={doctorDetail.data?.image}
+                    alt={doctorDetail.data?.name}
+                    fill
+                    className="object-cover rounded-md"
+                    sizes="(max-width: 640px) 95vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 700px"
+                  />
+                </div>
+
+                <h4 className="text-base md:text-lg lg:text-xl font-medium text-[#202020] px-1">
                   {doctorDetail.data?.title}
                 </h4>
-                <ScrollArea className="h-[140px] md:h-[170px] lg:h-[200px] w-full pr-5">
+
+                <ScrollArea className="w-full h-[120px] sm:h-[140px] md:h-[160px] lg:h-[180px] pr-3 md:pr-4 lg:pr-5">
                   <div
                     dangerouslySetInnerHTML={{
                       __html: doctorDetail.data?.description,
                     }}
-                    className="text-sm text-[#555] leading-[160%] text-justify "
+                    className="text-xs sm:text-sm md:text-base text-[#555] leading-[160%] text-justify pr-2 space-y-2"
                   />
                 </ScrollArea>
               </div>
