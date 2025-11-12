@@ -1,13 +1,23 @@
 import { z } from "zod";
 
+// Helper function to check if value is a File
+const isFile = (value: unknown): value is File => {
+  return value instanceof File;
+};
+
 export const addGallerySchema = z.object({
-  imageName: z.string().min(1, { message: "Image name is required" }),
-  imageDescription: z
-    .string()
-    .min(10, { message: "Description should be at least 10 characters." }),
-  imageUrl: z
-    .instanceof(File, { message: "Please upload a valid image file." })
-    .or(z.string().url().optional()),
+  before: z.object({
+    imageFile: z.unknown()
+      .refine((value) => isFile(value) && value.size > 0, {
+        message: "Before image is required",
+      })
+  }),
+  after: z.object({
+    imageFile: z.unknown()
+      .refine((value) => isFile(value) && value.size > 0, {
+        message: "After image is required",
+      })
+  }),
 });
 
 export type AddGalleryFormType = z.infer<typeof addGallerySchema>;

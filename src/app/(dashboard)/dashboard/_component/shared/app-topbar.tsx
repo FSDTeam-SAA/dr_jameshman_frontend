@@ -2,7 +2,7 @@
 import React from "react";
 import PathTracker from "./path-tracker";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Edit, Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -49,6 +49,46 @@ export const AppTopBar = () => {
         <Link href={`/dashboard/treatment-category/add-treatment-category`}>
           <Button className="h-[40px]">
             <Plus /> Add Treatment Category
+          </Button>
+        </Link>
+      )}
+
+      {pathName === "/dashboard/doctors" && (
+        <Link href={`/dashboard/doctors/add-doctor`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Doctors
+          </Button>
+        </Link>
+      )}
+
+      {pathName === "/dashboard/contact-info" && (
+        <Link href={`/dashboard/contact-info/add-contact-info`}>
+          <Button className="h-[40px]">
+            <Plus /> Add Contact Info
+          </Button>
+        </Link>
+      )}
+
+      {pathName === "/dashboard/privacy-policy" && (
+        <Link href={`/dashboard/privacy-policy/edit-privacy-policy`}>
+          <Button className="h-[40px]">
+            <Edit /> Edit Privacy Policy
+          </Button>
+        </Link>
+      )}
+
+      {pathName === "/dashboard/terms-of-service" && (
+        <Link href={`/dashboard/terms-of-service/edit-terms-of-service`}>
+          <Button className="h-[40px]">
+            <Edit /> Edit Terms of Service
+          </Button>
+        </Link>
+      )}
+
+      {pathName === "/dashboard/gdpr" && (
+        <Link href={`/dashboard/gdpr/edit-gdpr`}>
+          <Button className="h-[40px]">
+            <Edit /> Edit Terms of Service
           </Button>
         </Link>
       )}

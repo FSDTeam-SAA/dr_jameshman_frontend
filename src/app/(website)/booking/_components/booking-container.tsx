@@ -14,6 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -35,11 +42,11 @@ const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   subject: z
     .string()
-    .min(2, { message: "Subject must be at least 2 characters." }),
+    .min(2, { message: "Surname must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   phoneNumber: z
     .string()
-    .min(11, { message: "Phone Number must be at least 11 characters." }),
+    .min(9, { message: "Phone Number must be at least 9 characters." }),
   message: z
     .string()
     .min(10, { message: "Message must be at least 10 characters." }),
@@ -161,12 +168,12 @@ const BookingContainer = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base md:text-lg font-medium text-[#2F2F2F]">
-                        Subject *
+                        Surname *
                       </FormLabel>
                       <FormControl>
                         <Input
                           className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] font-semibold"
-                          placeholder="Subject Here"
+                          placeholder="Surname Here"
                           {...field}
                         />
                       </FormControl>
@@ -269,9 +276,24 @@ const BookingContainer = () => {
                       <FormLabel className="text-base font-semibold text-black">
                         Preferred Time *
                       </FormLabel>
-                      <FormControl>
-                        <Input type="time" className="h-12" {...field} />
-                      </FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] font-semibold">
+                            <SelectValue placeholder="Select time" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="anytime">Anytime</SelectItem>
+                          <SelectItem value="morning">Morning</SelectItem>
+                          <SelectItem value="midday">Afternoon</SelectItem>
+                          <SelectItem value="afternoon">Evening</SelectItem>
+                          {/* <SelectItem value="night">Night</SelectItem> */}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -304,13 +326,13 @@ const BookingContainer = () => {
                 control={form.control}
                 name="consent"
                 render={({ field }) => (
-                  <FormItem className="flex items-start space-x-3">
+                  <FormItem className="flex items-center space-x-3">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
                         id="consent"
-                        className="mt-1"
+                        className="mt-[8px]"
                       />
                     </FormControl>
                     <div className="space-y-0 leading-none">
@@ -323,7 +345,7 @@ const BookingContainer = () => {
                         <span className="text-primary">privacy policy</span> to
                         learn more about how we use data.
                       </Label>
-                      <FormMessage className="text-red-500" />
+                      <FormMessage className="text-red-500 pt-2" />
                     </div>
                   </FormItem>
                 )}
@@ -347,7 +369,3 @@ const BookingContainer = () => {
 };
 
 export default BookingContainer;
-
-
-
-

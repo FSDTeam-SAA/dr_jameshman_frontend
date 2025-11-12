@@ -22,7 +22,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "next-auth/react";
 import { AddTreatmentCategoryType } from "@/schema/addTreatmentCategorySchema";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type TreatmentCategory = {
   _id: string;
@@ -40,6 +40,7 @@ interface Props {
 export const AddEditTreatmentCategory = ({ categoryDetails, id }: Props) => {
   const queryClient = useQueryClient();
   const pathName = usePathname();
+  const router = useRouter();
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -101,6 +102,8 @@ export const AddEditTreatmentCategory = ({ categoryDetails, id }: Props) => {
             pathName === "/dashboard/treatment-category" ? "added" : "updated"
           } successfully`
       );
+
+      router.push('/dashboard/treatment-category')
 
       if (pathName === "/dashboard/treatment-category") {
         form.reset();

@@ -8,7 +8,6 @@ const AboutUsPage = () => {
     <div>
       <HeroSection
         title="About Us"
-        description=""
       />
       <section id="why-us">
         <WhyChooseUs />

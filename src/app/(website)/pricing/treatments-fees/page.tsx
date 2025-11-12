@@ -7,9 +7,10 @@ const TreatmentsFeesPage = () => {
     <div>
       <HeroSection
         title="Pricing & Payment Information"
-        description=""
       />
-      <TreatmentFeesContainer />
+      <section id="treatments-fees">
+        <TreatmentFeesContainer />
+      </section>
     </div>
   );
 };

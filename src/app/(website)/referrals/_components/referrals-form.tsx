@@ -40,8 +40,8 @@ const formSchema = z.object({
   patientEmail: z
     .string()
     .email({ message: "Please enter a valid email address." }),
-  patientPhone: z.string().min(11, {
-    message: "patient Phone Number must be at least 11 characters.",
+  patientPhone: z.string().min(9, {
+    message: "patient Phone Number must be at least 9 characters.",
   }),
   dentistName: z
     .string()
@@ -52,8 +52,8 @@ const formSchema = z.object({
   dentistEmail: z
     .string()
     .email({ message: "Please enter a valid email address." }),
-  dentistPhone: z.string().min(11, {
-    message: "Dentist Phone Number must be at least 11 characters.",
+  dentistPhone: z.string().min(9, {
+    message: "Dentist Phone Number must be at least 9 characters.",
   }),
   additionalNotes: z
     .string()
@@ -175,7 +175,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Name Here"
                           {...field}
                         />
@@ -236,7 +236,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Phone number"
                           {...field}
                         />
@@ -255,7 +255,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="email@example.com"
                           {...field}
                         />
@@ -280,7 +280,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Dentist full name"
                           {...field}
                         />
@@ -299,7 +299,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Practice name"
                           {...field}
                         />
@@ -322,7 +322,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="Phone number"
                           {...field}
                         />
@@ -341,7 +341,7 @@ const ReferralsForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                          className="h-[48px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                           placeholder="email@example.com"
                           {...field}
                         />
@@ -366,7 +366,7 @@ const ReferralsForm = () => {
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        className="h-[114px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] text-base leading-[120%] font-semibold"
+                        className="h-[114px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-gray-300 placeholder:font-medium text-base leading-[120%] font-semibold"
                         placeholder="Please provide any additional information about the referral..."
                         {...field}
                       />
@@ -464,7 +464,7 @@ const ReferralsForm = () => {
                 control={form.control}
                 name="consentGiven"
                 render={({ field }) => (
-                  <FormItem className="flex items-start space-x-3 space-y-0">
+                  <FormItem className="flex items-center space-x-3 ">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -481,7 +481,7 @@ const ReferralsForm = () => {
                         I consent to being contacted about this referral request and have read the 
                         <span className="text-primary"> privacy policy</span>
                       </Label>
-                      <FormMessage className="text-red-500" />
+                      <FormMessage className="text-red-500 pt-2" />
                     </div>
                   </FormItem>
                 )}

@@ -8,7 +8,7 @@ const Hero = () => {
     <div className="relative min-h-[calc(100vh)] flex items-center justify-center overflow-hidden">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
-        src="/assets/videos/hero-video.mp4"
+        src="/assets/videos/update-hero.mp4"
         autoPlay
         loop
         muted
@@ -23,11 +23,12 @@ const Hero = () => {
             Specialist <br className="hidden md:block" /> Orthodontic Care
           </span>
         </h1>
+        <p className="text-sm md:text-base font-normal text-[#E7E7E7] leading-[150%] pt-3 md:pt-4">We focus exclusively on orthodontic treatments to create healthy, confident smiles for the whole family.</p>
 
         <div className="pt-5 md:pt-7 lg:pt-9 flex flex-col md:flex-row justify-center items-center gap-[13px]">
           <Link href="/booking">
             <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[46px] rounded-[6px]">
-              Book Free Consult
+              Book FREE Consult
             </Button>
           </Link>
           <Link href="/treatments">

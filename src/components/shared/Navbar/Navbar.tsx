@@ -13,52 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { NavbarSkeleton } from "@/components/ui/navbar-skeleton";
-
-export interface TreatmentCategory {
-  _id: string;
-  name: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-export interface Pagination {
-  currentPage: number;
-  totalPages: number;
-  totalCategories: number;
-  itemsPerPage: number;
-}
-
-export interface TreatmentCategoryResponse {
-  status: boolean;
-  mnessage: string; // Note: typo in your API key; ideally should be `message`
-  data: TreatmentCategory[];
-  pagination: Pagination;
-}
-
+import TreatmentsDropdown from "./DynamicDropDown";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
-
-  const {data, isLoading, isError, error} = useQuery<TreatmentCategoryResponse>({
-    queryKey: ["treatments-categories"],
-    queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/treatmentCategories`);
-      return res.json();
-    },
-  })
-
-console.log(data?.data)
-  // Get treatment categories from API
-  const treatmentCategories = data?.data?.map((cat) => ({
-    label: cat?.name,
-    link: `/treatments/${cat?._id}`
-  })) || [];
-
 
   useEffect(() => {
     const handleScroll = () => setIsAtTop(window.scrollY <= 50);
@@ -66,40 +26,52 @@ console.log(data?.data)
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Define routes where navbar should be white at top
+  const whiteNavRoutes = [
+    "/",
+    "/treatments",
+    "/pricing",
+    "/about-us",
+    "/referrals",
+    "/gallery",
+    "/contact",
+  ];
+
+  // Check if current route is in whiteNavRoutes
+  const isWhiteNavRoute = whiteNavRoutes.includes(pathname);
+
+  // Logo logic
   const logoSrc =
-    pathname === "/" && isAtTop
-      ? "/assets/images/logo.png"
-      : "/assets/images/black-logo.png";
+    isWhiteNavRoute && isAtTop
+      ? "/assets/images/logo.png" // white logo
+      : "/assets/images/update-black-logo.png"; // black logo
+
+  // ✅ Adjust padding dynamically
+  const containerPadding = pathname === "/" && isAtTop ? "py-2" : "py-0";
 
   // Dropdown items
   const pricingItems = [
-    { label: "Fees", link: "/pricing" },
+    { label: "Fees", link: "/pricing#pricing" },
     {
       label: "Offers & Payment Plans",
-      link: "/pricing/offers-and-payment-plans",
+      link: "/pricing/offers-and-payment-plans#offers-and-payment-plans",
     },
   ];
 
-const aboutItems = [
-  { label: "Why Us", link: "/about-us#why-us" },
-  { label: "Meet The Team", link: "/about-us#meet-the-team" },
-];
-
-  // ✅ Adjust padding dynamically
-  const containerPadding =
-    pathname === "/" && isAtTop ? "py-2" : "py-0";
-
-    
-  if (isLoading) return <NavbarSkeleton/>
-  if (isError) return <div className="bg-white py-10 text-black text-center leading-[120%] font-medium">Error: {error?.message}</div>;
+  const aboutItems = [
+    { label: "Why Us", link: "/about-us#why-us" },
+    { label: "Meet The Team", link: "/about-us#meet-the-team" },
+  ];
 
   return (
     <div
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        pathname === "/" && isAtTop ? "bg-transparent" : "bg-white shadow-md"
+        isAtTop && isWhiteNavRoute ? "bg-transparent" : "bg-white shadow-md"
       }`}
     >
-      <div className={`container transition-all duration-500 ${containerPadding}`}>
+      <div
+        className={`container transition-all duration-500 ${containerPadding}`}
+      >
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href={"/"}>
@@ -108,7 +80,7 @@ const aboutItems = [
               alt="logo"
               width={1000}
               height={1000}
-              className="h-[72px] w-[125px] transition-all duration-500"
+              className="h-[72px] w-[216px] transition-all duration-500"
             />
           </Link>
 
@@ -117,40 +89,20 @@ const aboutItems = [
             <ul className="flex items-center gap-2 text-primary">
               {navLinks.map((item, index) => {
                 const isActive = item.link === pathname;
+
+                // Text color logic
                 const textColor =
-                  pathname === "/" && isAtTop && !isActive
-                    ? "text-white"
-                    : "text-black";
+                  isWhiteNavRoute && isAtTop ? "text-white" : "text-black";
 
                 // Treatments dropdown
                 if (item?.label === "Treatments") {
                   return (
-                    <li key={index} className="relative">
-                      <DropdownMenu modal={false}>
-                        <DropdownMenuTrigger asChild>
-                          <button
-                            className={`flex items-center gap-1 p-2 px-4 text-base transition-all duration-500 ease-in-out ${textColor}`}
-                          >
-                            {item.label}
-                            <ChevronDown className="w-4 h-4 mt-[2px]" />
-                          </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="mt-2 w-48 bg-white shadow-lg border rounded-lg">
-                          {treatmentCategories?.map((item, idx) => (
-                            <DropdownMenuItem key={idx} asChild>
-                              <Link
-                                href={item?.link}
-                                className="block w-full px-3 py-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"
-                              >
-                                {item?.label}
-                              </Link>
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                    <li key={index} className="relative ">
+                      <TreatmentsDropdown textColor={textColor} />
                     </li>
                   );
                 }
+
                 // Pricing dropdown
                 if (item.label === "Pricing") {
                   return (
@@ -227,6 +179,13 @@ const aboutItems = [
               })}
             </ul>
           </div>
+          <div className="hidden md:block">
+            <Link href="/booking">
+              <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[23px] rounded-[6px]">
+                Book FREE Consult
+              </Button>
+            </Link>
+          </div>
 
           {/* Mobile menu */}
           <MobileNavbar />
@@ -237,6 +196,3 @@ const aboutItems = [
 };
 
 export default Navbar;
-
-
-

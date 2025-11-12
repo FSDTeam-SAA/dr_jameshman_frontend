@@ -5,7 +5,7 @@ import ErrorContainer from '@/components/shared/ErrorContainer/ErrorContainer';
 import TreatmentCart from '@/components/common/treatment-cart';
 import DashboardPagination from '@/app/(dashboard)/dashboard/_component/shared/pagination';
 import TreatmentSkeleton from '@/components/shared/Skeleton/TreatmentsSkeleton';
-import { TreatmentCategoryResponse } from '@/components/shared/Navbar/Navbar';
+import { TreatmentCategoryResponse } from '@/components/shared/Navbar/MobileTreatmentsDropdown';
 
 const TreatmentsContainer = () => {
     const [currentPage, setCurrentPage] = useState(1);

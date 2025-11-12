@@ -68,7 +68,7 @@ export function ViewReferralModal({ isOpen, onClose, id }: ReferralModalProps) {
       if (!res.ok) throw new Error("Failed to fetch referral details");
       return res.json();
     },
-    enabled: !!id && isOpen,
+    enabled: !!token && !!id && isOpen,
   });
 
   const referral = referralDetails?.data;

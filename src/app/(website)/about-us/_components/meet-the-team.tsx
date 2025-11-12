@@ -1,130 +1,234 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
+import { DoctorsGridSkeleton } from "./DoctorCardSkeleton";
+import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
+import NotFound from "@/components/shared/NotFound/NotFound";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import Autoplay from "embla-carousel-autoplay";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+export interface Doctor {
+  _id: string;
+  name: string;
+  title: string;
+  image: string;
+  cloudinaryId: string;
+  description: string;
+  __v: number;
+}
+
+export interface Pagination {
+  currentPage: number;
+  totalPages: number;
+  totalDoctors: number;
+  itemsPerPage: number;
+}
+
+export interface DoctorsResponse {
+  status: boolean;
+  message: string;
+  data: Doctor[];
+  pagination: Pagination;
+}
+
+export interface SingleDoctorResponse {
+  status: boolean;
+  message: string;
+  data: SingleDoctor;
+}
+
+export interface SingleDoctor {
+  _id: string;
+  name: string;
+  title: string;
+  image: string;
+  cloudinaryId: string;
+  description: string;
+  __v: number;
+}
 
 const MeetTheTeam = () => {
-  const teamMembers = [
-    {
-      id: 1,
-      name: "Dr. Anca Herman",
-      image: "/assets/images/meet-1.jpg",
-      title: "Specialist Orthodontist",
-      desc: (
-        <>
-          Dr. Anca Herman is a highly skilled Specialist Orthodontist registered
-          with the Irish Dental Council. She is passionate about creating
-          confident, healthy smiles through precision, innovation, and
-          compassionate care. <br /> <br />
-          With extensive experience in both classical and modern orthodontic
-          techniques including clear aligners, aesthetic and conventional
-          braces, and advanced digital treatment planning. Dr. Anca combines
-          meticulous attention to detail with a calm, reassuring approach.{" "}
-          <br /> <br />
-          Her philosophy centres on patient comfort and collaboration. She
-          believes every smile is unique and takes the time to understand each
-          patient’s goals, tailoring treatments to deliver natural, lasting
-          results. Dedicated to continuous professional development, Dr. Anca
-          remains at the forefront of orthodontic innovation to ensure her
-          patients receive the highest standard of care in a friendly, welcoming
-          environment.
-        </>
-      ),
+  const autoplay = React.useRef(
+    Autoplay({
+      delay: 2500,
+      stopOnInteraction: true,
+      stopOnMouseEnter: true,
+    })
+  );
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const [open, setOpen] = React.useState(false);
+
+  const { data, isLoading, isError, error } = useQuery<DoctorsResponse>({
+    queryKey: ["doctors"],
+    queryFn: async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/doctors`);
+      return res.json();
     },
-    {
-      id: 2,
-      name: "Dr. James Herman",
-      image: "/assets/images/meet-2.jpg",
-      title: "Specialist Orthodontist",
-      desc: (
-        <>
-          Dr. James Herman is an Australian-born Specialist Orthodontist
-          registered with the Irish Dental Council. He is dedicated to helping
-          patients of all ages achieve their best smiles in a caring,
-          family-friendly environment. <br /> <br />
-          Known for his approachable manner and gentle care, Dr. James takes the
-          time to get to know each patient and works closely with them to design
-          personalised treatment plans that suit their goals and lifestyle. His
-          calm, reassuring approach helps make every visit a positive and
-          comfortable experience. <br /> <br />
-          Dr. James combines his clinical expertise with the latest orthodontic
-          techniques and technologies to deliver excellent results for children,
-          teens, and adults alike.
-        </>
-      ),
+  });
+
+  const { data: doctorDetail, isFetching } = useQuery<SingleDoctorResponse>({
+    queryKey: ["doctor", selectedId],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/doctors/${selectedId}`
+      );
+      return res.json();
     },
-    {
-      id: 3,
-      name: "Andrei",
-      image: "/assets/images/meet-3.jpg",
-      title: "Treatment Coordinator and Orthodontic Nurse",
-      desc: (
-        <>
-          Our Treatment Coordinator is here to guide you through every step of
-          your orthodontic journey. He supports the doctors during appointments
-          and ensures every patient feels comfortable and at ease. He help with
-          procedures, offer guidance on caring for braces or aligners, and is
-          always ready with a reassuring smile for children, teens, and adults
-          alike. <br /> <br />
-          From scheduling appointments to explaining treatment options and
-          helping with payments, Andrei makes sure your experience is smooth,
-          clear, and stress-free. He is your friendly first point of contact and
-          always happy to answer questions.
-        </>
-      ),
-    },
-    {
-      id: 4,
-      name: "Alison",
-      image: "/assets/images/meet-4.jpg",
-      title: "Receptionist and Nurse",
-      desc: (
-        <>
-          Our Receptionist is the friendly face you’ll see when you first arrive
-          at Perrystown Orthodontics. She is here to welcome you, answer your
-          questions, help with appointments, and make sure your visit is as
-          smooth and enjoyable as possible. <br />
-          Always approachable and cheerful, Alison is the first smile you’ll
-          encounter and she loves making every patient feel at home.
-        </>
-      ),
-    },
-  ];
+    enabled: !!selectedId && open,
+  });
+
+  const handleReadMore = (id: string) => {
+    setSelectedId(id);
+    setOpen(true);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="py-12">
+        <DoctorsGridSkeleton />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="w-full h-[400px] md:h-[500px] flex items-center justify-center">
+        <ErrorContainer message={error?.message || "Something went wrong."} />
+      </div>
+    );
+  }
+
+  if (!data?.data?.length) {
+    return (
+      <NotFound message="Oops! No data available. Please try again later." />
+    );
+  }
+
   return (
     <div className="pb-10 md:pb-16 lg:pb-24">
-      <div className="container">
-        <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-[#202020] leading-[150%] font-semibold text-center">
+      <div className="px-6 md:px-2 container">
+        <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-primary leading-[150%] font-semibold text-center">
           Meet The Team
         </h2>
-        <p className="text-sm md:text-base text-[#373737] text-center pt-2 leading-[150%] font-normal">
-          Our diverse team combines expertise in finding your problem.
-        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 pt-8 md:pt-12 lg:pt-12">
-          {teamMembers?.map((member) => {
-            return (
-              <div key={member?.id} className="h-auto bg-white rounded-b-[8px]">
-                <Image
-                  src={member?.image}
-                  alt={member?.name}
-                  width={1000}
-                  height={1000}
-                  className="w-full h-[300px] object-cover rounded-t-[8px]"
-                />
-                <div className=" p-4 ">
-                  <h3 className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#202020] leading-[150%]">
-                    {member?.name}
-                  </h3>
-                  <h5 className="text-sm font-medium text-primary leading-[120%] py-2 md:py-[10px]">
-                    {member?.title}
-                  </h5>
-                  <p className="text-xs font-normal text-[#656565] leading-[120%] text-justify">
-                    {member?.desc}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+        <div className="w-[90%] md:w-[92%] lg:w-[94%] mx-auto relative mt-10">
+          <Carousel
+            plugins={[autoplay.current]}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            onMouseEnter={() => autoplay.current.stop()}
+            onMouseLeave={() => autoplay.current.play()}
+            className="w-full"
+          >
+            <CarouselContent>
+              {data.data.map((member) => (
+                <CarouselItem
+                  key={member._id}
+                  className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-4 lg:pl-6 pr-2 lg:pr-3 "
+                >
+                  <div className="w-full h-full bg-white rounded-[8px] shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      width={500}
+                      height={500}
+                      className="w-full h-[300px] object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#202020] leading-[150%]">
+                        {member.name}
+                      </h3>
+                      <h5 className="text-sm font-medium text-primary leading-[120%] py-2 md:py-[10px]">
+                        {member.title}
+                      </h5>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: member.description,
+                        }}
+                        className=" text-xs font-normal text-[#656565] leading-[140%] text-justify line-clamp-3"
+                      />
+                      {member.description.length > 10 && (
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="p-0 h-auto text-primary hover:text-primary/80 font-medium mt-1"
+                          onClick={() => handleReadMore(member._id)}
+                        >
+                          Read more
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+
+            <CarouselPrevious className="absolute -left-10 lg:-left-12 xl:-left-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+            <CarouselNext className="absolute -right-10 lg:-right-9 xl:-right-9 top-1/2 -translate-y-1/2 bg-white shadow-md hover:bg-primary hover:text-white transition" />
+          </Carousel>
         </div>
       </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-[95vw] w-full mx-auto p-4 md:p-6 lg:p-8 max-h-[90vh] md:max-h-[85vh] lg:max-h-[80vh] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px] flex flex-col gap-3 md:gap-4 lg:gap-5">
+          <DialogHeader className="px-1 md:px-2">
+            <DialogTitle className="text-lg md:text-xl lg:text-2xl font-semibold text-primary text-left leading-tight">
+              {doctorDetail?.data?.name || "Loading..."}
+            </DialogTitle>
+          </DialogHeader>
+
+          {isFetching ? (
+            <div className="flex justify-center items-center py-8 md:py-12">
+              <p className="text-sm md:text-base text-gray-500">Loading details...</p>
+            </div>
+          ) : (
+            doctorDetail && (
+              <div className="space-y-3 md:space-y-4 lg:space-y-5 flex-1 overflow-hidden">
+                <div className="w-full h-[140px] sm:h-[160px] md:h-[200px] lg:h-[250px] relative">
+                  <Image
+                    src={doctorDetail.data?.image}
+                    alt={doctorDetail.data?.name}
+                    fill
+                    className="object-cover rounded-md"
+                    sizes="(max-width: 640px) 95vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 700px"
+                  />
+                </div>
+
+                <h4 className="text-base md:text-lg lg:text-xl font-medium text-[#202020] px-1">
+                  {doctorDetail.data?.title}
+                </h4>
+
+                <ScrollArea className="w-full h-[120px] sm:h-[140px] md:h-[160px] lg:h-[180px] pr-3 md:pr-4 lg:pr-5">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: doctorDetail.data?.description,
+                    }}
+                    className="text-xs sm:text-sm md:text-base text-[#555] leading-[160%] text-justify pr-2 space-y-2"
+                  />
+                </ScrollArea>
+              </div>
+            )
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

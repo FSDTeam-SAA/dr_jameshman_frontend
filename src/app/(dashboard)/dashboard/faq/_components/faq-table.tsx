@@ -61,6 +61,7 @@ export const FaqTable = () => {
       if (!res.ok) throw new Error("Failed to fetch FAQs");
       return res.json();
     },
+    enabled: !!token
   });
 
   const faqs = allFaq?.data ?? [];
@@ -118,6 +119,7 @@ export const FaqTable = () => {
                   <TableCell className="py-6">
                     <div
                       dangerouslySetInnerHTML={{ __html: faq?.answer || "" }}
+                      className="lg:max-w-xl mx-auto"
                     ></div>
                   </TableCell>
                   <TableCell className="py-6">

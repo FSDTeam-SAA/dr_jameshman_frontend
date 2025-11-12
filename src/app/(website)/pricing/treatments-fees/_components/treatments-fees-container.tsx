@@ -56,9 +56,9 @@ const TreatmentFeesContainer = () => {
   return (
     <div className="py-10 md:py-16 lg:py-24">
       <div className="container">
-        <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
+        {/* <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
           Get to know our story, our mission, and the team dedicated to your dental health.
-        </h3>
+        </h3> */}
         <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-primary leading-[150%] font-semibold  pt-6 md:pt-10 lg:pt-11">
           Treatment Fees
         </h2>
@@ -72,7 +72,7 @@ const TreatmentFeesContainer = () => {
           {data?.data?.map((item) => {
             return (
               <div key={item?._id} className="mb-6 md:mb-8 lg:mb-10 ">
-                <h4 className="text-base md:text-lg font-bold text-white bg-primary leading-[120%] py-3 md:py-4 px-5 md:px-6 rounded-t-[10px] text-center">
+                <h4 className="text-base md:text-lg font-bold text-white bg-primary leading-[120%] py-3 md:py-4 px-5 md:px-6 rounded-t-[10px]">
                   {item?.serviceName}
                 </h4>
                 <div>
@@ -88,12 +88,16 @@ const TreatmentFeesContainer = () => {
                         />
 
                         <p className="flex items-center gap-0 text-base md:text-lg font-semibold text-[#111827] leading-[120%]">
-                          {item?.currency ? (
-                            <Euro className="w-5 h-5" />
+                          {i?.rate === 0 ? (
+                            "FREE"
                           ) : (
-                            "Free"
+                            <div className="flex items-center gap-2">
+                              From{" "}
+                              <span className="flex items-center">
+                                <Euro /> {i?.rate}
+                              </span>
+                            </div>
                           )}{" "}
-                          {i?.rate}
                         </p>
                       </div>
                     );

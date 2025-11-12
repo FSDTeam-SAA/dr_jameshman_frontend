@@ -29,7 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type FormType = z.infer<typeof addTreatmentSchema>;
 
@@ -64,6 +64,7 @@ export const AddEditTreatmentForm = ({ treatmentDetails, id }: Props) => {
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
   const pathName = usePathname();
+  const router = useRouter();
 
   const { data: categories, isLoading: categoriesLoading } = useQuery<
     TreatmentCategory[]
@@ -105,29 +106,31 @@ export const AddEditTreatmentForm = ({ treatmentDetails, id }: Props) => {
     name: "treatments",
   });
 
-const getCategoryId = (category: string | { _id: string; name: string; image: string }): string => {
-  if (typeof category === 'string') {
-    return category;
-  }
-  return category?._id || "";
-};
+  const getCategoryId = (
+    category: string | { _id: string; name: string; image: string }
+  ): string => {
+    if (typeof category === "string") {
+      return category;
+    }
+    return category?._id || "";
+  };
 
-useEffect(() => {
-  if (pathName.includes("/edit-treatment/") && treatmentDetails) {
-    form.reset({
-      treatments: [
-        {
-          serviceName: treatmentDetails?.serviceName || "",
-          description: treatmentDetails?.description || "",
-          image: new File([], ""),
-          category: getCategoryId(treatmentDetails.category),
-        },
-      ],
-    });
-    setImagePreviews([treatmentDetails?.image || null]);
-    setImageFiles([null]);
-  }
-}, [pathName, treatmentDetails, form]);
+  useEffect(() => {
+    if (pathName.includes("/edit-treatment/") && treatmentDetails) {
+      form.reset({
+        treatments: [
+          {
+            serviceName: treatmentDetails?.serviceName || "",
+            description: treatmentDetails?.description || "",
+            image: new File([], ""),
+            category: getCategoryId(treatmentDetails.category),
+          },
+        ],
+      });
+      setImagePreviews([treatmentDetails?.image || null]);
+      setImageFiles([null]);
+    }
+  }, [pathName, treatmentDetails, form]);
 
   const { mutateAsync, isPending } = useMutation<any, any, FormData>({
     mutationKey: ["add-edit-treatment"],
@@ -155,12 +158,9 @@ useEffect(() => {
 
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["all-treatments"] });
-      toast.success(
-        data.message ||
-          `Treatment ${
-            pathName === "/dashboard/treatments" ? "added" : "updated"
-          } successfully`
-      );
+      toast.success(data.message);
+
+      router.push("/dashboard/treatment-list");
 
       if (pathName === "/dashboard/treatments") {
         form.reset();
@@ -302,10 +302,7 @@ useEffect(() => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Treatment Category</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a category" />
@@ -423,7 +420,7 @@ useEffect(() => {
           ))}
 
           {/* Add More Button - only show in add mode */}
-          {pathName === "/dashboard/treatments" && (
+          {pathName === "/dashboard/treatment-list/add-treatment" && (
             <Button
               type="button"
               onClick={() =>
@@ -455,7 +452,9 @@ useEffect(() => {
             ) : (
               <span className="flex items-center gap-1">
                 <Save />
-                {pathName === "/dashboard/treatment-list/add-treatment" ? "Save" : "Update"}
+                {pathName === "/dashboard/treatment-list/add-treatment"
+                  ? "Save"
+                  : "Update"}
               </span>
             )}
           </Button>

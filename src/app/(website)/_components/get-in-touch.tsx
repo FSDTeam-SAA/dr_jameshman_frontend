@@ -26,7 +26,7 @@ const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z
     .string()
-    .min(11, { message: "Phone Number must be at least 11 characters." }),
+    .min(9, { message: "Phone Number must be at least 9 characters." }),
   message: z
     .string()
     .min(10, { message: "Message must be at least 10 characters." }),
@@ -161,7 +161,7 @@ const GetInTouch = () => {
                         </FormLabel>
                         <FormControl>
                           <Textarea
-                            className="h-[200px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base md:text-base leading-[120%] font-semibold"
+                            className="h-[150px] border border-[#C0C3C1] rounded-[4px] text-black placeholder:text-[#666666] placeholder:font-normal text-base md:text-base leading-[120%] font-semibold"
                             placeholder="Write your message Here"
                             {...field}
                           />
@@ -196,7 +196,7 @@ const GetInTouch = () => {
                             </span>
                             to learn more about how we use data.
                           </Label>
-                          <FormMessage className="text-red-500" />
+                          <FormMessage className="text-red-500 pt-2" />
                         </div>
                       </FormItem>
                     )}
@@ -215,11 +215,11 @@ const GetInTouch = () => {
           </div>
           <div className="md:col-span-1">
             <Image
-              src="/assets/images/get-in-touch.jpg"
+              src="/assets/images/home-get-in-touch.jpg"
               alt="get in touch"
               width={1000}
               height={1000}
-              className="w-full h-[400px] md:h-[500px] lg:h-[825px] object-cover"
+              className="w-full h-[350px] md:h-[500px] lg:h-[775px] object-cover"
             />
           </div>
         </div>

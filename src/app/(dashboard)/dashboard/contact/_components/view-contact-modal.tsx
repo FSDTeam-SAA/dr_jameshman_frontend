@@ -30,10 +30,10 @@ export function ViewContactModal({ isOpen, onClose, id }: ContactModalProps) {
       if (!res.ok) throw new Error("Failed to fetch contacts");
       return res.json();
     },
-    enabled: !!id && isOpen,
+    enabled: !!token && !!id && isOpen,
   });
 
-  const contact = contactDetails?.contact;
+  const contact = contactDetails?.data;
 
   if (!isOpen) return null;
 

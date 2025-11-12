@@ -4,10 +4,7 @@ const ReferralsHeader = () => {
   return (
     <div className="pt-10 md:pt-16 lg:pt-24">
       <div className="container">
-        <h3 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold text-primary leading-[150%]">
-          Working together to create confident smiles
-        </h3>
-        <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-[#202020] leading-[150%] font-semibold  pt-6 md:pt-10 lg:pt-11">
+        <h2 className="text-2xl md:text-[28px] lg:text-[32px] text-primary leading-[150%] font-semibold ">
           Collaborative Orthodontic Care You Can Trust
         </h2>
         <p className="text-sm md:text-base text-[#373737] pt-2 leading-[150%] font-normal">

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import scrollbarHide from 'tailwind-scrollbar-hide'
 
 const config: Config = {
   darkMode: ["class"],
@@ -13,12 +14,12 @@ const config: Config = {
   			center: true,
   			padding: {
   				DEFAULT: '14px',
-  				md: '30px',
-  				lg: '40px'
+  				md: '40px',
+  				lg: '50px'
   			},
   			screens: {
   				sm: '100%',
-  				md: '100%',
+  				md: '97%',
   				lg: '1400px'
   			}
   		},
@@ -93,6 +94,6 @@ const config: Config = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), scrollbarHide],
 };
 export default config;

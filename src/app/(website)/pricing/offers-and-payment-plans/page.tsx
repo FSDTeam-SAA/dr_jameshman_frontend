@@ -7,9 +7,10 @@ const OffersAndPaymentPlans = () => {
     <div>
       <HeroSection
         title="Pricing & Payment Information"
-        description=""
       />
-      <OffersAndPaymentPlanContainer />
+      <section id="offers-and-payment-plans">
+        <OffersAndPaymentPlanContainer />
+      </section>
     </div>
   );
 };
