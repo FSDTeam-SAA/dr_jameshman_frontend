@@ -2,11 +2,11 @@
 
 import { ContactInfoResponse } from "@/components/shared/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
+import { FaFacebookSquare, FaInstagramSquare, FaTiktok } from "react-icons/fa";
 
 const ContactInformation = () => {
   const { data, isLoading, isError, error } = useQuery<ContactInfoResponse>({
@@ -42,7 +42,7 @@ const ContactInformation = () => {
             alt="contact info"
             width={1000}
             height={1000}
-            className="w-full h-[400px] md:h-[450px] lg:h-[500px] rounded-[16px] object-cover"
+            className=" rounded-[16px] object-cover "
           />
         </div>
 
@@ -76,9 +76,8 @@ const ContactInformation = () => {
             </Link>
 
             <Link
-              href={`mailto:${
-                data?.data[0]?.email || "perrystownorthodontics@gmail.com"
-              }`}
+              href={`mailto:${data?.data[0]?.email || "perrystownorthodontics@gmail.com"
+                }`}
             >
               <li className="flex items-center gap-2 text-sm md:text-base font-normal text-[#007FFF] pt-1">
                 <Mail className="w-5 h-5 text-primary" />
@@ -104,8 +103,18 @@ const ContactInformation = () => {
             <p className="flex items-center gap-2 text-base md:text-lg font-normal text-[#343A40] leading-[150%]">
               Socials:
               <span className="flex items-center gap-4">
+               <Link  href={"https://www.facebook.com/profile.php?id=61583533137378"} target="_blank">
                 <FaFacebookSquare className="w-6 h-6 cursor-pointer text-primary" />
-                <FaInstagramSquare className="w-6 h-6 cursor-pointer text-primary" />
+                </Link>
+                <Link href={"https://www.instagram.com/perrystownorthodontics/"} target="_blank">
+                  <FaInstagramSquare className="w-6 h-6 cursor-pointer text-primary" />
+                </Link>
+                <Link href={"https://x.com/PerrystownOrtho"} target="_blank">
+                  <Twitter className="w-6 h-6 cursor-pointer text-primary" />
+                </Link>
+                <Link href={"https://www.tiktok.com/@perrystownorthodontics"} target="_blank">
+                  <FaTiktok className="w-6 h-6 cursor-pointer text-primary" />
+                </Link>
               </span>
             </p>
           </div>

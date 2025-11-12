@@ -16,7 +16,7 @@ const WhyChooseUs = () => {
               alt="about-us"
               width={1000}
               height={1000}
-              className="w-full h-[420px] md:h-[520px] lg:h-[628px] object-cover rounded-[20px]"
+              className="object-cover rounded-[20px]"
             />
           </div>
           <div className="md:col-span-4 flex flex-col justify-center">

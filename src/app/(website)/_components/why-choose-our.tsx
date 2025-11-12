@@ -38,7 +38,7 @@ const WhyChooseOur = () => {
             </li>
             <li className=" py-2 md:py-4 ">
               <span className="flex items-center gap-2 text-lg md:text-xl font-medium text-[#2F2F2F] leading-[120%]">
-                <Smile className="w-5 h-5 text-primary" /> As an Focused Care
+                <Smile className="w-5 h-5 text-primary" /> Focused Care
               </span>
               <span className="text-sm md:text-base font-[#505050] text-[#505050] leading-[120%] pt-2">
                 As an orthodontics-only practice, we&apos;re 100% focused on

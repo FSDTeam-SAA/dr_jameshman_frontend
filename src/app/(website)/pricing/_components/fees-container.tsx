@@ -4,7 +4,7 @@ import React from "react";
 
 const FeesContainer = () => {
   return (
-    <section id="pricing">
+    <section>
       <div className="pb-10 md:pb-16 lg:pb-24">
         <div className="container grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
           <div className="md:col-span-1 border-[2px] border-black/0 shadow-[0px_4px_10px_0px_#00000026] rounded-[16px] px-4 py-6 md:py-7 lg:py-8">

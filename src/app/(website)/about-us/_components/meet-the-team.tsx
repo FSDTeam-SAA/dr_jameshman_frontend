@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Autoplay from "embla-carousel-autoplay";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export interface Doctor {
   _id: string;
@@ -188,8 +187,9 @@ const MeetTheTeam = () => {
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-[95vw] w-full mx-auto p-4 md:p-6 lg:p-8 max-h-[90vh] md:max-h-[85vh] lg:max-h-[80vh] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px] flex flex-col gap-3 md:gap-4 lg:gap-5">
-          <DialogHeader className="px-1 md:px-2">
+        <DialogContent className="max-w-[95vw] hide-scrollbar  w-full mx-auto p-4 md:p-6 lg:p-8 max-h-[90vh] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px] flex flex-col gap-3 md:gap-4 lg:gap-5 overflow-auto">
+          {/* Header */}
+          <DialogHeader className="px-1 md:px-2 flex-shrink-0">
             <DialogTitle className="text-lg md:text-xl lg:text-2xl font-semibold text-primary text-left leading-tight">
               {doctorDetail?.data?.name || "Loading..."}
             </DialogTitle>
@@ -201,34 +201,36 @@ const MeetTheTeam = () => {
             </div>
           ) : (
             doctorDetail && (
-              <div className="space-y-3 md:space-y-4 lg:space-y-5 flex-1 overflow-hidden">
-                <div className="w-full h-[140px] sm:h-[160px] md:h-[200px] lg:h-[250px] relative">
-                  <Image
-                    src={doctorDetail.data?.image}
-                    alt={doctorDetail.data?.name}
-                    fill
-                    className="object-cover rounded-md"
-                    sizes="(max-width: 640px) 95vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 700px"
-                  />
-                </div>
+              <div className="flex flex-col gap-3 md:gap-4 lg:gap-5">
+                {/* Image */}
+                {doctorDetail.data?.image && (
+                  <div className="w-full aspect-[16/9] relative rounded-md overflow-hidden">
+                    <Image
+                      src={doctorDetail.data.image}
+                      alt={doctorDetail.data.name || 'Doctor'}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 95vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 100vw"
+                    />
+                  </div>
+                )}
 
+                {/* Title */}
                 <h4 className="text-base md:text-lg lg:text-xl font-medium text-[#202020] px-1">
                   {doctorDetail.data?.title}
                 </h4>
 
-                <ScrollArea className="w-full h-[120px] sm:h-[140px] md:h-[160px] lg:h-[180px] pr-3 md:pr-4 lg:pr-5">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: doctorDetail.data?.description,
-                    }}
-                    className="text-xs sm:text-sm md:text-base text-[#555] leading-[160%] text-justify pr-2 space-y-2"
-                  />
-                </ScrollArea>
+                {/* Description */}
+                <div
+                  dangerouslySetInnerHTML={{ __html: doctorDetail.data?.description || '' }}
+                  className="text-xs sm:text-sm md:text-base text-[#555] leading-[160%] text-justify space-y-2 px-1"
+                />
               </div>
             )
           )}
         </DialogContent>
       </Dialog>
+
     </div>
   );
 };

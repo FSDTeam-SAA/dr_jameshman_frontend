@@ -152,13 +152,13 @@ const Footer = () => {
               Contact Us
             </h3>
             <ul className="pt-3 md:pt-4 lg:pt-6 space-y-2">
-              <li className="flex items-start gap-2 text-white text-sm md:text-[15px]">
+              <li className="flex items-start gap-2 !no-underline text-white text-sm md:text-[15px]">
                 <MapPin className="w-5 h-5" />
                 {data?.data[0]?.address ||
                   "44 Muckross Avenue, Perrystown, Dublin 12, D12VK49"}
               </li>
 
-              <li className="flex flex-col gap-2 text-white text-sm md:text-[15px]">
+              <li className="flex flex-col gap-2 !no-underline text-white text-sm md:text-[15px]">
                 {data?.data[0]?.phoneNumbers.map((number, index) => (
                   <div key={index}>
                     <div className="flex items-center gap-2">
@@ -169,12 +169,12 @@ const Footer = () => {
                 )) || "083 011 0533"}
               </li>
 
-              <li className="flex items-center gap-2 text-white text-sm md:text-[15px]">
+              <li className="flex items-center !no-underline gap-2 text-white text-sm md:text-[15px]">
                 <Mail className="w-5 h-5" />
                 {data?.data[0]?.email || "perrystownorthodontics@gmail.com"}
               </li>
 
-              <li className="flex items-start gap-2 text-white text-sm md:text-[15px]">
+              <li className="flex items-start gap-2 !no-underline text-white text-sm md:text-[15px]">
                 <Clock className="w-5 h-5" />
                 Opening hours :{" "}
                 {data?.data[0]?.openingHours ||
