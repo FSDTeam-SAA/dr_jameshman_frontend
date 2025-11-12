@@ -19,7 +19,7 @@ const MobileNavbar = () => {
   const closeSheet = () => setIsOpen(false);
 
   const pricingItems = [
-    { label: "Fees", link: "/pricing" },
+    { label: "Fees", link: "/pricing#pricing" },
     {
       label: "Offers & Payment Plans",
       link: "/pricing/offers-and-payment-plans",
