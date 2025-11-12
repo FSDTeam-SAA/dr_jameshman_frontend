@@ -57,6 +57,7 @@ const Navbar = () => {
       link: "/pricing/offers-and-payment-plans#offers-and-payment-plans",
     },
   ];
+  
 
   const aboutItems = [
     { label: "Why Us", link: "/about-us#why-us" },
