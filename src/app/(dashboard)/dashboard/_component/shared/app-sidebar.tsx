@@ -37,16 +37,6 @@ const items = [
     icon: BookText,
   },
   {
-    title: "Contact",
-    url: "/dashboard/contact",
-    icon: MessageSquareText,
-  },
-  {
-    title: "Referral",
-    url: "/dashboard/referral",
-    icon: RefreshCcwDot,
-  },
-  {
     title: "Treatment Category",
     url: "/dashboard/treatment-category",
     icon: BookCheck,
@@ -62,20 +52,33 @@ const items = [
     icon: DollarSign,
   },
   {
+    title: "Referral",
+    url: "/dashboard/referral",
+    icon: RefreshCcwDot,
+  },
+  {
     title: "Gallery Management",
     url: "/dashboard/gallery-management",
     icon: FileImage,
   },
+
+  {
+    title: "Doctors",
+    url: "/dashboard/doctors",
+    icon: Users,
+  },
+
   {
     title: "FAQ",
     url: "/dashboard/faq",
     icon: NotebookPen,
   },
   {
-    title: "Doctors",
-    url: "/dashboard/doctors",
-    icon: Users,
+    title: "Contact",
+    url: "/dashboard/contact",
+    icon: MessageSquareText,
   },
+
   {
     title: "Contact Info",
     url: "/dashboard/contact-info",
@@ -136,15 +139,14 @@ export function AppSidebar() {
                       item.url === "/dashboard"
                         ? pathName === "/dashboard"
                         : pathName === item.url ||
-                          pathName.startsWith(`${item.url}/`);
+                        pathName.startsWith(`${item.url}/`);
 
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton
-                          className={`h-[60px] rounded-none text-[20px] hover:bg-primary/20 hover:text-black transition-all duration-300 pl-5 ${
-                            isActive &&
+                          className={`h-[60px] rounded-none text-[20px] hover:bg-primary/20 hover:text-black transition-all duration-300 pl-5 ${isActive &&
                             "bg-primary hover:bg-primary text-white hover:text-white font-medium"
-                          }`}
+                            }`}
                           asChild
                         >
                           <Link href={item.url}>
