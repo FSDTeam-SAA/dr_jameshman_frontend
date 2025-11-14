@@ -151,28 +151,33 @@ const Footer = () => {
             <h3 className="text-base md:text-lg lg:text-xl font-medium text-white">
               Contact Us
             </h3>
-            <ul className="pt-3 md:pt-4 lg:pt-6 space-y-2">
-              <li className="flex items-start gap-2 !no-underline text-white text-sm md:text-[15px]">
+            <ul className="pt-3 md:pt-4 lg:py-6 flex flex-col gap-2">
+              
+              <li className="flex items-start gap-2  !no-underline text-white text-sm md:text-[15px]">
                 <MapPin className="w-5 h-5" />
                 {data?.data[0]?.address ||
                   "44 Muckross Avenue, Perrystown, Dublin 12, D12VK49"}
               </li>
 
-              <li className="flex flex-col gap-2 !no-underline text-white text-sm md:text-[15px]">
-                {data?.data[0]?.phoneNumbers.map((number, index) => (
-                  <div key={index}>
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-5 h-5" />
-                      {number}
+              <Link href={`tel:${data?.data[0]?.phoneNumbers[0] || "083 011 0533"}`} className="">
+                <li className="flex flex-col gap-2 !no-underline text-white text-sm md:text-[15px]">
+                  {data?.data[0]?.phoneNumbers.map((number, index) => (
+                    <div key={index}>
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-5 h-5" />
+                        {number}
+                      </div>
                     </div>
-                  </div>
-                )) || "083 011 0533"}
-              </li>
+                  )) || "083 011 0533"}
+                </li>
+              </Link>
 
-              <li className="flex items-center !no-underline gap-2 text-white text-sm md:text-[15px]">
-                <Mail className="w-5 h-5" />
-                {data?.data[0]?.email || "perrystownorthodontics@gmail.com"}
-              </li>
+              <Link href={`mailto:${data?.data[0]?.email || "perrystownorthodontics@gmail.com"}`}>
+                <li className="flex items-center !no-underline gap-2 text-white text-sm md:text-[15px]">
+                  <Mail className="w-5 h-5" />
+                  {data?.data[0]?.email || "perrystownorthodontics@gmail.com"}
+                </li>
+              </Link>
 
               <li className="flex items-start gap-2 !no-underline text-white text-sm md:text-[15px]">
                 <Clock className="w-5 h-5" />
