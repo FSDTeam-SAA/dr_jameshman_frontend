@@ -19,7 +19,8 @@ const MobileNavbar = () => {
   const closeSheet = () => setIsOpen(false);
 
   const pricingItems = [
-    { label: "Fees", link: "/pricing#pricing" },
+    { label: "Overview", link: "/pricing#overview" },
+    { label: "Fees", link: "/pricing/treatments-fees#treatments-fees" },
     {
       label: "Offers & Payment Plans",
       link: "/pricing/offers-and-payment-plans",
@@ -165,16 +166,14 @@ const MobileNavbar = () => {
                 })}
               </ul>
               <div className=" pt-5">
-            <Link href="/booking">
-              <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[23px] rounded-[6px]">
-                Book FREE Consult
-              </Button>
-            </Link>
-          </div>
+                <Link href="/booking">
+                  <Button className="h-[46px] shadow-[0_4px_7px_0_rgba(0,0,0,0.12)] text-sm font-medium leading-[150%] text-white py-[14px] px-[23px] rounded-[6px]">
+                    Book FREE Consult
+                  </Button>
+                </Link>
+              </div>
             </nav>
-            
           </div>
-           
         </SheetContent>
       </Sheet>
     </div>

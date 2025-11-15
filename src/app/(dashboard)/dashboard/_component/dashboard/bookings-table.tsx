@@ -85,7 +85,7 @@ export const BookingsTable = () => {
               Name
             </TableHead>
             <TableHead className="py-6 text-black/85 text-center">
-              Subject
+              Surname
             </TableHead>
             <TableHead className="py-6 text-black/85 text-center">
               Email
