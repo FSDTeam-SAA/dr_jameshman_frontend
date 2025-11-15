@@ -134,7 +134,7 @@ const MeetTheTeam = () => {
               loop: true,
             }}
             onMouseEnter={() => autoplay.current.stop()}
-            onMouseLeave={() => autoplay.current.play()}
+            onMouseLeave={() => autoplay?.current?.play()}
             className="w-full"
           >
             <CarouselContent>
@@ -206,10 +206,10 @@ const MeetTheTeam = () => {
                 {doctorDetail.data?.image && (
                   <div className="w-full aspect-[16/9] relative rounded-md overflow-hidden">
                     <Image
-                      src={doctorDetail.data.image}
-                      alt={doctorDetail.data.name || 'Doctor'}
+                      src={doctorDetail?.data?.image}
+                      alt={doctorDetail?.data?.name || 'Doctor'}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                       sizes="(max-width: 640px) 95vw, (max-width: 768px) 90vw, (max-width: 1024px) 80vw, 100vw"
                     />
                   </div>
@@ -217,12 +217,12 @@ const MeetTheTeam = () => {
 
                 {/* Title */}
                 <h4 className="text-base md:text-lg lg:text-xl font-medium text-[#202020] px-1">
-                  {doctorDetail.data?.title}
+                  {doctorDetail?.data?.title}
                 </h4>
 
                 {/* Description */}
                 <div
-                  dangerouslySetInnerHTML={{ __html: doctorDetail.data?.description || '' }}
+                  dangerouslySetInnerHTML={{ __html: doctorDetail?.data?.description || '' }}
                   className="text-xs sm:text-sm md:text-base text-[#555] leading-[160%] text-justify space-y-2 px-1"
                 />
               </div>

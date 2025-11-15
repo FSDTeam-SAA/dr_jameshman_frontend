@@ -51,7 +51,8 @@ const Navbar = () => {
 
   // Dropdown items
   const pricingItems = [
-    { label: "Fees", link: "/pricing#pricing" },
+    { label: "Overview", link: "/pricing#overview" },
+    { label: "Fees", link: "/pricing/treatments-fees#treatments-fees" },
     {
       label: "Offers & Payment Plans",
       link: "/pricing/offers-and-payment-plans#offers-and-payment-plans",
