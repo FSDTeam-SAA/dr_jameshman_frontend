@@ -215,7 +215,7 @@ const GetInTouch = () => {
           </div>
           <div className="md:col-span-1">
             <Image
-              src="/assets/images/home-get-in-touch.jpg"
+              src="/assets/images/get-in-touch-home.jpg"
               alt="get in touch"
               width={1000}
               height={1000}
