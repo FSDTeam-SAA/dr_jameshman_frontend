@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AppProvider from "@/providers/app-provider";
 import { Toaster } from "sonner";
+import { ChatBot } from "@/components/chatbot/chat-bot";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <AppProvider>{children}</AppProvider>
         <Toaster />
+        <ChatBot/>
       </body>
     </html>
   );
