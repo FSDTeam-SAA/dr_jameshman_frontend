@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { MessageCircle, Send, X } from "lucide-react"
+import { MessageSquareText, Send, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface Message {
@@ -81,9 +81,9 @@ export function ChatBot() {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="h-14 w-14 rounded-full shadow-lg bg-primary hover:bg-primary/90"
+          className="h-12 w-12 rounded-full shadow-lg bg-primary border"
         >
-          <MessageCircle className="h-6 w-6" />
+        <MessageSquareText className="h-8 w-8 text-white"/>
         </Button>
       )}
 
@@ -97,7 +97,7 @@ export function ChatBot() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="h-8 w-8 text-white hover:bg-blue-700 rounded-full"
+                className="h-8 w-8 text-white hover:bg-primary border rounded-full"
               >
                 <X className="h-5 w-5" />
               </Button>
