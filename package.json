@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "build": "node init && next build",
+    "start": "node init && next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -31,7 +31,7 @@
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.548.0",
     "motion": "^12.23.24",
-    "next": "14.2.33",
+    "next": "16.4.4",
     "next-auth": "^4.24.13",
     "react": "^18",
     "react-day-picker": "^9.11.1",
